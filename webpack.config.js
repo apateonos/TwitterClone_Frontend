@@ -2,10 +2,10 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js",
+  entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "main.js"
+    filename: "[id].bundle.[hash].js"
   },
   module: {
     rules: [
@@ -29,6 +29,11 @@ module.exports = {
         use: ["style-loader", "css-loader", "scss-loader"]
       },
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: /\.(svg|png|jpg|gif)$/,
         use: {
           loader: "file-loader",
@@ -39,6 +44,9 @@ module.exports = {
         }
       }
     ]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new HtmlWebpackPlugin({
