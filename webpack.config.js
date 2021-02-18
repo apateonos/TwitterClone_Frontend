@@ -25,8 +25,21 @@ module.exports = {
         use: ["style-loader", "css-loader"]
       },
       {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 10000,
+              fallback: 'file-loader',
+              name: 'fonts/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "scss-loader"]
+        use: ["style-loader", "css-loader", "sass-loader"]
       },
       {
         test: /\.tsx?$/,
