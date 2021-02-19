@@ -1,9 +1,9 @@
 import React from 'react';
-import { Home } from '../../pages/index';
+import { Home } from '../pages/index';
 
 function HomeContainer () {
   return (
-    <>HomeContainer</>
+    <><Home/></>
   )
 }
 

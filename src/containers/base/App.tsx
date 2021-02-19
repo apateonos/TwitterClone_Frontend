@@ -1,10 +1,10 @@
 import * as React from "react";
-
-export interface AppProps {};
+import { HomeContainer } from "..";
+import Routes from "../../routes/routes";
 
 function App() {
   return (
-    <>App</>
+    <Routes/>
   )
 };
 
