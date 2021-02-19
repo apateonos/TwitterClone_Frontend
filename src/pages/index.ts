@@ -1,5 +1,5 @@
 // base
-export { default as Nav } from './base/nav';
+export { default as Header } from './base/header';
 export { default as Aside } from './base/aside';
 
 // countainer

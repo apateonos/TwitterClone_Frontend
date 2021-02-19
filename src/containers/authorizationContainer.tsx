@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Authorization } from '../pages/index';
 
-function AuthorizationContainer () {
+function AuthorizationContainer ({}) {
+  const [ isCreateAccout, setIsCreateAccout ] = useState(true);
   const [ name, setName ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ email, setEmail ] = useState('');
@@ -21,17 +22,28 @@ function AuthorizationContainer () {
     }
   }
 
-  useEffect(()=>{
-    console.log(email)
-  },[email])
-  
+  const onSubmitHandler = (e: { target: HTMLFormElement}) => {    
+    if (isCreateAccout) {
+
+    } else {
+
+    }
+  }
+
+  const onClickHandler = (e: { target: HTMLButtonElement}) => {
+    setIsCreateAccout(prev => !prev);
+  }
+
   return (
     <>
       <Authorization 
-        inputHandler={onChangeHandler} 
-        _name={name} 
-        email={email} 
-        _password={password}
+        onChangeHandler = {onChangeHandler}
+        onSubmitHandler = {onSubmitHandler}
+        onClickHandler = {onClickHandler}
+        _name = {name} 
+        email = {email} 
+        _password = {password}
+        isToggle = {isCreateAccout}
       />
     </>
   )

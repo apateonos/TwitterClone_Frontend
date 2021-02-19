@@ -5,26 +5,59 @@ interface props {
   _name: string;
   _password: string;
   email: string;
+  onChangeHandler: any;
+  onSubmitHandler: any;
+  onClickHandler: any;
+  isToggle: boolean;
 }
 
-function Authorization ({inputHandler, _name, _password, email}:props) {
+function Authorization ( {onSubmitHandler, onChangeHandler, onClickHandler, _name, _password, email, isToggle}:props ) {
   return (
     <>
-      <form>
+      <form onSubmit = {(e: React.FormEvent<HTMLFormElement>) => {e.preventDefault(); onSubmitHandler(e)}}>
         <Input 
-          type='text' 
-          name='name' 
-          onChange = {(e: React.FormEvent<HTMLInputElement>) => inputHandler(e)} 
-          value={_name} />
+          type = 'text' 
+          name = 'name' 
+          onChange = {(e: React.FormEvent<HTMLInputElement>) => onChangeHandler(e)} 
+          value = {_name}
+          placeholder = 'name'  
+        />          
         <Input 
-          type='password' 
-          name='password' 
-          onChange = {(e: React.FormEvent<HTMLInputElement>) => inputHandler(e)} 
-          value={_password}
+          type = 'password' 
+          name = 'password' 
+          onChange = {(e: React.FormEvent<HTMLInputElement>) => onChangeHandler(e)} 
+          value = {_password}
+          placeholder = 'password' 
         />
-        <Input type='button' value='Login' onChange = {(e: React.FormEvent<HTMLInputElement>) => inputHandler(e)}/>
+        <Input type='submit' value='Login' onChange = {(e: React.FormEvent<HTMLInputElement>) => onChangeHandler(e)}/>
       </form>
-      <div>{email}</div>
+      <button onClick = {(e: React.MouseEvent<HTMLButtonElement>) => onClickHandler(e)}>Sign Up</button>
+      {!isToggle &&
+        <form onSubmit = {(e: React.FormEvent<HTMLFormElement>) => {e.preventDefault(); onSubmitHandler(e)}}>
+        <Input 
+            type = 'text' 
+            name = 'email' 
+            onChange = {(e: React.FormEvent<HTMLInputElement>) => onChangeHandler(e)} 
+            value = {email}
+            placeholder = 'email'  
+          />
+          <Input 
+            type='text' 
+            name='name' 
+            onChange = {(e: React.FormEvent<HTMLInputElement>) => onChangeHandler(e)} 
+            value={_name}
+            placeholder = 'name'   
+          />
+          <Input 
+            type='password' 
+            name='password' 
+            onChange = {(e: React.FormEvent<HTMLInputElement>) => onChangeHandler(e)} 
+            value={_password}
+            placeholder = 'password'
+          />
+          <Input type='submit' value='Create Account' onChange = {(e: React.FormEvent<HTMLInputElement>) => onChangeHandler(e)}/>
+        </form>
+      }
     </>
   )
 }
