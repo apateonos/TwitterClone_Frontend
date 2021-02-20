@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { NavButton, TwitButton, Modal } from '../../components/index';
 interface props {
   isLogin: boolean;
 }
@@ -9,12 +9,13 @@ interface props {
 function Header ({ isLogin }: props) {
   return (
     <Container>
+      <Modal/>
       <Nav>
-        <li><Link to = '/'>Home</Link></li>
-        <li><Link to = '/message'>Message</Link></li>
-        <li><Link to = '/profile'>Profile</Link></li>
+        <li><Link to = '/'><NavButton text='Home' count={0}/></Link></li>
+        <li><Link to = '/message'><NavButton text='Message' /></Link></li>
+        <li><Link to = '/profile'><NavButton text='Profile' /></Link></li>
       </Nav>
-      <Button>Twit</Button>
+      <TwitButton/>
     </Container>
   )
 }
@@ -40,13 +41,5 @@ const Nav: any = styled.nav`
   @media only screen and (max-width: 500px) {
     flex-direction: row;
     justify-content: space-around;
-  }
-`;
-
-const Button: any = styled.button`
-  @media only screen and (max-width: 500px) {
-    position: absolute;
-    top: -30px;
-    right: 30px;
   }
 `;

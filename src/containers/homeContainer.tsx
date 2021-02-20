@@ -4,36 +4,42 @@ import { Home } from '../pages/index';
 import { AsideContainer, HeaderContainer } from './index';
 
 function HomeContainer () {
-  const [ twitList, setTwitList ] = useState([]);
-  const [ writeTwit, setWriteTwit ] = useState('');
+  const [ twitList, setTwitList ]=useState([]);
+  const [ writeTwit, setWriteTwit ]=useState('');
 
 
-  const onChangeHandler = (e: { target: HTMLInputElement}) => {
-    let val: string = e.target.value;
+  const onChangeHandler=(e: { target: HTMLInputElement}) => {
+    let val: string=e.target.value;
     setWriteTwit(val);
   }
 
-  const onClickPost = () => {
+  const onClickPost=() => {
+    
+  }
+
+  const onClickImageFile=() => {
 
   }
 
-  const onClickImageFile = () => {
-
-  }
-
-  useEffect(()=> {}, []);
+  useEffect(()=> {
+    
+  }, []);
 
   return (
     <Container>
-      <HeaderContainer/>
-      <Home/>
+      <HeaderContainer />
+      <Home 
+        twitList={twitList} 
+        writeTwit={writeTwit} 
+        onChangeHandler={onChangeHandler}
+      />
     </Container>
   )
 }
 
 export default HomeContainer;
 
-const Container: any = styled.div`
+const Container: any=styled.div`
   display: flex;
 
   @media only screen and (max-width: 500px){

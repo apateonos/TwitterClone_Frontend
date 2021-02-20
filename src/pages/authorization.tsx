@@ -23,8 +23,8 @@ function Authorization ( {onSubmitHandler, onChangeHandler, onClickHandler, _nam
           placeholder = 'name'  
         />          
         <Input 
-          type = 'password' 
-          name = 'password' 
+          type = 'password'
+          name = 'password'
           onChange = {(e: React.FormEvent<HTMLInputElement>) => onChangeHandler(e)} 
           value = {_password}
           placeholder = 'password' 

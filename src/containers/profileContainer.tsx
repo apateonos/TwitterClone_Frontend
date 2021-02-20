@@ -1,21 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Profile } from '../pages/index';
 import { AsideContainer, HeaderContainer } from './index';
 
 function ProfileContainer () {
   const history = useHistory();
+  const [ userName, setUserName ] = useState();
 
   useEffect(()=>{
-    console.log(history.location.pathname);
+    let id: string = history.location.pathname.slice(1);
+    setUserName(id);
   }, [])
 
   return (
     <>
-    <NavContainer/>
-    <Profile/>
-    <AsideContainer/>
-  </>
+      <HeaderContainer/>
+      <Profile userName={userName}/>
+      <AsideContainer/>
+    </>
   )
 }
 

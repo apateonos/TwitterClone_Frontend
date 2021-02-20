@@ -1,9 +1,13 @@
 import React from 'react';
 
-function Profile () {
+interface props {
+  userName: string;
+}
+
+function Profile ({ userName }: props ) {
   return (
     <>
-      Path
+      <div>{userName}</div>
     </>
   )
 }

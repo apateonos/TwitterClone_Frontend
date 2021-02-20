@@ -3,7 +3,7 @@ import { Header } from '../../pages/index';
 
 function HeaderContainer () {
   return (
-    <><Header/></>
+    <><Header isLogin={true} /></>
   )
 }
 
