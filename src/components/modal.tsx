@@ -7,7 +7,7 @@ interface props {
 function Modal ({component}: props) {
   return (
     <Container>
-
+      <Board>{component}</Board>
     </Container>
   )
 }
@@ -15,6 +15,21 @@ function Modal ({component}: props) {
 export default Modal;
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  width: 100vw;
+  height: 100vh;
+
+  background: black;
+  opacity: 0.5;
+`;
+
+const Board = styled.div`
+  width: 600px;
+  height: 600px;
+  background: white;
 `;

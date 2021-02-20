@@ -9,9 +9,10 @@ interface props {
 function TextArea ({ value, _onChangeHandler }: props ) {
   const [ height, setHeight ] = useState(29);
 
-  const onChangeHandler = async (e: HTMLTextAreaElement ) => {
+  const onChangeHandler = async (e: { target: HTMLTextAreaElement; }) => {
     _onChangeHandler(e);
     await setHeight(0);
+    
     await setHeight(e.target.scrollHeight);
   }
 
@@ -27,7 +28,11 @@ function TextArea ({ value, _onChangeHandler }: props ) {
 
 export default TextArea;
 
-const Container = styled.textarea`
+interface styledProps {
+  height: string;
+}
+
+const Container = styled.textarea<styledProps>`
   height: ${props=>props.height};
   overflow: hidden;
 `;

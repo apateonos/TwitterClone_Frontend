@@ -5,14 +5,14 @@ import { TextArea, Twit } from '../components/index';
 interface props {
   writeTwit: string;
   onChangeHandler: any;
-  twitList: object[];
+  twitList: any[];
 }
 
 function Home ( {twitList, writeTwit, onChangeHandler }: props ) {
   return (
     <>
       <TextArea value={writeTwit} _onChangeHandler={onChangeHandler} />
-      {twitList.map((el) => 
+      {twitList.length > 0 && twitList.map((el) => 
         <Twit 
           userName={el.userName} 
           userImage={el.userImage}

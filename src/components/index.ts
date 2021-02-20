@@ -6,3 +6,4 @@ export { default as TwitButton } from './twitButton';
 export { default as NavButton } from './navButton';
 
 export { default as Modal } from './modal';
+export { default as ModalTwit } from './modalTwit';

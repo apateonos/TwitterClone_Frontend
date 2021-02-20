@@ -2,11 +2,11 @@ import React from 'react';
 
 interface props {
   userImage: any;
-  userName: string;
-  userId: string;
-  text: string;
-  reply: object[];
-  heart: string[];
+  userName: any;
+  userId: any;
+  text: any;
+  reply: any[];
+  heart: any[];
 }
 
 function Twit ({ userImage, userName, userId, text, reply, heart }:props ) {

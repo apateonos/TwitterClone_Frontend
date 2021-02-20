@@ -1,21 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { NavButton, TwitButton, Modal } from '../../components/index';
+import { NavButton, TwitButton, Modal, ModalTwit } from '../../components/index';
 interface props {
   isLogin: boolean;
+  isModal: boolean;
+  onClickHandler: any;
 }
 
-function Header ({ isLogin }: props) {
+function Header ({ isLogin, isModal, onClickHandler }: props) {
   return (
     <Container>
-      <Modal/>
+      {isModal && <Modal component={<ModalTwit/>} />}
       <Nav>
-        <li><Link to = '/'><NavButton text='Home' count={0}/></Link></li>
-        <li><Link to = '/message'><NavButton text='Message' /></Link></li>
-        <li><Link to = '/profile'><NavButton text='Profile' /></Link></li>
+        <li><Link to = '/'><NavButton text='Home' image='' count={0}/></Link></li>
+        <li><Link to = '/message'><NavButton text='Message' image='' count={0} /></Link></li>
+        <li><Link to = '/profile'><NavButton text='Profile' image='' count={0} /></Link></li>
       </Nav>
-      <TwitButton/>
+      <TwitButton onClickHandler={onClickHandler}/>
     </Container>
   )
 }
