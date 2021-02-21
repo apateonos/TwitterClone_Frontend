@@ -1,5 +1,4 @@
-import TwitButtonIcon from 'assets/images/twitButton';
-import React, { useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 interface props {
@@ -7,11 +6,10 @@ interface props {
 }
 
 const TwitButton = ({onClickHandler}:props ) => {
-  
   return (
     <Button onClick={()=>onClickHandler()}>
+      <Icon></Icon>
       <Text>Twit</Text>
-      <TwitButtonIcon/>
     </Button>
   )
 }
@@ -19,12 +17,20 @@ const TwitButton = ({onClickHandler}:props ) => {
 export default TwitButton;
 
 const Button: any = styled.button`
-  border-radius: 25px;
-  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  width: 250px;
   height: 50px;
 
+  margin: 5px 0;
+
+  font-size: 16px;
+  font-weight: 600;
   color: white;
-  background: blue;
+  background: #39a1f1;
+  border-radius: 25px;
 
   @media only screen and (max-width: 1280px) {
     width: 50px;
@@ -32,7 +38,7 @@ const Button: any = styled.button`
 
   @media only screen and (max-width: 500px) {
     position: absolute;
-    top: -30px;
+    top: -80px;
     right: 30px;
   }
 `;
@@ -42,5 +48,20 @@ const Text: any = styled.div`
 
   @media only screen and (max-width: 1280px) {
     width: 0;
+    height: 0;
+  }
+`;
+
+const Icon: any = styled.div`
+  overflow:hidden;
+
+  width: 0;
+  height: 0;
+
+  @media only screen and (max-width: 1280px) {
+    width: 40px;
+    height: 40px;
+
+    background: black;
   }
 `;

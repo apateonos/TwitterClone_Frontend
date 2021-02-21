@@ -14,9 +14,9 @@ function Header ({ isLogin, isModal, onClickHandler }: props) {
       {isModal && <Modal component={<ModalTwit/>} />}
       <Container>
         <Nav>
-          <li><Link to = '/'><NavButton text='Home' image='' count={0}/></Link></li>
-          <li><Link to = '/message'><NavButton text='Message' image='' count={0} /></Link></li>
-          <li><Link to = '/profile'><NavButton text='Profile' image='' count={0} /></Link></li>
+          <Label><Link to = '/'><NavButton text='Home' icon='' count={3}/></Link></Label>
+          <Label><Link to = '/message'><NavButton text='Message' icon='' count={10} /></Link></Label>
+          <Label><Link to = '/profile'><NavButton text='Profile' icon='' count={0} /></Link></Label>
         </Nav>
         <TwitButton onClickHandler={onClickHandler}/>
       </Container>
@@ -27,23 +27,27 @@ function Header ({ isLogin, isModal, onClickHandler }: props) {
 export default Header;
 
 const Container: any = styled.div`
-  @media only screen and (max-width: 500px) {
-    position: fixed;
-    bottom: 0;
+  position: fixed;
+  bottom: 0;
 
-    width: 100%;
+  width: 100%;
+  border-top: 1px solid #afafaf;
+  background: white;
 
-    border-top: 1px solid #efcfef;
-    background: white;
+  @media only screen and (min-width: 500px) {
+    position: relative;
   }
 `;
 
 const Nav: any = styled.nav`
-  display: flex;
-  flex-direction: column;
-  
-  @media only screen and (max-width: 500px) {
-    flex-direction: row;
-    justify-content: space-around;
+  display:flex;
+  justify-content: space-between;
+
+
+  @media only screen and (min-width: 500px) {
+    display: block;
   }
+`;
+
+const Label: any = styled.li`
 `;

@@ -26,23 +26,12 @@ function HomeContainer () {
   }, []);
 
   return (
-    <Container>
-      <HeaderContainer />
-      <Home 
-        twitList={twitList} 
-        writeTwit={writeTwit} 
-        onChangeHandler={onChangeHandler}
-      />
-    </Container>
+    <Home 
+      twitList={twitList} 
+      writeTwit={writeTwit} 
+      onChangeHandler={onChangeHandler}
+    />
   )
 }
 
 export default HomeContainer;
-
-const Container: any=styled.div`
-  display: flex;
-
-  @media only screen and (max-width: 500px){
-    display:block;
-  }
-`;
