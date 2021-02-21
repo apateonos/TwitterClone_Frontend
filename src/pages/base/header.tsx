@@ -10,15 +10,17 @@ interface props {
 
 function Header ({ isLogin, isModal, onClickHandler }: props) {
   return (
-    <Container>
+    <>
       {isModal && <Modal component={<ModalTwit/>} />}
-      <Nav>
-        <li><Link to = '/'><NavButton text='Home' image='' count={0}/></Link></li>
-        <li><Link to = '/message'><NavButton text='Message' image='' count={0} /></Link></li>
-        <li><Link to = '/profile'><NavButton text='Profile' image='' count={0} /></Link></li>
-      </Nav>
-      <TwitButton onClickHandler={onClickHandler}/>
-    </Container>
+      <Container>
+        <Nav>
+          <li><Link to = '/'><NavButton text='Home' image='' count={0}/></Link></li>
+          <li><Link to = '/message'><NavButton text='Message' image='' count={0} /></Link></li>
+          <li><Link to = '/profile'><NavButton text='Profile' image='' count={0} /></Link></li>
+        </Nav>
+        <TwitButton onClickHandler={onClickHandler}/>
+      </Container>
+    </>
   )
 }
 

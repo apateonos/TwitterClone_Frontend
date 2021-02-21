@@ -17,6 +17,8 @@ export default Modal;
 const Container = styled.div`
   position: fixed;
   
+
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,12 +26,16 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
 
-  background: black;
-  opacity: 0.5;
+  background: rgba(0,0,0, 0.5);
 `;
 
 const Board = styled.div`
   width: 600px;
   height: 600px;
   background: white;
+
+  @media only screen and (max-width: 500px) {
+    width: 100%;
+    height: 100%;
+  }
 `;
