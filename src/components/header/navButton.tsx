@@ -1,27 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface props {
+  link: string;
   text: string;
   count: number;
   icon: any;
 }
 
-const NavButton = ({icon, count, text}:props ) => {
+const NavButton = ({link, icon, count, text}:props ) => {
   return (
-    <Container>
-      <IconBox>
-        {icon}
-        {count > 0 && <CountBox>{count}</CountBox>}
-      </IconBox>
-      <TextBox>{text}</TextBox>
-    </Container>
+    <Link to = {link}>
+      <Button>
+        <IconBox>
+          {icon}
+          {count > 0 && <CountBox>{count}</CountBox>}
+        </IconBox>
+        <TextBox>{text}</TextBox>
+      </Button>
+    </Link>
   )
 }
 
 export default NavButton;
 
-const Container = styled.button`
+const Button = styled.button`
   display: flex;
   align-items: center;
   

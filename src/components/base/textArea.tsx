@@ -3,14 +3,15 @@ import styled from 'styled-components';
 
 interface props {
   value: string;
-  _onChangeHandler: any;
+  onChange: any;
 }
 
-function TextArea ({ value, _onChangeHandler }: props ) {
+function TextArea ({ value, onChange }: props ) {
   const [ height, setHeight ] = useState(29);
 
-  const onChangeHandler = async (e: { target: HTMLTextAreaElement; }) => {
-    _onChangeHandler(e);
+  const _onChangeHandler = async (e: { target: HTMLTextAreaElement; }) => {
+    console.log('change!');
+    onChange(e);
     await setHeight(0);
     
     await setHeight(e.target.scrollHeight);
@@ -20,8 +21,8 @@ function TextArea ({ value, _onChangeHandler }: props ) {
     <Container
       placeholder="what?"
       value={value}
-      height={`${height}px`}
-      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onChangeHandler(e)}
+      height={height}
+      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => _onChangeHandler(e)}
     />
   )
 }
@@ -29,10 +30,12 @@ function TextArea ({ value, _onChangeHandler }: props ) {
 export default TextArea;
 
 interface styledProps {
-  height: string;
+  height: number;
 }
 
 const Container = styled.textarea<styledProps>`
-  height: ${props=>props.height};
+  height: ${props=>props.height}px;
+  height: 100%;
+  width: 100%;
   overflow: hidden;
 `;

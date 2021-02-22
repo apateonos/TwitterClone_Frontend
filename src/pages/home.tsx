@@ -3,15 +3,14 @@ import styled from 'styled-components';
 import { TextArea, Twit } from '../components/index';
 
 interface props {
-  writeTwit: string;
-  onChangeHandler: any;
   twitList: any[];
 }
 
-function Home ( {twitList, writeTwit, onChangeHandler }: props ) {
+function Home ( {twitList }: props ) {
   return (
     <Container>
-      <TextArea value={writeTwit} _onChangeHandler={onChangeHandler} />
+      <WriteTwitBox>
+      </WriteTwitBox>
       {twitList.length > 0 && twitList.map((el) => 
         <Twit 
           userName={el.userName} 
@@ -29,13 +28,9 @@ function Home ( {twitList, writeTwit, onChangeHandler }: props ) {
 export default Home;
 
 const Container = styled.div`
-  width: 600px;
-  min-height: 100vh;
-  
-  border-left: 1px solid #cfcfcf;
-  border-right: 1px solid #cfcfcf;
 
-  @media only screen and(max-width: 680px) {
-    width: 100%;
-  }
+`;
+
+const WriteTwitBox = styled.div`
+  
 `;

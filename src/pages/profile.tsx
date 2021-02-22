@@ -1,13 +1,9 @@
 import React from 'react';
 
-interface props {
-  userName: string;
-}
-
-function Profile ({ userName }: props ) {
+function Profile () {
   return (
     <>
-      <div>{userName}</div>
+      <div>Profile</div>
     </>
   )
 }
