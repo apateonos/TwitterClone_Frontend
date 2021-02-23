@@ -3,7 +3,7 @@ import { Main, Alarm } from '../pages/index';
 
 function AlarmContainer () {
   return (
-    <Main component={<Alarm
+    <Main title='Notification' component={<Alarm
       
     />}/>
   )

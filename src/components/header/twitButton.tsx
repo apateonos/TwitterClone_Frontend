@@ -7,7 +7,7 @@ interface props {
 
 const TwitButton = ({onClickHandler}:props ) => {
   return (
-    <Button onClick={()=>onClickHandler()}>
+    <Button onClick={()=>onClickHandler('modal')}>
       <Icon></Icon>
       <Text>Twit</Text>
     </Button>

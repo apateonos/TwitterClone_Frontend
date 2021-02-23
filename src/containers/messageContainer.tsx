@@ -3,7 +3,7 @@ import { Main, Message } from '../pages/index';
 
 function MessageContainer () {
   return (
-    <Main component={<Message
+    <Main title='Message' component={<Message
       
     />}/>
   )

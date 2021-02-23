@@ -2,14 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Header } from '../../pages/index';
 
-function HeaderContainer () {
+interface props {
+  title: string;
+}
+function HeaderContainer ({ title }: props ) {
   const [ isModal, setIsModal ] = useState(false);
+  const [ isSideBar, setIsSideBar ] = useState(false);
   const [ width, setWidth ] = useState(window.screen.width);
-
   const history = useHistory();
 
-  const onClickHandler = () => {
-    setIsModal(prev => !prev);
+  useEffect(()=>{
+    console.log('!!')
+  }, [isSideBar]);
+
+  const onClickToggle = (dir: string) => {
+    if (dir === 'sideBar') {
+      setIsSideBar(prev => !prev);
+    }
+    if (dir === 'modal') {
+      setIsModal(prev => !prev);
+    }
   }
 
   useEffect(()=>{
@@ -18,20 +30,20 @@ function HeaderContainer () {
       setWidth(window.screen.width);
     })
 
-    const path = history.location.pathname;
-    console.log(path.split('/')[1]);
-    console.log(path);
   },[]);
 
   return (
     <Header
       isLogin={true}
       isModal={isModal}
+      isSideBar={isSideBar}
       width={width}
-      title={}
-      onClickHandler={onClickHandler}  
+      title={title}
+      back={true}
+      onClickToggle={onClickToggle}
     />
   )
 }
 
 export default HeaderContainer;
+

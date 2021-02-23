@@ -5,12 +5,13 @@ import styled from 'styled-components';
 
 interface props {
   component: any;
+  title: string;
 }
 
-function Main ({component}:props) {
+function Main ({component, title}:props) {
   return (
     <Container>
-      <HeaderContainer/>
+      <HeaderContainer title={title}/>
       <ComponentBox>
         {component}
       </ComponentBox>
@@ -28,10 +29,11 @@ const Container = styled.div`
 `;
 
 const ComponentBox = styled.div`
+  width: 100%;
   @media only screen and ( min-width: 500px ) {
-    min-height: 100vh;
     width: 600px;
-
+    min-height: 100vh;
+    
     border-left: 1px solid #cfcfcf;
     border-right: 1px solid #cfcfcf;
   }

@@ -3,7 +3,7 @@ import { Main, Profile } from '../pages/index';
 
 function ProfileContainer () {
   return (
-    <Main component={<Profile
+    <Main title='Profile' component={<Profile
       
     />}/>
   )

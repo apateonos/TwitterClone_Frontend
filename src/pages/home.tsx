@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TextArea, Twit } from '../components/index';
+import { Twit, WriteTwit } from '../components/index';
 
 interface props {
   twitList: any[];
+  width: number;
 }
 
-function Home ( {twitList }: props ) {
+function Home ({ twitList, width }: props ) {
   return (
     <Container>
-      <WriteTwitBox>
-      </WriteTwitBox>
+      {width > 500 && <WriteTwit/>}
       {twitList.length > 0 && twitList.map((el) => 
         <Twit 
           userName={el.userName} 
@@ -19,6 +19,7 @@ function Home ( {twitList }: props ) {
           text={el.text}
           reply={el.reply}
           heart={el.heart}
+          retwit={el.retwit}
         />
       )}
     </Container>
@@ -28,9 +29,5 @@ function Home ( {twitList }: props ) {
 export default Home;
 
 const Container = styled.div`
-
-`;
-
-const WriteTwitBox = styled.div`
-  
+  background: black;
 `;
