@@ -1,11 +1,10 @@
 // base
+export { default as Main } from './base/main';
 export { default as Header } from './base/header';
 export { default as Aside } from './base/aside';
-export { default as Main } from './base/main';
+export { default as Footer } from './base/footer';
 
-// countainer
-export { default as Authorization } from './authorization';
+// pages
 export { default as Home } from './home';
-export { default as Alarm } from './alarm';
-export { default as Message } from './message';
+export { default as Auth } from './auth';
 export { default as Profile } from './profile';

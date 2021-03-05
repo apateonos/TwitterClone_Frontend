@@ -1,9 +1,7 @@
 import React from 'react';
 
-function Aside () {
+export default () => {
   return (
-    <>Aside</>
+    <aside>aside</aside>
   )
 }
-
-export default Aside;

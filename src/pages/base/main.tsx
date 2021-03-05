@@ -1,40 +1,16 @@
-//import { AsideContainer, HeaderContainer } from 'containers';
-import { HeaderContainer } from '../../containers/index';
+import { Header, Aside, Footer } from '../../containers/index';
 import React from 'react';
-import styled from 'styled-components';
-
 interface props {
-  component: any;
-  title: string;
+  components: React.ReactNode;
 }
-
-function Main ({component, title}:props) {
+export default ( { components }: props ) => {
   return (
-    <Container>
-      <HeaderContainer title={title}/>
-      <ComponentBox>
-        {component}
-      </ComponentBox>
-    </Container>
+    <>
+      <Header/>
+      <div> Main Page </div>
+      <div>{components}</div>
+      <Aside/>
+      <Footer/>
+    </>
   )
 }
-
-export default Main;
-
-const Container = styled.div`
-  @media only screen and ( min-width: 500px ) {
-    display: flex;
-    justify-content: center;
-  }
-`;
-
-const ComponentBox = styled.div`
-  width: 100%;
-  @media only screen and ( min-width: 500px ) {
-    width: 600px;
-    min-height: 100vh;
-    
-    border-left: 1px solid #cfcfcf;
-    border-right: 1px solid #cfcfcf;
-  }
-`;

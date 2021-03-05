@@ -1,11 +1,10 @@
 // base
-export { default as App } from './base/App';
-export { default as HeaderContainer } from './base/headerContainer';
-export { default as AsideContainer } from './base/asideContainer';
+export { default as App } from './base/app';
+export { default as Header } from './base/header';
+export { default as Aside } from './base/aside';
+export { default as Footer } from './base/footer';
 
-// countainer
-export { default as AuthorizationContainer } from './authorizationContainer';
-export { default as HomeContainer } from './homeContainer';
-export { default as ProfileContainer } from './profileContainer';
-export { default as MessageContainer } from './messageContainer';
-export { default as AlarmContainer } from './alarmContainer';
+// container
+export { default as Auth } from './auth';
+export { default as Home } from './home';
+export { default as Profile } from './profile';
