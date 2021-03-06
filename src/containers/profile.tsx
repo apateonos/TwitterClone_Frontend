@@ -3,8 +3,10 @@ import { Main, Profile } from '../pages/index';
 
 export default () => {
   return (
-    <Main components={<Profile
-    
-    />}/>
+    <Main components={
+      <Profile
+      
+      />
+    }/>
   )
 }

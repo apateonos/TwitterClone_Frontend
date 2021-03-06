@@ -19,7 +19,7 @@ export interface LoginUserUseData {
   password: string
 }
 
-export const getLoginAccount = ({
+export const postLoginAccount = ({
   email, password
 }: LoginUserUseData): AxiosPromise => {
   return get('/login', {email, password});

@@ -7,7 +7,7 @@ export const postCreateAccountApi = {
   }),
   success: (res: any) => ({
     type: POST_CREATE_ACCOUNT['SUCCESS'],
-    payload: [],
+    payload: res,
   }),
   failure: (err: Error) => ({
     type: POST_CREATE_ACCOUNT['FAILURE'],
@@ -18,14 +18,13 @@ export const postCreateAccountApi = {
 export const postLoginAccountApi = {
   request: ({ email, password }: LoginUserUseData) => ({
     type: POST_LOGIN_ACCOUNT['REQUEST'],
-    token: '',
   }),
   success: (res: any) => ({
     type: POST_LOGIN_ACCOUNT['SUCCESS'],
-    payload: [],
+    payload: res,
   }),
   failure: (err: Error) => ({
     type: POST_LOGIN_ACCOUNT['FAILURE'],
     err: err.message,
-  }),
+  }), 
 };

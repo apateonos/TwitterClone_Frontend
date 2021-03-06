@@ -7,7 +7,7 @@ interface props {
   timeLine: Array<any>
 }
 
-export default ({onChange, onSubmit}: props ) => {
+export default ({onChange, onSubmit, tweet, timeLine}: props ) => {
   return (
     <div>Home Page</div>
   )
