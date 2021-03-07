@@ -13,6 +13,9 @@ export function createRequestTypes(base: string): Indexable {
   }, {});
 }
 
+//ping
+//export const GET_PING = createRequestTypes('GET_PING');
+
 //user
 export const POST_CREATE_ACCOUNT = createRequestTypes('POST_CREATE_ACCOUNT');
 export const POST_LOGIN_ACCOUNT = createRequestTypes('POST_LOGIN_ACCOUNT');

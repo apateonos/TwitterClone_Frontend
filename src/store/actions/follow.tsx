@@ -1,8 +1,8 @@
 import { GET_FOLLOW_USER_LIST, POST_FOLLOW_USER, DELETE_FOLLOW_USER } from './types';
-import { FollowUserUseData } from '../../api/follow';
+import { FollowUserUseData, GetFollowUserListUseData } from '../../api/follow';
 
 export const getFollowUserListApi = {
-  request: () => ({
+  request: ({ id }: GetFollowUserListUseData) => ({
     type: GET_FOLLOW_USER_LIST['REQUEST']
   }),
   success: (res: any) => ({

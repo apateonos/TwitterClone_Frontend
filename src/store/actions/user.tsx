@@ -1,5 +1,5 @@
 import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, CHANGE_USER_NAME, CHANGE_USER_PASSWORD, DELETE_USER_ACCOUNT } from './types';
-import { CreateAccountUseData, LoginUserUseData } from '../../api/user';
+import { CreateAccountUseData, LoginUserUseData, ChangeUserNameUseData, DeleteUserAccountUseData } from '../../api/user';
 
 export const createUserAccountApi = {
   request: ({ email, name, password, profile }: CreateAccountUseData) => ({
@@ -34,19 +34,33 @@ export const loginUserAccountApi = {
     err: err.message,
   }), 
 };
-/* 
+
 export const changeUserNameApi = {
   request: ({ name }: ChangeUserNameUseData) => ({
-    type: LOGIN_USER_ACCOUNT['REQUEST'],
+    type: CHANGE_USER_NAME['REQUEST'],
     name
   }),
   success: (res: any) => ({
-    type: LOGIN_USER_ACCOUNT['SUCCESS'],
+    type: CHANGE_USER_NAME['SUCCESS'],
     payload: res,
   }),
   failure: (err: Error) => ({
-    type: LOGIN_USER_ACCOUNT['FAILURE'],
+    type: CHANGE_USER_NAME['FAILURE'],
     err: err.message,
   }),
 }; 
-*/
+
+export const deleteUserAccountApi = {
+  request: ({ password }: DeleteUserAccountUseData) => ({
+    type: DELETE_USER_ACCOUNT['REQUEST'],
+    password
+  }),
+  success: (res: any) => ({
+    type: DELETE_USER_ACCOUNT['SUCCESS'],
+    payload: res,
+  }),
+  failure: (err: Error) => ({
+    type: DELETE_USER_ACCOUNT['FAILURE'],
+    err: err.message,
+  }),
+}; 

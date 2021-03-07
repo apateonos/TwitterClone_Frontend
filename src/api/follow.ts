@@ -5,8 +5,11 @@ export interface FollowUserUseData {
   user_id: number
 }
 
-export const getFollowUserList = (): AxiosPromise => {
-  return get('/follow/user')
+export interface GetFollowUserListUseData {
+  id: number
+}
+export const getFollowUserList = ({ id }: GetFollowUserListUseData): AxiosPromise => {
+  return get('/follow/user', { id })
 }
 
 export const postFollowUser = ({

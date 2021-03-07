@@ -7,17 +7,22 @@ import {
   createUserAccountApi,
   loginUserAccountApi
 } from '../store/actions/user';
+import { State } from "../store/reducers/index";
 import { CreateAccountUseData, LoginUserUseData } from '../api/user';
 import { Auth } from '../pages/index';
 
 interface AuthContainerProps {
   createUserAccountApi: ({ email, name, password, profile }: CreateAccountUseData) => object;
   loginUserAccountApi: ({ email, password }: LoginUserUseData) => object;
+  res: string;
+  error: string;
 }
 
 const AuthContainer: React.FC<AuthContainerProps> = ({
   createUserAccountApi,
-  loginUserAccountApi
+  loginUserAccountApi,
+  res,
+  error,
 }) => {
   const [ userEmail, setUserEmail ] = useState('');
   const [ userName, setUserName ] = useState('');
@@ -120,6 +125,11 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
   )
 }
 
+const mapStateToProps = (rootState: State) => ({
+  error: rootState.userReducer.error,
+  res: rootState.userReducer.res
+})
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   createUserAccountApi: ({ email, name, password, profile}: CreateAccountUseData) => {
     return dispatch(createUserAccountApi.request({email, name, password, profile}));
@@ -130,5 +140,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default withRouter(
-  compose(connect(null, mapDispatchToProps))(AuthContainer)
+  compose(connect(mapStateToProps, mapDispatchToProps))(AuthContainer)
 );

@@ -8,10 +8,10 @@ export interface CreateAccountUseData {
   name: string
 }
 
-export const postCreateAccount = ({
+export const createUserAccount = ({
   email, name, password, profile
 }: CreateAccountUseData): AxiosPromise => {
-  return get('/sign-up', {email, name, password, profile});
+  return post('/sign-up', {email, name, password, profile});
 };
 
 export interface LoginUserUseData {
@@ -19,8 +19,28 @@ export interface LoginUserUseData {
   password: string
 }
 
-export const postLoginAccount = ({
+export const loginUserAccount = ({
   email, password
 }: LoginUserUseData): AxiosPromise => {
-  return get('/login', {email, password});
+  return post('/login', {email, password});
 };
+
+export interface ChangeUserNameUseData {
+  name: string
+}
+
+export const changeUserName = ({ 
+  name 
+}: ChangeUserNameUseData): AxiosPromise => {
+  return put('/user/name', { name });
+}
+
+export interface DeleteUserAccountUseData {
+  password: string,
+}
+
+export const deleteUserAccount =({
+  password
+}: DeleteUserAccountUseData): AxiosPromise => {
+  return del('/user/unsigned', { password });
+}

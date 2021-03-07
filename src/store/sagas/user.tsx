@@ -1,29 +1,31 @@
 import { all, fork, call, put, take } from 'redux-saga/effects';
 import * as Api from '../../api/user';
 import * as types from '../actions/types';
-import { createUserAccountApi, loginUserAccountApi } from '../actions/user';
-import { LoginUserUseData, CreateAccountUseData } from '../../api/user';
+import axios from 'axios';
+import { createUserAccountApi, loginUserAccountApi, changeUserNameApi, deleteUserAccountApi } from '../actions/user';
+import { LoginUserUseData, CreateAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData } from '../../api/user';
 
-function* postLoginAccountSaga({ email, password }: LoginUserUseData) {
+function* loginUserAccountApiSaga({ email, password }: LoginUserUseData) {
   try {
-    const data = yield call(Api.postLoginAccount, { email, password });
+    const data = yield call(Api.loginUserAccount, { email, password });
     if (yield data.code === 'errors') throw Error;
     yield put(loginUserAccountApi.success(data));
+    yield axios.defaults.headers.common['Authorization'] = `Bearer ${data}`;
   } catch (err) {
     yield put(loginUserAccountApi.failure(err));
   }
 }
 
-function* watchPostLoginAccountSaga() {
+function* watchLoginUserAccountApiSaga() {
   while (true) {
     const { email, password } = yield take(types.POST_LOGIN_ACCOUNT[types.REQUEST]);
-    yield fork(postLoginAccountSaga, { email, password });
+    yield fork(loginUserAccountApiSaga, { email, password });
   }
 }
 
-function* postCreateAccountSaga({ email, name, password, profile }: CreateAccountUseData) {
+function* createUserAccountApiSaga({ email, name, password, profile }: CreateAccountUseData) {
   try {
-    const data = yield call(Api.postCreateAccount, { email, name, password, profile });
+    const data = yield call(Api.createUserAccount, { email, name, password, profile });
     if (yield data.code === 'errors') throw Error;
     yield put(createUserAccountApi.success(data));
   } catch (err) {
@@ -31,16 +33,52 @@ function* postCreateAccountSaga({ email, name, password, profile }: CreateAccoun
   }
 }
 
-function* watchPostCreateAccountSaga() {
+function* watchCreateUserAccountApiSaga() {
   while (true) {
     const { email, name, password, profile } = yield take(types.CREATE_USER_ACCOUNT[types.REQUEST]);
-    yield fork(postCreateAccountSaga, { email, name, password, profile });
+    yield fork(createUserAccountApiSaga, { email, name, password, profile });
+  }
+}
+
+function* chageUserNameApiSaga({ name }: ChangeUserNameUseData) {
+  try {
+    const data = yield call(Api.changeUserName, { name });
+    if (yield data.code === 'errors') throw Error;
+    yield put(changeUserNameApi.success(data));
+  } catch (err) {
+    yield put(changeUserNameApi.failure(err));
+  }
+}
+
+function* watchchageUserNameApiSaga() {
+  while (true) {
+    const { name } = yield take(types.CHANGE_USER_NAME[types.REQUEST]);
+    yield fork(chageUserNameApiSaga, { name });
+  }
+}
+
+function* deleteUserAccountApiSaga({ password }: DeleteUserAccountUseData) {
+  try {
+    const data = yield call(Api.deleteUserAccount, { password });
+    if (yield data.code === 'errors') throw Error;
+    yield put(deleteUserAccountApi.success(data));
+  } catch (err) {
+    yield put(deleteUserAccountApi.failure(err));
+  }
+}
+
+function* watchDeleteUserAccountApiSaga() {
+  while (true) {
+    const { password } = yield take(types.DELETE_USER_ACCOUNT[types.REQUEST]);
+    yield fork(deleteUserAccountApiSaga, { password });
   }
 }
 
 export default function* () {
   yield all([
-    fork(watchPostLoginAccountSaga),
-    fork(watchPostCreateAccountSaga)
+    fork(watchLoginUserAccountApiSaga),
+    fork(watchCreateUserAccountApiSaga),
+    fork(watchchageUserNameApiSaga),
+    fork(watchDeleteUserAccountApiSaga)
   ]);
 }

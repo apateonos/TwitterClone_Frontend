@@ -1,6 +1,10 @@
-import axios, { AxiosPromise } from 'axios';
+import { AxiosPromise } from 'axios';
 import { get } from './service';
 
-export const getTimeLine = (): AxiosPromise => {
-  return get('/sign-up');
+export interface GetUserTimelineUseData {
+  id: number;
+}
+
+export const getUserTimeLine = ({ id }: GetUserTimelineUseData): AxiosPromise => {
+  return get('/timeline', { id });
 };

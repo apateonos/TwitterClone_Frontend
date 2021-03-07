@@ -7,6 +7,7 @@ import { postUserTweetApi, updateUserTweetApi, deleteUserTweetApi } from '../sto
 import { PostUserTweetUseData, UpdateUserTweetUseData, DeleteUserTweetUseData } from '../api/tweet';
 import { Main, Home } from '../pages/index';
 import { getUserTimelineApi } from '../store/actions/timeline';
+import { GetUserTimelineUseData } from 'api/timeline';
 
 interface HomeContainerProps extends RouteComponentProps<any> {
   postUserTweetApi: ({ tweet }: PostUserTweetUseData) => object;
@@ -14,6 +15,7 @@ interface HomeContainerProps extends RouteComponentProps<any> {
   deleteUserTweetApi: ({ tweet_id }: DeleteUserTweetUseData) => object;
   getUserTimelineApi: () => object;
   timeline: [];
+  user: object;
 }
 
 const HomeContainer: React.FC<HomeContainerProps> = ({
@@ -21,46 +23,34 @@ const HomeContainer: React.FC<HomeContainerProps> = ({
   updateUserTweetApi,
   deleteUserTweetApi,
   getUserTimelineApi,
-  timeline
+  timeline,
+  user,
 }) => {
   const [ tweet, setTweet ] = useState('');
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    
-    switch (name) {
-      case 'tweet': setTweet(value)
-        break;
-      default:
-        break;
-    }
   }
 
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    /* const { name, key } = event.currentTarget;
-    switch (name) {
-      case 'postTweet': postUserTweetApi({tweet});
-      case 'updateTweet': updateUserTweetApi({tweet_id: key, tweet});
-      case 'deleteTweet': deleteUserTweetApi({ tweet_id: key });
-    } */
+
   }
 
-  useEffect(() => {
-    getUserTimelineApi();
-  },[])
-
+  useEffect(()=> {
+  }, [])
   return (
     <Main components = {<Home
       onChange={onChangeHandler}
       onClick={onClickHandler}
-      timeLine={timeline}
+      timeLine={[]}
       tweet={tweet}
     />}/>
   )
 }
 
 const mapStateToProps = (rootState: State) => ({
-  timeline: rootState.userReducer.payload
+  user: rootState.userReducer.user,
+  timeline: rootState.timelineReducer.timeline
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -73,11 +63,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   deleteUserTweetApi: ({ tweet_id }: DeleteUserTweetUseData) => {
     return dispatch(deleteUserTweetApi.request({ tweet_id }));
   },
-  getUserTimelineApi: ()=> {
-    return dispatch(getUserTimelineApi.request());
+  getUserTimelineApi: ({ id }: GetUserTimelineUseData)=> {
+    return dispatch(getUserTimelineApi.request({ id }));
   }
 });
 
 export default withRouter(
-  compose(connect(mapStateToProps, mapDispatchToProps))(HomeContainer)
+  compose(connect(null, mapDispatchToProps))(HomeContainer)
 );
