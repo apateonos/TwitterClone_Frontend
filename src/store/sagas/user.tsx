@@ -1,16 +1,16 @@
 import { all, fork, call, put, take } from 'redux-saga/effects';
 import * as Api from '../../api/user';
 import * as types from '../actions/types';
-import { postLoginAccountApi, postCreateAccountApi } from '../actions/user';
+import { createUserAccountApi, loginUserAccountApi } from '../actions/user';
 import { LoginUserUseData, CreateAccountUseData } from '../../api/user';
 
 function* postLoginAccountSaga({ email, password }: LoginUserUseData) {
   try {
     const data = yield call(Api.postLoginAccount, { email, password });
     if (yield data.code === 'errors') throw Error;
-    yield put(postLoginAccountApi.success(data));
+    yield put(loginUserAccountApi.success(data));
   } catch (err) {
-    yield put(postLoginAccountApi.failure(err));
+    yield put(loginUserAccountApi.failure(err));
   }
 }
 
@@ -25,15 +25,15 @@ function* postCreateAccountSaga({ email, name, password, profile }: CreateAccoun
   try {
     const data = yield call(Api.postCreateAccount, { email, name, password, profile });
     if (yield data.code === 'errors') throw Error;
-    yield put(postCreateAccountApi.success(data));
+    yield put(createUserAccountApi.success(data));
   } catch (err) {
-    yield put(postCreateAccountApi.failure(err));
+    yield put(createUserAccountApi.failure(err));
   }
 }
 
 function* watchPostCreateAccountSaga() {
   while (true) {
-    const { email, name, password, profile } = yield take(types.POST_CREATE_ACCOUNT[types.REQUEST]);
+    const { email, name, password, profile } = yield take(types.CREATE_USER_ACCOUNT[types.REQUEST]);
     yield fork(postCreateAccountSaga, { email, name, password, profile });
   }
 }

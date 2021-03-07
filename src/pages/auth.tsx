@@ -32,7 +32,7 @@ export default ({onChange, onSubmit, onClick, userEmail, password, checkPassword
         <button type='submit'>login</button>
       </form>
       <button onClick={(e)=>onClick(e)} name='modal'>Create Account</button>
-      <div>{errorMessage}</div>
+      <div>msg: {errorMessage}</div>
     </>
   )
 }

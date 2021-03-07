@@ -4,20 +4,20 @@ import { withRouter } from 'react-router-dom'; //왜리액트라우터 에서 �
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import {
-  postCreateAccountApi,
-  postLoginAccountApi
+  createUserAccountApi,
+  loginUserAccountApi
 } from '../store/actions/user';
 import { CreateAccountUseData, LoginUserUseData } from '../api/user';
 import { Auth } from '../pages/index';
 
 interface AuthContainerProps {
-  postCreateAccountApi: ({ email, name, password, profile }: CreateAccountUseData) => object;
-  postLoginAccountApi: ({ email, password }: LoginUserUseData) => object;
+  createUserAccountApi: ({ email, name, password, profile }: CreateAccountUseData) => object;
+  loginUserAccountApi: ({ email, password }: LoginUserUseData) => object;
 }
 
 const AuthContainer: React.FC<AuthContainerProps> = ({
-  postCreateAccountApi,
-  postLoginAccountApi
+  createUserAccountApi,
+  loginUserAccountApi
 }) => {
   const [ userEmail, setUserEmail ] = useState('');
   const [ userName, setUserName ] = useState('');
@@ -58,7 +58,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
           setErrorMessage('Please enter your password')
           break;
         }
-        postLoginAccountApi({
+        loginUserAccountApi({
           email: userEmail,
           password: password
         })
@@ -85,7 +85,7 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
           setErrorMessage('password is different from password checked')
           break;
         }
-        postCreateAccountApi({
+        createUserAccountApi({
           email: userEmail,
           name: userName,
           password: password,
@@ -121,11 +121,11 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  postCreateAccountApi: ({ email, name, password, profile}: CreateAccountUseData) => {
-    return dispatch(postCreateAccountApi.request({email, name, password, profile}));
+  createUserAccountApi: ({ email, name, password, profile}: CreateAccountUseData) => {
+    return dispatch(createUserAccountApi.request({email, name, password, profile}));
   },
-  postLoginAccountApi: ({email, password}: LoginUserUseData) => {
-    return dispatch(postLoginAccountApi.request({email, password}));
+  loginUserAccountApi: ({email, password}: LoginUserUseData) => {
+    return dispatch(loginUserAccountApi.request({email, password}));
   }
 });
 
