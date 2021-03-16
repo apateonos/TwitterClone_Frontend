@@ -1,11 +1,40 @@
-import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, CHANGE_USER_NAME, CHANGE_USER_PASSWORD, DELETE_USER_ACCOUNT } from './types';
-import { CreateAccountUseData, LoginUserUseData, ChangeUserNameUseData, DeleteUserAccountUseData } from '../../api/user';
+import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, CHANGE_USER_NAME, CHANGE_USER_PASSWORD, DELETE_USER_ACCOUNT, CHECK_USER_ACCOUNT, GET_USER_INFO } from './types';
+import { CreateUserAccountUseData, LoginUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData, GetUserInfoUseData } from '../../api/user';
+
+export const getUserInfoApi = {
+  request: ({ userUniqueName }: GetUserInfoUseData) => ({
+    type: GET_USER_INFO['REQUEST'],
+    userUniqueName
+  }),
+  success: (res: any) => ({
+    type: GET_USER_INFO['SUCCESS'],
+    payload: res
+  }),
+  failure: (err: Error) => ({
+    type: GET_USER_INFO['FAILURE'],
+    payload: err
+  })
+}
+
+export const checkUserAccountApi = {
+  request: () => ({
+    type: CHECK_USER_ACCOUNT['REQUEST'],
+  }),
+  success: (res: any) => ({
+    type: CHECK_USER_ACCOUNT['SUCCESS'],
+    payload: res,
+  }),
+  failure: (err: Error) => ({
+    type: CHECK_USER_ACCOUNT['FAILURE'],
+    payload: err,
+  }),
+};
 
 export const createUserAccountApi = {
-  request: ({ email, name, password, profile }: CreateAccountUseData) => ({
+  request: ({ userUniqueName, userName, password, profile }: CreateUserAccountUseData) => ({
     type: CREATE_USER_ACCOUNT['REQUEST'],
-    email,
-    name,
+    userUniqueName,
+    userName,
     password,
     profile
   }),
@@ -15,14 +44,14 @@ export const createUserAccountApi = {
   }),
   failure: (err: Error) => ({
     type: CREATE_USER_ACCOUNT['FAILURE'],
-    err: err.message,
+    payload: err,
   }),
 };
 
 export const loginUserAccountApi = {
-  request: ({ email, password }: LoginUserUseData) => ({
+  request: ({ userUniqueName, password }: LoginUserAccountUseData) => ({
     type: LOGIN_USER_ACCOUNT['REQUEST'],
-    email,
+    userUniqueName,
     password
   }),
   success: (res: any) => ({
@@ -31,14 +60,14 @@ export const loginUserAccountApi = {
   }),
   failure: (err: Error) => ({
     type: LOGIN_USER_ACCOUNT['FAILURE'],
-    err: err.message,
+    payload: err,
   }), 
 };
 
 export const changeUserNameApi = {
-  request: ({ name }: ChangeUserNameUseData) => ({
+  request: ({ userName }: ChangeUserNameUseData) => ({
     type: CHANGE_USER_NAME['REQUEST'],
-    name
+    userName
   }),
   success: (res: any) => ({
     type: CHANGE_USER_NAME['SUCCESS'],
@@ -46,7 +75,7 @@ export const changeUserNameApi = {
   }),
   failure: (err: Error) => ({
     type: CHANGE_USER_NAME['FAILURE'],
-    err: err.message,
+    payload: err,
   }),
 }; 
 
@@ -61,6 +90,6 @@ export const deleteUserAccountApi = {
   }),
   failure: (err: Error) => ({
     type: DELETE_USER_ACCOUNT['FAILURE'],
-    err: err.message,
+    payload: err,
   }),
 }; 

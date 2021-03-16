@@ -1,44 +1,51 @@
 import axios, { AxiosPromise } from 'axios';
 import { get, post, put, del } from './service';
 
-export interface CreateAccountUseData {
-  email: string,
+export interface GetUserInfoUseData {
+  userUniqueName: string;
+}
+export const getUserInfo = ({ userUniqueName }: GetUserInfoUseData) => {
+  return get('/user/get', { userUniqueName })
+}
+
+export const checkUserAccount = () => {
+  return post('/user/check', {});
+}
+
+export interface CreateUserAccountUseData {
+  userUniqueName: string,
   password: string,
   profile: string,
-  name: string
+  userName: string
 }
-
 export const createUserAccount = ({
-  email, name, password, profile
-}: CreateAccountUseData): AxiosPromise => {
-  return post('/sign-up', {email, name, password, profile});
+  userUniqueName, userName, password, profile
+}: CreateUserAccountUseData): AxiosPromise => {
+  return post('/user/sign-up', {userUniqueName, userName, password, profile});
 };
 
-export interface LoginUserUseData {
-  email: string,
+export interface LoginUserAccountUseData {
+  userUniqueName: string,
   password: string
 }
-
 export const loginUserAccount = ({
-  email, password
-}: LoginUserUseData): AxiosPromise => {
-  return post('/login', {email, password});
+  userUniqueName, password
+}: LoginUserAccountUseData): AxiosPromise => {
+  return post('/user/login', { userUniqueName, password });
 };
 
 export interface ChangeUserNameUseData {
-  name: string
+  userName: string
 }
-
 export const changeUserName = ({ 
-  name 
+  userName 
 }: ChangeUserNameUseData): AxiosPromise => {
-  return put('/user/name', { name });
+  return put('/user/change/name', { userName });
 }
 
 export interface DeleteUserAccountUseData {
   password: string,
 }
-
 export const deleteUserAccount =({
   password
 }: DeleteUserAccountUseData): AxiosPromise => {

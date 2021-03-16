@@ -1,8 +1,9 @@
 import { GET_USER_TWEET_LIST, POST_USER_TWEET, UPDATE_USER_TWEET, DELETE_USER_TWEET } from '../actions/types';
 
 const initialState = {
-  tweets: [],
-  payload: []
+  res: [],
+  msg: '',
+  error: ''
 };
 
 export default function (state = initialState, { type, payload }: any) {
@@ -15,14 +16,14 @@ export default function (state = initialState, { type, payload }: any) {
     case GET_USER_TWEET_LIST['SUCCESS']:
       return { 
         ...state,
-        tweets: payload,
-      }
+        res: payload.res,
+      };
     case POST_USER_TWEET['SUCCESS']:
     case UPDATE_USER_TWEET['SUCCESS']:
     case DELETE_USER_TWEET['SUCCESS']:
       return {
         ...state,
-        payload,
+        msg: payload.msg,
       };
     case GET_USER_TWEET_LIST['FAILURE']:
     case POST_USER_TWEET['FAILURE']:
@@ -30,7 +31,7 @@ export default function (state = initialState, { type, payload }: any) {
     case DELETE_USER_TWEET['FAILURE']:
       return {
         ...state,
-        error: payload,
+        error: payload.err,
       };
     default:
       return { ...state };

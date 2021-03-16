@@ -1,37 +1,20 @@
 import React from 'react';
-
+import { CreateAccountDock, LoginDock, Modal } from '../components/index';
+import { CreateAccountDockComponentProps } from '../components/auth/createAccountDock';
+import { LoginDockComponentProps } from '../components/auth/loginDock';
 interface props {
-  onChange: Function,
-  onSubmit: Function,
-  onClick: Function,
-  userEmail: string,
-  password: string,
-  checkPassword: string,
-  userName: string,
-  profile: string,
+  onClick: Function;
   errorMessage: string,
   isModal: boolean,
+  createAccountDockProps: CreateAccountDockComponentProps;
+  loginDockProps: LoginDockComponentProps;
 }
 
-export default ({onChange, onSubmit, onClick, userEmail, password, checkPassword, userName, profile, errorMessage, isModal}: props) => {
+export default ({onClick, createAccountDockProps, loginDockProps, errorMessage, isModal}: props) => {
   return (
     <>
-      {isModal && <form onSubmit={(e)=>onSubmit(e)}  name='createAccount'>
-        <div> Create Account Modal </div>
-        <input onChange={(e)=>onChange(e)} name='userEmail' value={userEmail} placeholder='email...'/>
-        <input onChange={(e)=>onChange(e)} name='userName' value={userName} placeholder='name...'/>
-        <input onChange={(e)=>onChange(e)} name='password' value={password} placeholder='password...'/>
-        <input onChange={(e)=>onChange(e)} name='checkPassword' value={checkPassword} placeholder='check password again...'/>
-        <input onChange={(e)=>onChange(e)} name='profile' value={profile} placeholder='profile...'/>
-        <button type='submit'>Create Account</button>
-      </form>}
-      <div> Login Page </div>
-      <form onSubmit={(e)=>onSubmit(e)} name='loginAccount'>
-        <input onChange={(e)=>onChange(e)} name='userEmail' value={userEmail} placeholder='email...'/>
-        <input onChange={(e)=>onChange(e)} name='password' value={password} placeholder='password...'/>
-        <button type='submit'>login</button>
-      </form>
-      <button onClick={(e)=>onClick(e)} name='modal'>Create Account</button>
+      {isModal && <Modal onClick={onClick} component={<CreateAccountDock props={createAccountDockProps}/>}/>}
+      <LoginDock props={loginDockProps}/>
       <div>msg: {errorMessage}</div>
     </>
   )

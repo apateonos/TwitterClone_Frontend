@@ -1,7 +1,8 @@
 import React from 'react';
+import styled from 'styled-components';
 
 export default () => {
   return (
-    <button></button>
+    <div></div>
   )
 }

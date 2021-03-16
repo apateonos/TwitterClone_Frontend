@@ -4,9 +4,9 @@ import * as types from '../actions/types';
 import { getUserTweetListApi, postUserTweetApi, updateUserTweetApi, deleteUserTweetApi } from '../actions/tweet';
 import { GetUserTweetListUseData, PostUserTweetUseData, UpdateUserTweetUseData, DeleteUserTweetUseData } from '../../api/tweet';
 
-function* getUserTweetListApiSaga({ user_id }: GetUserTweetListUseData) {
+function* getUserTweetListApiSaga({ userUniqueName }: GetUserTweetListUseData) {
   try {
-    const data = yield call(Api.getUserTweetList, { user_id });
+    const data = yield call(Api.getUserTweetList, { userUniqueName });
     if (yield data.code === 'errors') throw Error;
     yield put(getUserTweetListApi.success(data));
   } catch (err) {
@@ -16,14 +16,14 @@ function* getUserTweetListApiSaga({ user_id }: GetUserTweetListUseData) {
 
 function* watchGetUserTweetListApiSaga() {
   while (true) {
-    const { user_id } = yield take(types.GET_USER_TWEET_LIST[types.REQUEST]);
-    yield fork(getUserTweetListApiSaga, { user_id });
+    const { userUniqueName } = yield take(types.GET_USER_TWEET_LIST[types.REQUEST]);
+    yield fork(getUserTweetListApiSaga, { userUniqueName });
   } 
 }
 
-function* postUserTweetApiSaga({ tweet }: PostUserTweetUseData) {
+function* postUserTweetApiSaga({ tweetContent, tweetImage, replyTweetNumber, retweetNumber }: PostUserTweetUseData) {
   try {
-    const data = yield call(Api.postUserTweet, { tweet });
+    const data = yield call(Api.postUserTweet, { tweetContent, tweetImage, replyTweetNumber, retweetNumber });
     if (yield data.code === 'errors') throw Error;
     yield put(postUserTweetApi.success(data));
   } catch (err) {
@@ -33,14 +33,14 @@ function* postUserTweetApiSaga({ tweet }: PostUserTweetUseData) {
 
 function* watchPostUserTweetApiSaga() {
   while (true) {
-    const { tweet } = yield take(types.POST_USER_TWEET[types.REQUEST]);
-    yield fork(postUserTweetApiSaga, { tweet });
+    const { tweetContent, tweetImage, replyTweetNumber, retweetNumber } = yield take(types.POST_USER_TWEET[types.REQUEST]);
+    yield fork(postUserTweetApiSaga, { tweetContent, tweetImage, replyTweetNumber, retweetNumber });
   }
 }
 
-function* updateUserTweetApiSaga({ tweet_id, tweet }: UpdateUserTweetUseData){
+function* updateUserTweetApiSaga({ tweetNumber, tweetContent, tweetImage }: UpdateUserTweetUseData){
   try {
-    const data = yield call(Api.updateUserTweet, { tweet_id, tweet });
+    const data = yield call(Api.updateUserTweet, { tweetNumber, tweetContent, tweetImage });
     if (yield data.code === 'error') throw Error;
     yield put(updateUserTweetApi.success(data));
   } catch (err) {
@@ -50,14 +50,14 @@ function* updateUserTweetApiSaga({ tweet_id, tweet }: UpdateUserTweetUseData){
 
 function* watchUpdateUserTweetApiSaga() {
   while (true) {
-    const { tweet_id, tweet } = yield take(types.UPDATE_USER_TWEET[types.REQUEST]);
-    yield fork(updateUserTweetApiSaga, { tweet_id, tweet });
+    const { tweetNumber, tweetContent, tweetImage } = yield take(types.UPDATE_USER_TWEET[types.REQUEST]);
+    yield fork(updateUserTweetApiSaga, { tweetNumber, tweetContent, tweetImage });
   }
 }
 
-function* deleteUserTweetApiSaga({ tweet_id }: DeleteUserTweetUseData){
+function* deleteUserTweetApiSaga({ tweetNumber }: DeleteUserTweetUseData){
   try {
-    const data = yield call(Api.deleteUserTweet, { tweet_id });
+    const data = yield call(Api.deleteUserTweet, { tweetNumber });
     if (yield data.code === 'error') throw Error;
     yield put(deleteUserTweetApi.success(data));
   } catch (err) {
@@ -67,8 +67,8 @@ function* deleteUserTweetApiSaga({ tweet_id }: DeleteUserTweetUseData){
 
 function* watchDeleteUserTweetApiSaga() {
   while (true) {
-    const { tweet_id } = yield take(types.DELETE_USER_TWEET[types.REQUEST]);
-    yield fork(deleteUserTweetApiSaga, { tweet_id });
+    const { tweetNumber } = yield take(types.DELETE_USER_TWEET[types.REQUEST]);
+    yield fork(deleteUserTweetApiSaga, { tweetNumber });
   }
 }
 

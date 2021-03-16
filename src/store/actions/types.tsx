@@ -17,15 +17,13 @@ export function createRequestTypes(base: string): Indexable {
 //export const GET_PING = createRequestTypes('GET_PING');
 
 //user
-export const POST_CREATE_ACCOUNT = createRequestTypes('POST_CREATE_ACCOUNT');
-export const POST_LOGIN_ACCOUNT = createRequestTypes('POST_LOGIN_ACCOUNT');
-
-//user
+export const CHECK_USER_ACCOUNT = createRequestTypes('CHECK_USER_ACCOUNT');
 export const LOGIN_USER_ACCOUNT = createRequestTypes('LOGIN_USER_ACCOUNT');
 export const CREATE_USER_ACCOUNT = createRequestTypes('CREATE_USER_ACCOUNT');
 export const CHANGE_USER_NAME = createRequestTypes('CHANGE_USER_NAME');
 export const CHANGE_USER_PASSWORD = createRequestTypes('CHANGE_USER_PASSWORD');
 export const DELETE_USER_ACCOUNT = createRequestTypes('DELETE_USER_ACCOUNT');
+export const GET_USER_INFO = createRequestTypes('GET_USER_INFO');
 
 //follow
 export const GET_FOLLOW_USER_LIST = createRequestTypes('GET_USER_FOLLOW_LIST');
@@ -41,13 +39,13 @@ export const POST_USER_TWEET = createRequestTypes('POST_USER_TWEET');
 export const UPDATE_USER_TWEET = createRequestTypes('UPDATE_USER_TWEET');
 export const DELETE_USER_TWEET = createRequestTypes('DELETE_USER_TWEET');
 
+//tweet
+export const GET_TWEET_DETAIL = createRequestTypes('GET_TWEET_DETAIL');
+
 //retweet
 export const POST_RETWEET_THIS_TWEET = createRequestTypes('POST_RETWEET_THIS_TWEET');
 export const DELETE_RETWEET_THIS_TWEET = createRequestTypes('DELETE_RETWEET_THIS_TWEET');
 
 //reply
 export const GET_THIS_TWEET_REPLY_LIST  = createRequestTypes('GET_THIS_TWEET_REPLY_LIST');
-export const POST_THIS_TWEET_REPLY  = createRequestTypes('POST_THIS_TWEET_REPLY');
-export const UPDATE_THIS_TWEET_REPLY = createRequestTypes('UPDATE_THIS_TWEET_REPLY');
-export const DELETE_THIS_TWEET_REPLY = createRequestTypes('DELETE_THIS_TWEET_REPLY');
-
+export const GET_PRECEDENCE_REPLYED_TWEET_LIST = createRequestTypes('GET_PRECEDENCE_REPLYED_TWEET_LIST');

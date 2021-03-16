@@ -2,24 +2,24 @@ import axios, { AxiosPromise } from 'axios';
 import { get, post, del } from './service';
 
 export interface FollowUserUseData {
-  user_id: number
+  userNumber: number
 }
 
 export interface GetFollowUserListUseData {
-  id: number
+  userNumber: number
 }
-export const getFollowUserList = ({ id }: GetFollowUserListUseData): AxiosPromise => {
-  return get('/follow/user', { id })
+export const getFollowUserList = ({ userNumber }: GetFollowUserListUseData): AxiosPromise => {
+  return get('/follow/user', { userNumber })
 }
 
 export const postFollowUser = ({
-  user_id
+  userNumber
 }: FollowUserUseData): AxiosPromise => {
-  return post('/follow/subscribe', { user_id });
+  return post('/follow/post', { userNumber });
 };
 
 export const deleteFollowUser = ({
-  user_id
+  userNumber
 }: FollowUserUseData): AxiosPromise => {
-  return del('/unfollow', { user_id });
+  return del('/unfollow/del', { userNumber });
 };

@@ -1,9 +1,10 @@
 import { GET_USER_TIMELINE } from '../actions/types';
 
 const initialState = {
-  timeline: [],
-  payload: []
-}
+  res: {},
+  msg: '',
+  error: ''
+};
 
 export default function (state=initialState, { type, payload }: any) {
   switch (type) {
@@ -12,12 +13,12 @@ export default function (state=initialState, { type, payload }: any) {
     case GET_USER_TIMELINE['SUCCESS']:
       return {
         ...state,
-        timeline: payload
+        res: payload.res,
       }
     case GET_USER_TIMELINE['FAILURE']:
       return {
         ...state,
-        error: payload
+        error: payload.err
       }
     default:
       return { ...state };

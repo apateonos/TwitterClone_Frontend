@@ -1,9 +1,10 @@
 import { GET_FOLLOW_USER_LIST, POST_FOLLOW_USER, DELETE_FOLLOW_USER } from '../actions/types';
 
 const initialState = {
-  followers: [],
-  payload: []
-}
+  res: [],
+  msg: '',
+  error: ''
+};
 
 export default function (state = initialState, { type, payload }: any) {
   switch (type) {
@@ -14,20 +15,20 @@ export default function (state = initialState, { type, payload }: any) {
     case GET_FOLLOW_USER_LIST['SUCCESS']:
       return { 
         ...state,
-        followers: payload,
+        res: payload.res,
       }
     case POST_FOLLOW_USER['SUCCESS']:
     case DELETE_FOLLOW_USER['SUCCESS']:
       return {
         ...state,
-        payload,
+        msg: payload.msg,
       };
     case GET_FOLLOW_USER_LIST['FAILURE']:
     case POST_FOLLOW_USER['FAILURE']:
     case DELETE_FOLLOW_USER['FAILURE']:
       return {
         ...state,
-        error: payload,
+        error: payload.err,
       };
     default:
       return { ...state };

@@ -8,3 +8,4 @@ export { default as Footer } from './base/footer';
 export { default as Auth } from './auth';
 export { default as Home } from './home';
 export { default as Profile } from './profile';
+export { default as Tweet } from './tweet';

@@ -1,18 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Tweet } from '../components/index';
+import { TweetDock, TweetCard } from '../components/index';
+import { TweetCardUseData } from '../components/base/tweet/tweetCard';
+import { TweetDockUseData } from '../components/home/tweetDock';
 
 interface props {
-  onChange: Function,
-  onClick: Function,
-  tweet: string,
-  timeLine: Array<any>
+  onClick: Function;
+  tweetDockProps: TweetDockUseData;
+  timeline: Array<TweetCardUseData>;
+  isModal: boolean;
 }
 
-export default ({onChange, onClick, tweet, timeLine}: props ) => {
+export default ({isModal, tweetDockProps, onClick, timeline}: props) => {
   return (
     <>
-      <div>Home Page</div>
+      <TweetDock props={tweetDockProps} />
+      {isModal && <TweetDock props={tweetDockProps} />}
+      {timeline.length > 0 ? timeline.map((el, key)=><TweetCard onClick={onClick} props={el} idx={key} key={key}/>) : ""}
     </>
   )
 }

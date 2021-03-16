@@ -5,16 +5,13 @@ interface props {
   value: string;
   onChange: Function;
   placeholder: string;
-  height: number;
+  height?: number;
   name: string;
 }
 
-const init = {
-  height: 30,
-};
 
-export default({ onChange, value, placeholder, height=init.height, name }: props ) => {
-  const [ currentHeight, setCurrentHeight ] = useState(0);
+export default ({ onChange, value, placeholder, name, height }: props ) => {
+  const [ currentHeight, setCurrentHeight ] = useState(21);
 
   const onChangeHandler = async (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange(event);
@@ -23,7 +20,7 @@ export default({ onChange, value, placeholder, height=init.height, name }: props
   }
 
   useEffect(()=>{
-    setCurrentHeight(height);
+    if (height) setCurrentHeight(height);
   }, [])
 
   return (
@@ -42,8 +39,6 @@ interface styledProps {
 }
 
 const TextAreaInput = styled.textarea<styledProps>`
-  height: ${props=>props.height}px;
   width: 100%;
-  overflow: hidden;
-  resize:none;
+  height: ${props=>props.height}px;
 `;

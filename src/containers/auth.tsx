@@ -8,27 +8,37 @@ import {
   loginUserAccountApi
 } from '../store/actions/user';
 import { State } from "../store/reducers/index";
-import { CreateAccountUseData, LoginUserUseData } from '../api/user';
+import { CreateUserAccountUseData, LoginUserAccountUseData } from '../api/user';
 import { Auth } from '../pages/index';
 
 interface AuthContainerProps {
-  createUserAccountApi: ({ email, name, password, profile }: CreateAccountUseData) => object;
-  loginUserAccountApi: ({ email, password }: LoginUserUseData) => object;
-  res: string;
+  createUserAccountApi: ({ userUniqueName, userName, password, profile }: CreateUserAccountUseData) => object;
+  loginUserAccountApi: ({ userUniqueName, password }: LoginUserAccountUseData) => object;
   error: string;
+}
+
+interface VFLoginUseData {
+  userUniqueName: string;
+  password: string;
+}
+
+interface VerificationInputUseData {
+  userName?: string;
+  userUniqueName: string;
+  password: string;
+  comfirmPassword?: string;
 }
 
 const AuthContainer: React.FC<AuthContainerProps> = ({
   createUserAccountApi,
   loginUserAccountApi,
-  res,
   error,
 }) => {
-  const [ userEmail, setUserEmail ] = useState('');
+  const [ userUniqueName, setUserUniqueName ] = useState('');
   const [ userName, setUserName ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ profile, setProfile ] = useState('');
-  const [ checkPassword, setCheckPassword ] = useState('');
+  const [ comfirmPassword, setComfirmPassword ] = useState('');
   const [ errorMessage, setErrorMessage ] = useState('');
   const [ isModal, setIsModal ] = useState(false);
   
@@ -36,13 +46,13 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
     const { name, value } = event.target;
 
     switch (name) {
-      case 'userEmail': setUserEmail(value) 
+      case 'userUniqueName': setUserUniqueName(value) 
         break;
       case 'userName': setUserName(value) 
         break;
       case 'password': setPassword(value) 
         break;
-      case 'checkPassword': setCheckPassword(value) 
+      case 'comfirmPassword': setComfirmPassword(value) 
         break;
       case 'profile': setProfile(value) 
         break;
@@ -52,50 +62,28 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { name } = event.currentTarget;
+    let err: false|string = false;
 
-    switch (name) {
+    switch ( name ) {
       case 'loginAccount':
-        if(userEmail === '') {
-          setErrorMessage('Please enter your email')
+        err = verificationInputs({ userUniqueName, password });
+        if (err) {
+          setErrorMessage(err);
           break;
         }
-        if(password === '') {
-          setErrorMessage('Please enter your password')
-          break;
-        }
-        loginUserAccountApi({
-          email: userEmail,
-          password: password
-        })
+        loginUserAccountApi({ userUniqueName, password })
         break;
 
       case 'createAccount':
-        if(userEmail === '') {
-          setErrorMessage('Please enter your email')
+        err = verificationInputs({ userUniqueName, userName, password, comfirmPassword });
+        if (err) {
+          setErrorMessage(err);
           break;
         }
-        if(userName === '') {
-          setErrorMessage('Please enter your name')
-          break;
-        }
-        if(password === '') {
-          setErrorMessage('Please enter your password')
-          break;
-        }
-        if(checkPassword === '') {
-          setErrorMessage('Please enter your password checked')
-          break;
-        }
-        if(checkPassword !== password) {
-          setErrorMessage('password is different from password checked')
-          break;
-        }
-        createUserAccountApi({
-          email: userEmail,
-          name: userName,
-          password: password,
-          profile: profile
-        })
+        createUserAccountApi({ userUniqueName, userName, password, profile })
+        break;
+
+      default:
         break;
     }
   }
@@ -103,41 +91,61 @@ const AuthContainer: React.FC<AuthContainerProps> = ({
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = event.currentTarget;
 
-    switch (name) {
-      case 'modal': setIsModal(prev => !prev);
+    switch ( name ) {
+      case 'modal': setIsModal( prev => !prev );
         break;
     }
   }
 
   return (
+    <>
     <Auth
-      onChange={onChangeHandler}
-      onSubmit={onSubmitHandler}
       onClick={onClickHandler}
-      userEmail={userEmail}
-      userName={userName}
-      profile={profile}
-      password={password}
-      checkPassword={checkPassword}
       errorMessage={errorMessage}
       isModal={isModal}
+      loginDockProps={{
+        onChange:onChangeHandler,
+        onSubmit:onSubmitHandler,
+        onClick:onClickHandler,
+        userUniqueName,
+        password,
+      }}
+      createAccountDockProps={{
+        onChange:onChangeHandler,
+        onSubmit:onSubmitHandler,
+        userUniqueName,
+        userName,
+        profile,
+        password,
+        comfirmPassword
+      }}
     />
+    </>
   )
 }
 
 const mapStateToProps = (rootState: State) => ({
-  error: rootState.userReducer.error,
-  res: rootState.userReducer.res
+  error: rootState.userReducer.error
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  createUserAccountApi: ({ email, name, password, profile}: CreateAccountUseData) => {
-    return dispatch(createUserAccountApi.request({email, name, password, profile}));
+  createUserAccountApi: ({ userUniqueName, userName, password, profile}: CreateUserAccountUseData) => {
+    return dispatch(createUserAccountApi.request({ userUniqueName, userName, password, profile}));
   },
-  loginUserAccountApi: ({email, password}: LoginUserUseData) => {
-    return dispatch(loginUserAccountApi.request({email, password}));
+  loginUserAccountApi: ({ userUniqueName, password}: LoginUserAccountUseData) => {
+    return dispatch(loginUserAccountApi.request({ userUniqueName, password}));
   }
 });
+
+const verificationInputs = ({ userUniqueName, userName, password, comfirmPassword }:VerificationInputUseData ) => {
+  if ( userUniqueName === '' ) return 'enter your ID or Email...';
+  if ( userName !== undefined && userName === '' ) return 'enter your DisplayName...';
+  if ( password === '' ) return 'enter your password...';
+  if ( comfirmPassword !== undefined && comfirmPassword === '' ) return 'enter your comfirm password...';
+  if ( comfirmPassword !== undefined && comfirmPassword !== password ) return "it's different password between comfirm password...";
+
+  return false;
+};
 
 export default withRouter(
   compose(connect(mapStateToProps, mapDispatchToProps))(AuthContainer)

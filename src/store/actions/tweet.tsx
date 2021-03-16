@@ -1,14 +1,14 @@
-import { GET_USER_TWEET_LIST, POST_USER_TWEET, UPDATE_USER_TWEET, DELETE_USER_TWEET  } from './types';
+import { GET_USER_TWEET_LIST, POST_USER_TWEET, UPDATE_USER_TWEET, DELETE_USER_TWEET } from './types';
 import { GetUserTweetListUseData, PostUserTweetUseData, UpdateUserTweetUseData, DeleteUserTweetUseData } from '../../api/tweet';
 
 export const getUserTweetListApi = {
-  request: ({ user_id }: GetUserTweetListUseData) => ({
+  request: ({ userUniqueName }: GetUserTweetListUseData) => ({
     type: GET_USER_TWEET_LIST['REQUEST'],
-    user_id
+    userUniqueName
   }),
   success: (res: any) => ({
     type: GET_USER_TWEET_LIST['SUCCESS'],
-    tweetList: res,
+    payload: res,
   }),
   failure: (err: Error) => ({
     type: GET_USER_TWEET_LIST['FAILURE'],
@@ -17,9 +17,12 @@ export const getUserTweetListApi = {
 };
 
 export const postUserTweetApi = {
-  request: ({ tweet }: PostUserTweetUseData) => ({
+  request: ({ tweetContent, tweetImage, replyTweetNumber, retweetNumber }: PostUserTweetUseData) => ({
     type: POST_USER_TWEET['REQUEST'],
-    tweet
+    tweetContent,
+    tweetImage,
+    replyTweetNumber,
+    retweetNumber
   }),
   success: (res: any) => ({
     type: POST_USER_TWEET['SUCCESS'],
@@ -32,10 +35,11 @@ export const postUserTweetApi = {
 };
 
 export const updateUserTweetApi = {
-  request: ({ tweet_id, tweet }: UpdateUserTweetUseData) => ({
+  request: ({ tweetNumber, tweetContent, tweetImage }: UpdateUserTweetUseData) => ({
     type: UPDATE_USER_TWEET['REQUEST'],
-    tweet_id,
-    tweet
+    tweetNumber,
+    tweetContent,
+    tweetImage
   }),
   success: (res: any) => ({
     type: UPDATE_USER_TWEET['SUCCESS'],
@@ -48,9 +52,9 @@ export const updateUserTweetApi = {
 };
 
 export const deleteUserTweetApi = {
-  request: ({ tweet_id }: DeleteUserTweetUseData) => ({
+  request: ({ tweetNumber }: DeleteUserTweetUseData) => ({
     type: DELETE_USER_TWEET['REQUEST'],
-    tweet_id
+    tweetNumber
   }),
   success: (res: any) => ({
     type: DELETE_USER_TWEET['SUCCESS'],

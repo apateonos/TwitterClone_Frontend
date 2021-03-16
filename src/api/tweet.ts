@@ -2,38 +2,43 @@ import axios, { AxiosPromise } from 'axios';
 import { get, post, put, del } from './service';
 
 export interface GetUserTweetListUseData {
-  user_id: number,
+  userUniqueName: string;
 }
 export const getUserTweetList = ({
-  user_id
+  userUniqueName
 }: GetUserTweetListUseData): AxiosPromise => {
-  return get('/tweet/users', { user_id })
+  console.log(userUniqueName);
+  return get('/tweet/user', { userUniqueName })
 }
 
 export interface PostUserTweetUseData {
-  tweet: string,
+  tweetContent: string;
+  tweetImage: string;
+  replyTweetNumber: number|null;
+  retweetNumber: number|null;
 }
 export const postUserTweet = ({
-  tweet
+  tweetContent, tweetImage, replyTweetNumber, retweetNumber
 }: PostUserTweetUseData): AxiosPromise => {
-  return post('/tweet/post', { tweet });
+  return post('/tweet/post', { tweetContent, tweetImage, replyTweetNumber, retweetNumber });
 };
 
 export interface UpdateUserTweetUseData {
-  tweet_id: number,
-  tweet: string,
+  tweetNumber: number,
+  tweetContent: string,
+  tweetImage: string,
 }
 export const updateUserTweet = ({
-  tweet_id, tweet
+  tweetNumber, tweetContent, tweetImage
 }: UpdateUserTweetUseData): AxiosPromise => {
-  return put('/tweet/update', { tweet_id, tweet });
+  return put('/tweet/update', { tweetNumber, tweetContent, tweetImage });
 };
 
 export interface DeleteUserTweetUseData {
-  tweet_id: number,
+  tweetNumber: number,
 }
 export const deleteUserTweet = ({
-  tweet_id
+  tweetNumber
 }: DeleteUserTweetUseData): AxiosPromise => {
-  return del('/tweet/delete', { tweet_id })
+  return del('/tweet/delete', { tweetNumber })
 }

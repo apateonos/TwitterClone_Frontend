@@ -5,7 +5,8 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, "/dist"),
-    filename: "[id].bundle.[hash].js"
+    filename: "[id].bundle.[hash].js",
+    publicPath: "/"
   },
   module: {
     rules: [

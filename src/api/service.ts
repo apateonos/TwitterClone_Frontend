@@ -1,16 +1,17 @@
 import axios, { AxiosPromise } from "axios";
 
-const baseUrl = "http://127.0.0.1:8888";
-
-const onSuccess = (response: any) => {
-  return response.data;
-};
-
+const baseUrl = "http://127.0.0.1:4000";
+axios.defaults.withCredentials = true;
+/* 
 const AxiosInstance = axios.create({
   baseURL: baseUrl,
   responseType: "json",
   headers: { "content-type": "application/json" },
-});
+}); */
+
+const onSuccess = (response: any) => {
+  return response.data;
+};
 
 const onError = (error: any) => {
   console.error("Request Failed:", error.config);
@@ -26,9 +27,9 @@ const onError = (error: any) => {
 
 export const get = (url: string, params?: any) => {
   return axios
-    .get(baseUrl + url, {
-      params,
-    })
+    .get(baseUrl + url, {params: {
+      ...params
+    }})
     .then(onSuccess)
     .catch(onError);
 };
@@ -36,8 +37,8 @@ export const get = (url: string, params?: any) => {
 export const post = (url: string, params?: any) => {
   return axios
     .post(baseUrl + url, {
-      params,
-    })
+      ...params
+    },)
     .then(onSuccess)
     .catch(onError);
 };
@@ -45,7 +46,7 @@ export const post = (url: string, params?: any) => {
 export const put = (url: string, params?: any) => {
   return axios
     .put(baseUrl + url, {
-      params,
+      ...params
     })
     .then(onSuccess)
     .catch(onError);
@@ -54,7 +55,7 @@ export const put = (url: string, params?: any) => {
 export const del = (url: string, params?: any) => {
   return axios
     .delete(baseUrl + url, {
-      params,
+      ...params
     })
     .then(onSuccess)
     .catch(onError);

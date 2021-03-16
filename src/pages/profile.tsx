@@ -1,11 +1,19 @@
 import React from 'react';
+import { ProfileDock, TweetCard } from '../components';
+import { TweetCardUseData } from '../components/base/tweet/tweetCard';
+import { ProfileDockUseData } from '../components/profile/profileDock';
 
-export default () => {
+interface props {
+  onClick: Function;
+  userInfo: ProfileDockUseData;
+  tweetList: Array<TweetCardUseData>;
+}
+
+export default ({ onClick, userInfo, tweetList }: props) => {
   return (
     <>
-      <div> profile page </div>
-      <div> user Box </div>
-      <div> Tweet List </div>
+      <ProfileDock props={userInfo} onClick={onClick}/>
+      {tweetList.length > 0 ? tweetList.map((el: TweetCardUseData, key)=><TweetCard onClick={onClick} props={el} idx={key} key={key}/>) : ""}
     </>
   )
 }

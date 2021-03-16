@@ -2,12 +2,13 @@ import { GET_FOLLOW_USER_LIST, POST_FOLLOW_USER, DELETE_FOLLOW_USER } from './ty
 import { FollowUserUseData, GetFollowUserListUseData } from '../../api/follow';
 
 export const getFollowUserListApi = {
-  request: ({ id }: GetFollowUserListUseData) => ({
-    type: GET_FOLLOW_USER_LIST['REQUEST']
+  request: ({ userNumber }: GetFollowUserListUseData) => ({
+    type: GET_FOLLOW_USER_LIST['REQUEST'],
+    userNumber
   }),
   success: (res: any) => ({
     type: GET_FOLLOW_USER_LIST['SUCCESS'],
-    replys: res,
+    payload: res,
   }),
   failure: (err: Error) => ({
     type: GET_FOLLOW_USER_LIST['FAILURE'],
@@ -16,13 +17,13 @@ export const getFollowUserListApi = {
 };
 
 export const postFollowUserApi = {
-  request: ({ user_id }: FollowUserUseData) => ({
+  request: ({ userNumber }: FollowUserUseData) => ({
     type: POST_FOLLOW_USER['REQUEST'],
-    user_id
+    userNumber
   }),
   success: (res: any) => ({
     type: POST_FOLLOW_USER['SUCCESS'],
-    replys: res,
+    payload: res,
   }),
   failure: (err: Error) => ({
     type: POST_FOLLOW_USER['FAILURE'],
@@ -31,13 +32,13 @@ export const postFollowUserApi = {
 };
 
 export const deleteFollowUserApi = {
-  request: ({ user_id }: FollowUserUseData) => ({
+  request: ({ userNumber }: FollowUserUseData) => ({
     type: DELETE_FOLLOW_USER['REQUEST'],
-    user_id
+    userNumber
   }),
   success: (res: any) => ({
     type: DELETE_FOLLOW_USER['SUCCESS'],
-    replys: res,
+    payload: res,
   }),
   failure: (err: Error) => ({
     type: DELETE_FOLLOW_USER['FAILURE'],
