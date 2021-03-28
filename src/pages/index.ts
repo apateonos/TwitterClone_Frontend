@@ -1,6 +1,7 @@
 // base
-export { default as Main } from './base/main';
 export { default as Header } from './base/header';
+export { default as Main } from './base/main';
+export { default as Navigation } from './base/navigation';
 export { default as Aside } from './base/aside';
 export { default as Footer } from './base/footer';
 

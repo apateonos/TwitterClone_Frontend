@@ -1,26 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Home, Auth, Profile, Tweet } from '../containers/index';
+import { Home, Auth, Profile, Tweet, Temp } from '../containers/index';
 
 interface props {
-  login: boolean;
+  isLogin: boolean;
 }
 
-export default ({login}: props) => {
+export default ({ isLogin }: props) => {
   return (
     <Router>
-      {login ? <Switch>
-        <Route exact path = "/" component={Home} />
-        <Route exact path = "/login" component={Auth} />
-        <Route path = "/tweet/:tweetNumber" component={Tweet} />
-        <Route path = "/:userUniqueName"  component={Profile} />
-      </Switch> :
       <Switch>
+        <Route exact path = "/temp" component={Temp} />
+        <Route exact path = "/" component={isLogin ? Home : Auth} />
         <Route exact path = "/login" component={Auth} />
-        <Route exact path = "/" component={Auth} />
         <Route path = "/tweet/:tweetNumber" component={Tweet} />
         <Route path = "/:userUniqueName" component={Profile} />
-      </Switch>}
+      </Switch>
     </Router>
   )
 }
+

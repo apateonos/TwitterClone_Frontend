@@ -1,6 +1,7 @@
 // base
 export { default as App } from './base/app';
 export { default as Header } from './base/header';
+export { default as Navigation } from './base/navigation';
 export { default as Aside } from './base/aside';
 export { default as Footer } from './base/footer';
 
@@ -9,3 +10,4 @@ export { default as Auth } from './auth';
 export { default as Home } from './home';
 export { default as Profile } from './profile';
 export { default as Tweet } from './tweet';
+export { default as Temp } from './temp';

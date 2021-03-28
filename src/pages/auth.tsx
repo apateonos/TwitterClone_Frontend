@@ -1,21 +1,16 @@
 import React from 'react';
-import { CreateAccountDock, LoginDock, Modal } from '../components/index';
-import { CreateAccountDockComponentProps } from '../components/auth/createAccountDock';
-import { LoginDockComponentProps } from '../components/auth/loginDock';
-interface props {
-  onClick: Function;
-  errorMessage: string,
-  isModal: boolean,
-  createAccountDockProps: CreateAccountDockComponentProps;
-  loginDockProps: LoginDockComponentProps;
-}
+import styled from 'styled-components';
+import { CreateAccountDock, LoginAccountDock } from '../components/index';
 
-export default ({onClick, createAccountDockProps, loginDockProps, errorMessage, isModal}: props) => {
+export default () => {
   return (
-    <>
-      {isModal && <Modal onClick={onClick} component={<CreateAccountDock props={createAccountDockProps}/>}/>}
-      <LoginDock props={loginDockProps}/>
-      <div>msg: {errorMessage}</div>
-    </>
+    <Container>
+      <LoginAccountDock/>
+    </Container>
   )
 }
+
+const Container = styled.main`
+  display: flex;
+  justify-content: center;
+`;

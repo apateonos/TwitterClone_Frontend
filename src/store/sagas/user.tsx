@@ -2,50 +2,34 @@ import { all, fork, call, put, take } from 'redux-saga/effects';
 import axios from 'axios';
 import * as Api from '../../api/user';
 import * as types from '../actions/types';
-import { checkUserAccountApi, createUserAccountApi, loginUserAccountApi, changeUserNameApi, deleteUserAccountApi, getUserInfoApi } from '../actions/user';
-import { LoginUserAccountUseData, CreateUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData, GetUserInfoUseData } from '../../api/user';
+import { createUserAccountApi, loginUserAccountApi, changeUserNameApi, deleteUserAccountApi, getUserProfileApi } from '../actions/user';
+import { LoginUserAccountUseData, CreateUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData, GetUserProfileUseData } from '../../api/user';
 
-function* getUserInfoApiSaga({ userUniqueName }:GetUserInfoUseData) {
+function* getUserProfileApiSaga({ userUniqueName }: GetUserProfileUseData) {
   try {
-    const data = yield call(Api.getUserInfo, { userUniqueName });
+    const data = yield call(Api.getUserProfile, { userUniqueName });
     if (yield data.code === 'errors') throw Error;
-    yield put(getUserInfoApi.success(data));
+    yield put(getUserProfileApi.success(data));
   } catch (err) {
-    yield put(getUserInfoApi.failure(err));
+    yield put(getUserProfileApi.failure(err));
   }
 }
 
-function* watchGetUserInfoApiSaga() {
+function* watchGetUserProfileApiSaga() {
   while (true) {
-    const { userUniqueName } = yield take(types.GET_USER_INFO[types.REQUEST]);
-    yield fork(getUserInfoApiSaga, { userUniqueName });
-  }
-}
-
-function* checkUserAccountApiSaga() {
-  try {
-    const data = yield call(Api.checkUserAccount);
-    if (yield data.code === 'errors') throw Error;
-    yield put(checkUserAccountApi.success(data));
-    yield axios.defaults.headers.common['Authorization'] = `Bearer ${data.res.token}`;
-  } catch (err) {
-    yield put(checkUserAccountApi.failure(err));
-  }
-}
-
-function* watchCheckUserAccountApiSaga() {
-  while (true) {
-    yield take(types.CHECK_USER_ACCOUNT[types.REQUEST]);
-    yield fork(checkUserAccountApiSaga);
+    const { userUniqueName } = yield take(types.GET_USER_PROFILE[types.REQUEST]);
+    yield fork(getUserProfileApiSaga, { userUniqueName });
   }
 }
 
 function* loginUserAccountApiSaga({ userUniqueName, password }: LoginUserAccountUseData) {
-  try {
+  try { 
     const data = yield call(Api.loginUserAccount, { userUniqueName, password });
     if (yield data.code === 'errors') throw Error;
     yield put(loginUserAccountApi.success(data));
-    yield axios.defaults.headers.common['Authorization'] = `Bearer ${data.res.token}`;
+    yield axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    yield put({type: 'CLOSE_MODAL'});
+    //yield window.sessionStorage.setIem("refresh", data.refresh); // https 설정이후 쿠키로 변경후 httpOnly 속성부여예정
   } catch (err) {
     yield put(loginUserAccountApi.failure(err));
   }                                                                 
@@ -111,8 +95,7 @@ function* watchDeleteUserAccountApiSaga() {
 
 export default function* () {
   yield all([
-    fork(watchGetUserInfoApiSaga),
-    fork(watchCheckUserAccountApiSaga),
+    fork(watchGetUserProfileApiSaga),
     fork(watchLoginUserAccountApiSaga),
     fork(watchCreateUserAccountApiSaga),
     fork(watchchageUserNameApiSaga),

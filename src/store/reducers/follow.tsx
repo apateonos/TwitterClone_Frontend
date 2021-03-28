@@ -13,16 +13,12 @@ export default function (state = initialState, { type, payload }: any) {
     case DELETE_FOLLOW_USER['REQUEST']:
       return { ...state };
     case GET_FOLLOW_USER_LIST['SUCCESS']:
+    case POST_FOLLOW_USER['SUCCESS']:
+    case DELETE_FOLLOW_USER['SUCCESS']:
       return { 
         ...state,
         res: payload.res,
       }
-    case POST_FOLLOW_USER['SUCCESS']:
-    case DELETE_FOLLOW_USER['SUCCESS']:
-      return {
-        ...state,
-        msg: payload.msg,
-      };
     case GET_FOLLOW_USER_LIST['FAILURE']:
     case POST_FOLLOW_USER['FAILURE']:
     case DELETE_FOLLOW_USER['FAILURE']:

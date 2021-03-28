@@ -2,43 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from "../../store/reducers/index";
-import { checkUserAccountApi } from '../../store/actions/user';
 import Route from '../../routes/route';
 import '../../assets/style/main.scss';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../assets/style/lib/theme';
+import { Modal } from '../../components/index';
 
 interface AppContainerProps {
-  checkUserAccountApi: ()=> object;
-  login: boolean;
+  isLogin: boolean;
+  isModal: boolean;
 }
 
+
 const AppContainer: React.FC<AppContainerProps> = ({
-  checkUserAccountApi,
-  login, 
+  isLogin,
+  isModal,
 }) => {
-
-  useEffect(() => {
-    if( !login ) {
-      //checkUserAccountApi();
-    }
-  }, [])
-
   return (
     <ThemeProvider theme={theme}>
-      <Route login={login} />
+      <Route isLogin={isLogin} />
+      {isModal && <Modal />}
     </ThemeProvider>
   )
 }
 
 const mapStateToProps = (rootState: State) => ({
-  login: rootState.userReducer.login,
+  isLogin: rootState.userReducer.isLogin,
+  isModal: rootState.modalReducer.isModal,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  checkUserAccountApi: () => {
-    return dispatch(checkUserAccountApi.request());
-  }
-});
+const mapDispatchToProps = () => {};
 
 export default compose(connect(mapStateToProps, mapDispatchToProps))(AppContainer);

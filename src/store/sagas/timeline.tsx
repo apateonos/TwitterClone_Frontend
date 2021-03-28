@@ -15,7 +15,7 @@ function* getUserTimelineApiSaga() {
 
 function* watchGetUserTimelineApiSaga() {
   while (true) {
-    const { id } = yield take(types.GET_USER_TIMELINE[types.REQUEST]);
+    yield take(types.GET_USER_TIMELINE[types.REQUEST]);
     yield fork(getUserTimelineApiSaga);
   }
 }

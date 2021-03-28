@@ -1,15 +1,21 @@
 import React from 'react';
-import { Header, Aside, Footer } from '../../containers/index';
+import { Navigation, Aside, Footer } from '../../containers/index';
 import styled from 'styled-components';
+import { Header } from '../../containers/index';
 
 interface props {
   components: React.ReactNode;
+  title: string;
 }
-export default ( { components }: props ) => {
+
+export default ( { components, title }: props ) => {
   return (
     <Container>
-      <Header/>
-      <ComponentBox>{components}</ComponentBox>
+      <Navigation/>
+      <ComponentBox>
+        <Header title={title} />
+        {components}
+      </ComponentBox>
       <Aside/>
       <Footer/>
     </Container>
@@ -25,6 +31,8 @@ const Container = styled.div`
 
 const ComponentBox = styled.div`
   width: 100%;
+  background: #efefef;
+
   @media only screen and ( min-width: 500px ) {
     width: 600px;
     min-height: 100vh;

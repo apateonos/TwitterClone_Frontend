@@ -1,18 +1,17 @@
 import React from 'react';
-import { TweetCard, TweetMain } from '../components/index';
-import { TweetCardUseData } from '../components/base/tweet/tweetCard';
+import { TweetCard, SelectedTweetCard } from '../components/index';
+import { TweetCardUseData } from '../components/base/tweetCard/tweetCard';
 
 interface PropsData {
-  onClick: Function;
-  mainTweet: TweetCardUseData;
+  SelectedTweet: any;
   replyList: Array<TweetCardUseData>;
 }
 
-export default ({ onClick, mainTweet, replyList }: PropsData) => {
+export default ({ SelectedTweet, replyList }: PropsData) => {
   return (
     <>
-      <TweetMain props={mainTweet}/>
-      {replyList ? replyList.map((el: TweetCardUseData, key)=><TweetCard onClick={onClick} props={el} idx={key} key={key}/>) : ""}
-   </>
+      <SelectedTweetCard />
+      {replyList ? replyList.map((el: TweetCardUseData, key)=><TweetCard props={el} key={key}/>) : ""}
+    </>
   )
 }

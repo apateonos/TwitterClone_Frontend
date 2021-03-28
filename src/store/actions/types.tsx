@@ -17,13 +17,13 @@ export function createRequestTypes(base: string): Indexable {
 //export const GET_PING = createRequestTypes('GET_PING');
 
 //user
-export const CHECK_USER_ACCOUNT = createRequestTypes('CHECK_USER_ACCOUNT');
 export const LOGIN_USER_ACCOUNT = createRequestTypes('LOGIN_USER_ACCOUNT');
 export const CREATE_USER_ACCOUNT = createRequestTypes('CREATE_USER_ACCOUNT');
 export const CHANGE_USER_NAME = createRequestTypes('CHANGE_USER_NAME');
-export const CHANGE_USER_PASSWORD = createRequestTypes('CHANGE_USER_PASSWORD');
+//export const CHANGE_USER_PASSWORD = createRequestTypes('CHANGE_USER_PASSWORD');
 export const DELETE_USER_ACCOUNT = createRequestTypes('DELETE_USER_ACCOUNT');
-export const GET_USER_INFO = createRequestTypes('GET_USER_INFO');
+export const GET_USER_PROFILE = createRequestTypes('GET_USER_PROFILE');
+export const GET_USER_TOKEN_FROM_REFRESH = createRequestTypes('GET_USER_TOKEN_FROM_REFRESH');
 
 //follow
 export const GET_FOLLOW_USER_LIST = createRequestTypes('GET_USER_FOLLOW_LIST');

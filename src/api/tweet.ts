@@ -14,8 +14,8 @@ export const getUserTweetList = ({
 export interface PostUserTweetUseData {
   tweetContent: string;
   tweetImage: string;
-  replyTweetNumber: number|null;
-  retweetNumber: number|null;
+  replyTweetNumber?: number|null;
+  retweetNumber?: number|null;
 }
 export const postUserTweet = ({
   tweetContent, tweetImage, replyTweetNumber, retweetNumber

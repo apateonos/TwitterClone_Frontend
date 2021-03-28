@@ -1,15 +1,15 @@
 import axios, { AxiosPromise } from 'axios';
 import { get, post, put, del } from './service';
 
-export interface GetUserInfoUseData {
+export const getUserTokenFromRefresh = () => {
+  return get('/user/refresh');
+} 
+
+export interface GetUserProfileUseData {
   userUniqueName: string;
 }
-export const getUserInfo = ({ userUniqueName }: GetUserInfoUseData) => {
-  return get('/user/get', { userUniqueName })
-}
-
-export const checkUserAccount = () => {
-  return post('/user/check', {});
+export const getUserProfile = ({ userUniqueName }: GetUserProfileUseData) => {
+  return get('/user/profile', { userUniqueName })
 }
 
 export interface CreateUserAccountUseData {

@@ -5,6 +5,7 @@ import tweetReducer from './tweet';
 import timelineReducer from './timeline';
 //import pingReducer from './ping';
 import tweetDetailReducer from './tweetDetail';
+import modalReducer from './modal';
 
 export const rootReducer = combineReducers({
   userReducer,
@@ -12,6 +13,7 @@ export const rootReducer = combineReducers({
   tweetDetailReducer,
   //replyReducer,
   timelineReducer,
+  modalReducer
 });
 
 export type State = ReturnType<typeof rootReducer>;

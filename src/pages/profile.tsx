@@ -1,19 +1,16 @@
 import React from 'react';
-import { ProfileDock, TweetCard } from '../components';
-import { TweetCardUseData } from '../components/base/tweet/tweetCard';
-import { ProfileDockUseData } from '../components/profile/profileDock';
+import { ProfileCard, TweetCard } from '../components';
+import { TweetCardUseData } from '../components/base/tweetCard/tweetCard';
 
-interface props {
-  onClick: Function;
-  userInfo: ProfileDockUseData;
+interface ProfilePageUseData {
   tweetList: Array<TweetCardUseData>;
 }
 
-export default ({ onClick, userInfo, tweetList }: props) => {
+export default ({ tweetList }:  ProfilePageUseData) => {
   return (
     <>
-      <ProfileDock props={userInfo} onClick={onClick}/>
-      {tweetList.length > 0 ? tweetList.map((el: TweetCardUseData, key)=><TweetCard onClick={onClick} props={el} idx={key} key={key}/>) : ""}
+      <ProfileCard />
+      {tweetList.length > 0 ? tweetList.map((el: TweetCardUseData, key)=><TweetCard props={el} key={key}/>) : ""}
     </>
   )
 }

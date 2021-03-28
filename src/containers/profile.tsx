@@ -3,109 +3,58 @@ import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from "../store/reducers/index";
-import { getUserInfoApi } from '../store/actions/user';
-import { GetUserInfoUseData } from '../api/user';
-import { getUserTweetListApi } from '../store/actions/tweet';
+import { GetUserProfileUseData } from '../api/user';
+import { getUserTweetListApi, postUserTweetApi, updateUserTweetApi, deleteUserTweetApi } from '../store/actions/tweet';
 import { GetUserTweetListUseData } from '../api/tweet';
 import { Main, Profile } from '../pages/index';
-import { TweetCardUseData } from '../components/base/tweet/tweetCard';
+import { TweetCardUseData } from '../components/base/tweetCard/tweetCard';
 import { FollowUserUseData } from '../api/follow';
 import { getFollowUserListApi, deleteFollowUserApi, postFollowUserApi } from '../store/actions/follow';
+import { getUserProfileApi } from '../store/actions/user';
+import { PostUserTweetUseData, UpdateUserTweetUseData, DeleteUserTweetUseData, getUserTweetList } from '../api/tweet';
+
 
 interface ProfileProps extends RouteComponentProps<any> {
-  getUserInfoApi: ({ userUniqueName }: GetUserInfoUseData) => object;
+  getUserProfileApi: ({ userUniqueName }: GetUserProfileUseData) => object;
   getUserTweetListApi: ({ userUniqueName }: GetUserTweetListUseData) => object;
-  getUserFollowListApi: ({ userNumber }: FollowUserUseData) => object;
-  postFollowUserApi: ({ userNumber }: FollowUserUseData) => object;
-  deleteFollowUserApi: ({ userNumber }: FollowUserUseData) => object;
-  userInfo: userInfoData;
   tweetList: Array<TweetCardUseData>;
-  isLogin: boolean;
-}
-
-interface userInfoData {
-  userNumber: number,
-  userImage: any, 
-  userName: string, 
-  userUniqueName: string, 
-  profile: string, 
-  userCreatedTime: number, 
-  userFollowerNumber: number, 
-  userFollowingNumber: number,
 }
 
 interface ParamTypes {
   userUniqueName: string;
 }
 
-const ProfileContainer: React.FC<ProfileProps> = ({ 
-  getUserInfoApi, 
+const ProfileContainer: React.FC<ProfileProps> = ({
+  getUserProfileApi, 
   getUserTweetListApi,
-  getUserFollowListApi,
-  postFollowUserApi,
-  deleteFollowUserApi,
-  userInfo, 
-  tweetList,
-  isLogin
+  tweetList
 }) => {
   const { userUniqueName } = useParams<ParamTypes>();
-
+  
   useEffect(() => {
-    getUserInfoApi({ userUniqueName });
+    getUserProfileApi({ userUniqueName });
     getUserTweetListApi({ userUniqueName });
   }, [])
 
-  const onClickHandler = ( event: React.MouseEvent<HTMLButtonElement> ) => {
-    const { name } = event.currentTarget;
-    switch ( name ) {
-      case 'follow':
-        postFollowUserApi({ userNumber: userInfo.userNumber });
-        break;
-
-      case 'unfollow':
-        deleteFollowUserApi({ userNumber: userInfo.userNumber });
-        break;
-
-      default:
-        break;
-    }
-  }
-  
   return (
     <Main components={
-      <Profile
-        onClick={onClickHandler}
-        userInfo={{
-          isLogin,
-          ...userInfo
-        }}
-        tweetList={tweetList}
-      />
-    }/>
+      <Profile tweetList={tweetList}/>
+      }
+      title='Profile'
+    />
   )
 }
 
 const mapStateToProps = (rootState: State) => ({
-  isLogin: rootState.userReducer.login,
-  userInfo: rootState.userReducer.user,
   tweetList: rootState.tweetReducer.res
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getUserInfoApi: ({ userUniqueName }: GetUserInfoUseData) => {
-    return dispatch(getUserInfoApi.request({ userUniqueName }));
+  getUserProfileApi: ({ userUniqueName }: GetUserProfileUseData) => {
+    return dispatch(getUserProfileApi.request({ userUniqueName }));
   },
   getUserTweetListApi: ({ userUniqueName }: GetUserTweetListUseData) => {
     return dispatch(getUserTweetListApi.request({ userUniqueName }));
-  },
-  getFollowUserListApi: ({ userNumber }: FollowUserUseData) => {
-    return dispatch(getFollowUserListApi.request({ userNumber }));
-  },
-  postFollowUserApi: ({ userNumber }: FollowUserUseData) => {
-    return dispatch(postFollowUserApi.request({ userNumber }));
-  },
-  deleteFollowUser: ({ userNumber }: FollowUserUseData) => {
-    return dispatch(deleteFollowUserApi.request({ userNumber }));
   }
 });
 

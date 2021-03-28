@@ -26,6 +26,7 @@ function* postUserTweetApiSaga({ tweetContent, tweetImage, replyTweetNumber, ret
     const data = yield call(Api.postUserTweet, { tweetContent, tweetImage, replyTweetNumber, retweetNumber });
     if (yield data.code === 'errors') throw Error;
     yield put(postUserTweetApi.success(data));
+    yield put({type: 'CLOSE_MODAL'});
   } catch (err) {
     yield put(postUserTweetApi.failure(err));
   }

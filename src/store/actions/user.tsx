@@ -1,34 +1,34 @@
-import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, CHANGE_USER_NAME, CHANGE_USER_PASSWORD, DELETE_USER_ACCOUNT, CHECK_USER_ACCOUNT, GET_USER_INFO } from './types';
-import { CreateUserAccountUseData, LoginUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData, GetUserInfoUseData } from '../../api/user';
+import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, CHANGE_USER_NAME, DELETE_USER_ACCOUNT, GET_USER_PROFILE, GET_USER_TOKEN_FROM_REFRESH } from './types';
+import { CreateUserAccountUseData, LoginUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData, GetUserProfileUseData } from '../../api/user';
 
-export const getUserInfoApi = {
-  request: ({ userUniqueName }: GetUserInfoUseData) => ({
-    type: GET_USER_INFO['REQUEST'],
-    userUniqueName
+export const getUserTokenFromRefreshApi = {
+  request: () => ({
+    type: GET_USER_TOKEN_FROM_REFRESH['REQUEST'],
   }),
   success: (res: any) => ({
-    type: GET_USER_INFO['SUCCESS'],
-    payload: res
+    type: GET_USER_TOKEN_FROM_REFRESH['SUCCESS'],
+    payload: res,
   }),
   failure: (err: Error) => ({
-    type: GET_USER_INFO['FAILURE'],
+    type: GET_USER_TOKEN_FROM_REFRESH['FAILURE'],
     payload: err
   })
 }
 
-export const checkUserAccountApi = {
-  request: () => ({
-    type: CHECK_USER_ACCOUNT['REQUEST'],
+export const getUserProfileApi = {
+  request: ({ userUniqueName }: GetUserProfileUseData) => ({
+    type: GET_USER_PROFILE['REQUEST'],
+    userUniqueName
   }),
   success: (res: any) => ({
-    type: CHECK_USER_ACCOUNT['SUCCESS'],
+    type: GET_USER_PROFILE['SUCCESS'],
     payload: res,
   }),
   failure: (err: Error) => ({
-    type: CHECK_USER_ACCOUNT['FAILURE'],
-    payload: err,
-  }),
-};
+    type: GET_USER_PROFILE['FAILURE'],
+    payload: err
+  })
+}
 
 export const createUserAccountApi = {
   request: ({ userUniqueName, userName, password, profile }: CreateUserAccountUseData) => ({

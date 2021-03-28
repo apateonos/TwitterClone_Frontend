@@ -1,7 +1,7 @@
 import { GET_USER_TIMELINE } from '../actions/types';
 
 const initialState = {
-  res: {},
+  res: [],
   msg: '',
   error: ''
 };

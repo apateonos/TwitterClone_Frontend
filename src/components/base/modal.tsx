@@ -1,25 +1,35 @@
-import { BlueButton } from '../index';
-import React, { ReactNode } from 'react';
+import { BlueButton, CreateAccountDock, LoginAccountDock } from '../index';
+import React, { ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { State } from '../../store/reducers/index';
 
-interface props {
-  component: ReactNode;
-  onClick: Function;
-}
-function Modal ({component, onClick}: props) {
+export default () => {
+  const dispatch = useDispatch();
+  const { component, isLogin, isCreateAccount } = useSelector((state: State) => ({
+    component: state.modalReducer.component,
+    isLogin: state.userReducer.isLogin,
+    isCreateAccount: state.modalReducer.isCreateAccount
+  }))
+  console.log(isCreateAccount);
   return (
     <Container>
       <Board>
-        <Headline><ButtonWrap><BlueButton onClick={onClick} name='modal' text='Back' /></ButtonWrap></Headline>
-        <Section>{component}</Section>
+        <Headline>
+          <ButtonWrap>
+            <BlueButton onClick={()=>dispatch({type: "CLOSE_MODAL"})} name='modal' text='Back' />
+          </ButtonWrap>
+        </Headline>
+        <Section>
+          {isLogin ? component : isCreateAccount ? <CreateAccountDock/> : <LoginAccountDock/> }
+        </Section>
       </Board>
     </Container>
   )
 }
 
-export default Modal;
-
 const Container = styled.div`
+  z-index: 9999;
   position: fixed;
   top: 0;
   left: 0;
@@ -36,9 +46,9 @@ const Container = styled.div`
 
 const Board = styled.div`
   width: 500px;
-  height: 500px;
   background: white;
   border-radius: 25px;
+  overflow: hidden;
 
   @media only screen and (max-width: 500px) {
     width: 100%;
@@ -58,8 +68,6 @@ const ButtonWrap = styled.div`
   width: 100px;
 `;
 
-const Section = styled.div`
-  display:flex;
-  justify-content: center;
-  align-items: center;
+const Section = styled.section`
+  padding: 0 10px;
 `;

@@ -1,10 +1,9 @@
 import { GET_TWEET_DETAIL } from '../actions/types';
 
 const initialState = {
-  msg: '',
   error: '',
-  replyList: [],
-  main: {},
+  replys: [],
+  selectedTweet: {},
 };
 
 export default function (state = initialState, { type, payload }: any) {
@@ -14,8 +13,8 @@ export default function (state = initialState, { type, payload }: any) {
     case GET_TWEET_DETAIL['SUCCESS']:
       return {
         ...state,
-        main: payload.res.main,
-        replyList: payload.res.replys
+        selectedTweet: payload.res.main,
+        replys: payload.res.replys
       }
     case GET_TWEET_DETAIL['FAILURE']:
       return {
