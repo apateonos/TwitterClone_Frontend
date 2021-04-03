@@ -1,5 +1,5 @@
-import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, CHANGE_USER_NAME, DELETE_USER_ACCOUNT, GET_USER_PROFILE, GET_USER_TOKEN_FROM_REFRESH } from './types';
-import { CreateUserAccountUseData, LoginUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData, GetUserProfileUseData } from '../../api/user';
+import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, CHANGE_USER_INFORMATION, LOGOUT_USER_ACCOUNT, DELETE_USER_ACCOUNT, GET_USER_TOKEN_FROM_REFRESH } from './types';
+import { CreateUserAccountUseData, LoginUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData } from '../../api/user';
 
 export const getUserTokenFromRefreshApi = {
   request: () => ({
@@ -11,21 +11,6 @@ export const getUserTokenFromRefreshApi = {
   }),
   failure: (err: Error) => ({
     type: GET_USER_TOKEN_FROM_REFRESH['FAILURE'],
-    payload: err
-  })
-}
-
-export const getUserProfileApi = {
-  request: ({ userUniqueName }: GetUserProfileUseData) => ({
-    type: GET_USER_PROFILE['REQUEST'],
-    userUniqueName
-  }),
-  success: (res: any) => ({
-    type: GET_USER_PROFILE['SUCCESS'],
-    payload: res,
-  }),
-  failure: (err: Error) => ({
-    type: GET_USER_PROFILE['FAILURE'],
     payload: err
   })
 }
@@ -66,18 +51,32 @@ export const loginUserAccountApi = {
 
 export const changeUserNameApi = {
   request: ({ userName }: ChangeUserNameUseData) => ({
-    type: CHANGE_USER_NAME['REQUEST'],
+    type: CHANGE_USER_INFORMATION['REQUEST'],
     userName
   }),
   success: (res: any) => ({
-    type: CHANGE_USER_NAME['SUCCESS'],
+    type: CHANGE_USER_INFORMATION['SUCCESS'],
     payload: res,
   }),
   failure: (err: Error) => ({
-    type: CHANGE_USER_NAME['FAILURE'],
+    type: CHANGE_USER_INFORMATION['FAILURE'],
     payload: err,
   }),
 }; 
+
+export const logoutUserAccountApi = {
+  request: () => ({
+    type: LOGOUT_USER_ACCOUNT['REQUEST'],
+  }),
+  success: (res: any) => ({
+    type: LOGOUT_USER_ACCOUNT['SUCCESS'],
+    payload: res,
+  }),
+  failure: (err: Error) => ({
+    type: LOGOUT_USER_ACCOUNT['FAILURE'],
+    payload: err,
+  }), 
+};
 
 export const deleteUserAccountApi = {
   request: ({ password }: DeleteUserAccountUseData) => ({

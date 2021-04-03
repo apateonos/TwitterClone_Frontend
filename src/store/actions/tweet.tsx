@@ -1,27 +1,12 @@
-import { GET_USER_TWEET_LIST, POST_USER_TWEET, UPDATE_USER_TWEET, DELETE_USER_TWEET } from './types';
-import { GetUserTweetListUseData, PostUserTweetUseData, UpdateUserTweetUseData, DeleteUserTweetUseData } from '../../api/tweet';
-
-export const getUserTweetListApi = {
-  request: ({ userUniqueName }: GetUserTweetListUseData) => ({
-    type: GET_USER_TWEET_LIST['REQUEST'],
-    userUniqueName
-  }),
-  success: (res: any) => ({
-    type: GET_USER_TWEET_LIST['SUCCESS'],
-    payload: res,
-  }),
-  failure: (err: Error) => ({
-    type: GET_USER_TWEET_LIST['FAILURE'],
-    err: err.message,
-  }),
-};
+import { POST_USER_TWEET, UPDATE_USER_TWEET, DELETE_USER_TWEET } from './types';
+import { PostUserTweetUseData, UpdateUserTweetUseData, DeleteUserTweetUseData } from '../../api/tweet';
 
 export const postUserTweetApi = {
-  request: ({ tweetContent, tweetImage, replyTweetNumber, retweetNumber }: PostUserTweetUseData) => ({
+  request: ({ tweet, imageFile, replyNumber, retweetNumber }: PostUserTweetUseData) => ({
     type: POST_USER_TWEET['REQUEST'],
-    tweetContent,
-    tweetImage,
-    replyTweetNumber,
+    tweet,
+    imageFile,
+    replyNumber,
     retweetNumber
   }),
   success: (res: any) => ({
@@ -35,11 +20,11 @@ export const postUserTweetApi = {
 };
 
 export const updateUserTweetApi = {
-  request: ({ tweetNumber, tweetContent, tweetImage }: UpdateUserTweetUseData) => ({
+  request: ({ tweetNumber, tweet, imageFile }: UpdateUserTweetUseData) => ({
     type: UPDATE_USER_TWEET['REQUEST'],
     tweetNumber,
-    tweetContent,
-    tweetImage
+    tweet,
+    imageFile
   }),
   success: (res: any) => ({
     type: UPDATE_USER_TWEET['SUCCESS'],

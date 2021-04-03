@@ -2,29 +2,12 @@ import { all, fork, call, put, take } from 'redux-saga/effects';
 import axios from 'axios';
 import * as Api from '../../api/user';
 import * as types from '../actions/types';
-import { createUserAccountApi, loginUserAccountApi, changeUserNameApi, deleteUserAccountApi, getUserProfileApi } from '../actions/user';
-import { LoginUserAccountUseData, CreateUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData, GetUserProfileUseData } from '../../api/user';
-
-function* getUserProfileApiSaga({ userUniqueName }: GetUserProfileUseData) {
-  try {
-    const data = yield call(Api.getUserProfile, { userUniqueName });
-    if (yield data.code === 'errors') throw Error;
-    yield put(getUserProfileApi.success(data));
-  } catch (err) {
-    yield put(getUserProfileApi.failure(err));
-  }
-}
-
-function* watchGetUserProfileApiSaga() {
-  while (true) {
-    const { userUniqueName } = yield take(types.GET_USER_PROFILE[types.REQUEST]);
-    yield fork(getUserProfileApiSaga, { userUniqueName });
-  }
-}
+import { createUserAccountApi, loginUserAccountApi, changeUserNameApi, deleteUserAccountApi } from '../actions/user';
+import { LoginUserAccountUseData, CreateUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData } from '../../api/user';
 
 function* loginUserAccountApiSaga({ userUniqueName, password }: LoginUserAccountUseData) {
   try { 
-    const data = yield call(Api.loginUserAccount, { userUniqueName, password });
+    const data: any = yield call(Api.loginUserAccount, { userUniqueName, password });
     if (yield data.code === 'errors') throw Error;
     yield put(loginUserAccountApi.success(data));
     yield axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
@@ -71,7 +54,7 @@ function* chageUserNameApiSaga({ userName }: ChangeUserNameUseData) {
 
 function* watchchageUserNameApiSaga() {
   while (true) {
-    const { userName } = yield take(types.CHANGE_USER_NAME[types.REQUEST]);
+    const { userName } = yield take(types.CHANGE_USER_INFORMATION[types.REQUEST]);
     yield fork(chageUserNameApiSaga, { userName });
   }
 }
@@ -95,7 +78,6 @@ function* watchDeleteUserAccountApiSaga() {
 
 export default function* () {
   yield all([
-    fork(watchGetUserProfileApiSaga),
     fork(watchLoginUserAccountApiSaga),
     fork(watchCreateUserAccountApiSaga),
     fork(watchchageUserNameApiSaga),

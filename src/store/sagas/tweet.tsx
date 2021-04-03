@@ -1,29 +1,12 @@
 import { all, fork, call, put, take } from 'redux-saga/effects';
 import * as Api from '../../api/tweet';
 import * as types from '../actions/types';
-import { getUserTweetListApi, postUserTweetApi, updateUserTweetApi, deleteUserTweetApi } from '../actions/tweet';
-import { GetUserTweetListUseData, PostUserTweetUseData, UpdateUserTweetUseData, DeleteUserTweetUseData } from '../../api/tweet';
+import { postUserTweetApi, updateUserTweetApi, deleteUserTweetApi } from '../actions/tweet';
+import { PostUserTweetUseData, UpdateUserTweetUseData, DeleteUserTweetUseData } from '../../api/tweet';
 
-function* getUserTweetListApiSaga({ userUniqueName }: GetUserTweetListUseData) {
+function* postUserTweetApiSaga({ tweet, imageFile, replyNumber, retweetNumber }: PostUserTweetUseData) {
   try {
-    const data = yield call(Api.getUserTweetList, { userUniqueName });
-    if (yield data.code === 'errors') throw Error;
-    yield put(getUserTweetListApi.success(data));
-  } catch (err) {
-    yield put(getUserTweetListApi.failure(err));
-  }
-}
-
-function* watchGetUserTweetListApiSaga() {
-  while (true) {
-    const { userUniqueName } = yield take(types.GET_USER_TWEET_LIST[types.REQUEST]);
-    yield fork(getUserTweetListApiSaga, { userUniqueName });
-  } 
-}
-
-function* postUserTweetApiSaga({ tweetContent, tweetImage, replyTweetNumber, retweetNumber }: PostUserTweetUseData) {
-  try {
-    const data = yield call(Api.postUserTweet, { tweetContent, tweetImage, replyTweetNumber, retweetNumber });
+    const data = yield call(Api.postUserTweet, { tweet, imageFile, replyNumber, retweetNumber });
     if (yield data.code === 'errors') throw Error;
     yield put(postUserTweetApi.success(data));
     yield put({type: 'CLOSE_MODAL'});
@@ -34,14 +17,14 @@ function* postUserTweetApiSaga({ tweetContent, tweetImage, replyTweetNumber, ret
 
 function* watchPostUserTweetApiSaga() {
   while (true) {
-    const { tweetContent, tweetImage, replyTweetNumber, retweetNumber } = yield take(types.POST_USER_TWEET[types.REQUEST]);
-    yield fork(postUserTweetApiSaga, { tweetContent, tweetImage, replyTweetNumber, retweetNumber });
+    const { tweet, imageFile, replyNumber, retweetNumber } = yield take(types.POST_USER_TWEET[types.REQUEST]);
+    yield fork(postUserTweetApiSaga, { tweet, imageFile, replyNumber, retweetNumber });
   }
 }
 
-function* updateUserTweetApiSaga({ tweetNumber, tweetContent, tweetImage }: UpdateUserTweetUseData){
+function* updateUserTweetApiSaga({ tweetNumber, tweet, imageFile }: UpdateUserTweetUseData){
   try {
-    const data = yield call(Api.updateUserTweet, { tweetNumber, tweetContent, tweetImage });
+    const data = yield call(Api.updateUserTweet, { tweetNumber, tweet, imageFile });
     if (yield data.code === 'error') throw Error;
     yield put(updateUserTweetApi.success(data));
   } catch (err) {
@@ -51,8 +34,8 @@ function* updateUserTweetApiSaga({ tweetNumber, tweetContent, tweetImage }: Upda
 
 function* watchUpdateUserTweetApiSaga() {
   while (true) {
-    const { tweetNumber, tweetContent, tweetImage } = yield take(types.UPDATE_USER_TWEET[types.REQUEST]);
-    yield fork(updateUserTweetApiSaga, { tweetNumber, tweetContent, tweetImage });
+    const { tweetNumber, tweet, imageFile } = yield take(types.UPDATE_USER_TWEET[types.REQUEST]);
+    yield fork(updateUserTweetApiSaga, { tweetNumber, tweet, imageFile });
   }
 }
 
@@ -75,7 +58,6 @@ function* watchDeleteUserTweetApiSaga() {
 
 export default function* () {
   yield all([
-    fork(watchGetUserTweetListApiSaga),
     fork(watchPostUserTweetApiSaga),
     fork(watchUpdateUserTweetApiSaga),
     fork(watchDeleteUserTweetApiSaga)

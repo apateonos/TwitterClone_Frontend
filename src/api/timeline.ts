@@ -1,6 +1,11 @@
 import { AxiosPromise } from 'axios';
 import { get } from './service';
 
-export const getUserTimeLine = (): AxiosPromise => {
-  return get('/timeline', {});
+export interface GetUserTimelineUseData {
+  pickupCount: number;
+}
+export const getUserTimeline = ({ 
+  pickupCount 
+}: GetUserTimelineUseData): AxiosPromise => {
+  return get('/timeline', { pickupCount });
 };

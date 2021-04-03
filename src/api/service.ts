@@ -1,13 +1,7 @@
-import axios, { AxiosPromise } from "axios";
+import axios from "axios";
 
 const baseUrl = "http://127.0.0.1:4000";
 axios.defaults.withCredentials = true;
-/* 
-const AxiosInstance = axios.create({
-  baseURL: baseUrl,
-  responseType: "json",
-  headers: { "content-type": "application/json" },
-}); */
 
 const onSuccess = (response: any) => {
   return response.data;
@@ -27,36 +21,28 @@ const onError = (error: any) => {
 
 export const get = (url: string, params?: any) => {
   return axios
-    .get(baseUrl + url, {params: {
-      ...params
-    }})
+    .get(baseUrl + url, params)
     .then(onSuccess)
     .catch(onError);
 };
 
-export const post = (url: string, params?: any) => {
+export const post = (url: string, params?: any, headers?: any) => {
   return axios
-    .post(baseUrl + url, {
-      ...params
-    },)
+    .post(baseUrl + url, params, headers)
     .then(onSuccess)
     .catch(onError);
 };
 
-export const put = (url: string, params?: any) => {
+export const put = (url: string, params?: any, headers?: any) => {
   return axios
-    .put(baseUrl + url, {
-      ...params
-    })
+    .put(baseUrl + url, params, headers)
     .then(onSuccess)
     .catch(onError);
 };
 
 export const del = (url: string, params?: any) => {
   return axios
-    .delete(baseUrl + url, {
-      ...params
-    })
+    .delete(baseUrl + url, params)
     .then(onSuccess)
     .catch(onError);
 };

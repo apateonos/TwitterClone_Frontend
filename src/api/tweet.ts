@@ -1,37 +1,36 @@
 import axios, { AxiosPromise } from 'axios';
-import { get, post, put, del } from './service';
-
-export interface GetUserTweetListUseData {
-  userUniqueName: string;
-}
-export const getUserTweetList = ({
-  userUniqueName
-}: GetUserTweetListUseData): AxiosPromise => {
-  console.log(userUniqueName);
-  return get('/tweet/user', { userUniqueName })
-}
+import { post, put, del } from './service';
 
 export interface PostUserTweetUseData {
-  tweetContent: string;
-  tweetImage: string;
-  replyTweetNumber?: number|null;
-  retweetNumber?: number|null;
+  tweet: string;
+  imageFile: any;
+  replyNumber?: number;
+  retweetNumber?: number;
 }
 export const postUserTweet = ({
-  tweetContent, tweetImage, replyTweetNumber, retweetNumber
+  tweet, imageFile, replyNumber, retweetNumber
 }: PostUserTweetUseData): AxiosPromise => {
-  return post('/tweet/post', { tweetContent, tweetImage, replyTweetNumber, retweetNumber });
+  const form = new FormData();
+  form.append('tweet', tweet);
+  form.append('image', imageFile);
+  form.append('replyNumber', replyNumber as any);
+  form.append('retweetNumber', retweetNumber as any);
+  return post('/tweet/post', form, {headers: {'Content-Type': 'multipart/form-data'}});
 };
 
 export interface UpdateUserTweetUseData {
   tweetNumber: number,
-  tweetContent: string,
-  tweetImage: string,
+  tweet: string,
+  imageFile: any,
 }
 export const updateUserTweet = ({
-  tweetNumber, tweetContent, tweetImage
+  tweetNumber, tweet, imageFile
 }: UpdateUserTweetUseData): AxiosPromise => {
-  return put('/tweet/update', { tweetNumber, tweetContent, tweetImage });
+  const form = new FormData();
+  form.append('tweetNumber', tweetNumber as any);
+  form.append('tweet', tweet);
+  form.append('image', imageFile);
+  return put('/tweet/update', form, {headers: {'Content-Type': 'multipart/form-data'}});
 };
 
 export interface DeleteUserTweetUseData {

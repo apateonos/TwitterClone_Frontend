@@ -1,23 +1,20 @@
 import React from 'react';
-import { Navigation, Aside, Footer } from '../../containers/index';
+import { Nav, Header, Aside, Footer } from '../../containers/index';
 import styled from 'styled-components';
-import { Header } from '../../containers/index';
 
 interface props {
-  components: React.ReactNode;
+  component: React.ReactNode;
   title: string;
 }
 
-export default ( { components, title }: props ) => {
+export default ( { component, title }: props ) => {
   return (
     <Container>
-      <Navigation/>
+      <Nav />
       <ComponentBox>
-        <Header title={title} />
-        {components}
+        <Header />
+        {component}
       </ComponentBox>
-      <Aside/>
-      <Footer/>
     </Container>
   )
 }

@@ -9,15 +9,16 @@ import theme from '../../assets/style/lib/theme';
 import { Modal } from '../../components/index';
 
 interface AppContainerProps {
-  isLogin: boolean;
+  self: any;
   isModal: boolean;
 }
 
 
 const AppContainer: React.FC<AppContainerProps> = ({
-  isLogin,
+  self,
   isModal,
 }) => {
+  const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
   return (
     <ThemeProvider theme={theme}>
       <Route isLogin={isLogin} />
@@ -27,7 +28,7 @@ const AppContainer: React.FC<AppContainerProps> = ({
 }
 
 const mapStateToProps = (rootState: State) => ({
-  isLogin: rootState.userReducer.isLogin,
+  self: rootState.userReducer.self,
   isModal: rootState.modalReducer.isModal,
 })
 

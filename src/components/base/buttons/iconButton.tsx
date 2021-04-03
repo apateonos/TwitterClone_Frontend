@@ -1,49 +1,70 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface props {
-  onChange: Function;
-  image: any;
-  accept: string;
+interface IconButtonUseData {
+  tweetNumber: number;
+  onClick: Function;
   name: string;
-  id: string;
+  color: string;
+  image: any;
+  count?: number;
 }
 
-export default({onChange, image, accept, name, id}: props) => {
+export default ({ onClick, name, color, image, count, tweetNumber }: IconButtonUseData) => {
   return (
-    <>
-      <ImageLabel htmlFor={id}>
-        {image}
-      </ImageLabel>
-      <input
-        id={id}
-        type="file"
-        accept={accept}
-        name={name}
-        style={{display:'none'}}
-        onChange={(e)=>onChange(e)}
-      />
-    </>
+    <ToolButton onClick={(event)=> {event.stopPropagation(); onClick(event, tweetNumber)}} name={name} color={color}>
+      <Icon>{image}</Icon>
+      {count && count > 0 && <TextBox>{count}</TextBox>}
+    </ToolButton>
   )
 }
 
-const Container = styled.div`
+const COLOR_LIST: any = { // any말고 다른 방법이 있을까 찾아보자
+  red: 'red',
+  blue: 'blue',
+  green: 'green'
+}
+
+const BACKGROUND_COLOR_LIST: any = {
+  red: 'RGBA( 255, 0, 0, 0.1 )',
+  blue: 'RGBA( 0, 0, 255, 0.1 )',
+  green: 'RGBA( 0, 255, 0, 0.1 )'
+}
+
+interface buttonProps {
+  color: string;
+}
+const ToolButton = styled.button<buttonProps>`
+  display: flex;
+  align-items: center;
+  
+  :hover {
+    div {
+      background: ${(props) => BACKGROUND_COLOR_LIST[props.color]};
+    }
+    svg {
+      fill: ${props => COLOR_LIST[props.color]};
+    }
+    span {
+      color: ${props => COLOR_LIST[props.color]};
+    }
+  }
 `;
 
-const ImageLabel = styled.label`
+const Icon = styled.div`
   width: 30px;
   height: 30px;
-
   border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  :hover {
-    background: ${props => props.theme.color.glassBlue};
+  padding: 5px;
+
+  transition-duration: 0.5s;
+  svg{
+    fill: ${props => props.theme.color.grayText};
+    transition-duration: 0.5s;
   }
-  svg {
-    width: 20px;
-    height: 20px;
-    fill: ${props => props.theme.color.blue};
-  }
+`;
+
+const TextBox = styled.span`
+  color: ${props => props.theme.color.grayText};
+  transition-duration: 0.5s;
 `;

@@ -2,10 +2,11 @@ import { all, fork, call, put, take } from 'redux-saga/effects';
 import * as Api from '../../api/timeline';
 import * as types from '../actions/types';
 import { getUserTimelineApi } from '../actions/timeline';
+import { GetUserTimelineUseData } from '../../api/timeline';
 
-function* getUserTimelineApiSaga() {
+function* getUserTimelineApiSaga({ pickupCount }: GetUserTimelineUseData) {
   try {
-    const data = yield call(Api.getUserTimeLine);
+    const data = yield call(Api.getUserTimeline, { pickupCount });
     if (yield data.code === 'errors') throw Error;
     yield put(getUserTimelineApi.success(data));
   } catch (err) {
@@ -15,8 +16,8 @@ function* getUserTimelineApiSaga() {
 
 function* watchGetUserTimelineApiSaga() {
   while (true) {
-    yield take(types.GET_USER_TIMELINE[types.REQUEST]);
-    yield fork(getUserTimelineApiSaga);
+    const { pickupCount } = yield take(types.GET_USER_TIMELINE['REQUEST']);
+    yield fork(getUserTimelineApiSaga, { pickupCount });
   }
 }
 

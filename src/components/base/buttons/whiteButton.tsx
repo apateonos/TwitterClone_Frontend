@@ -6,11 +6,12 @@ interface props {
   text: string;
   name: string;
   type?: "button"|"submit"|"reset";
+  idx?: number;
 }
 
-export default ({ onClick, text, name, type }: props) => {
+export default ({ onClick, text, name, type, idx }: props) => {
   return (
-    <Button name={name} onClick={(e)=>onClick(e)} type={type ? type : "button"}>
+    <Button name={name} onClick={(e)=>onClick(e, idx)} type={type ? type : "button"}>
       {text}
     </Button>
   )

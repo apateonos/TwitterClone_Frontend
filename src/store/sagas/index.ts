@@ -1,9 +1,8 @@
 import userSaga from './user';
 import tweetSaga from './tweet';
 import followSaga from './follow';
-//import replySaga from './reply';
 import timelineSaga from './timeline';
-//import pingSaga from './ping';
-import tweetDetail from './tweetDetail';
+import detailSaga from './detail';
+import profileSaga from './profile';
 
-export default [userSaga, followSaga, tweetSaga, tweetDetail, timelineSaga];
+export default [userSaga, followSaga, tweetSaga, detailSaga, timelineSaga, profileSaga];

@@ -1,15 +1,17 @@
+import { CancelButton } from 'components';
 import React from 'react';
 import styled from 'styled-components';
-import { cancelIcon } from '../../../assets/images/svg';
+import { cancelButtonIcon } from '../../../assets/images/svg';
 
 interface CancelButtonUseProps {
   onClick: Function;
+  name: string;
 }
 
-export default ({ onClick }: CancelButtonUseProps) => {
+export default ({ onClick, name }: CancelButtonUseProps) => {
   return (
-    <Button onClick={(e)=>onClick(e)}>
-      {cancelIcon}
+    <Button onClick={(e)=>onClick(e)} name={name}>
+      {cancelButtonIcon}
     </Button>
   )
 }

@@ -1,29 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Header } from '../../pages/index';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { Dispatch, compose } from 'redux';
+import { connect } from 'react-redux';
+import { Header } from '../../components/index';
 import { State } from '../../store/reducers/index';
 
-interface props {
-  title: string;
+interface HeaderContainerUseProps extends RouteComponentProps<any> {
+  self: {};
 }
-export default ({ title }: props) => {
+const HeaderContainer: React.FC<HeaderContainerUseProps> = ({ 
+  self 
+}) => {
   const [ width, setWidth ] = useState(window.document.body.clientWidth);
-  const [ isSideBar, setIsSideBar ] = useState(false);
-  const userData = useSelector((state: State) => {
-    return state.userReducer.self;
-  });
 
   useEffect(()=> {
     window.addEventListener('resize', ()=> setWidth(window.document.body.clientWidth))
   },[])
 
+  const onClickHandler = () => {
+
+  }
 
   return (
-    <Header 
-      isSideBar={isSideBar}
-      title={title} 
-      width={width} 
-      self={userData}
+    <Header
+      onClick={onClickHandler}
+      title="HOME"
     />
   )
 }
+
+const mapStateToProps = (rootState: State) => ({
+  self: rootState.userReducer.self
+})
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+});
+export default withRouter(
+  compose(connect(mapStateToProps, mapDispatchToProps))(HeaderContainer)
+);

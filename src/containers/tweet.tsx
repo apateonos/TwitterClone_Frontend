@@ -1,52 +1,85 @@
-import React, { useEffect } from 'react';
-import { useParams, withRouter, RouteComponentProps } from 'react-router-dom';
+import React, { useState } from 'react';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from "../store/reducers/index";
-import { getTweetDetailApi } from '../store/actions/tweetDetail';
-import { GetTweetDetailUseData } from '../api/tweetDetail';
-import { Main, Tweet } from '../pages/index';
-import { TweetCardUseData } from '../components/base/tweetCard/tweetCard';
+import { PostUserTweetUseData } from 'api/tweet';
+import { postUserTweetApi } from '../store/actions/tweet';
+import { Tweet } from '../components/index';
+import { UserSelfData } from '../store/reducers/user';
 
-interface TweetDetailProps extends RouteComponentProps<any> {
-  getTweetDetailApi: ({ tweetNumber }: GetTweetDetailUseData) => object;
-  SelectedTweet: any;
-  replyList: Array<TweetCardUseData>;
+interface TweetContainerUseProps extends RouteComponentProps<any> {
+  postUserTweetApi: ({ tweet, imageFile, replyNumber, retweetNumber }: PostUserTweetUseData) => object;
+  retweetNumber?: number;
+  replyNumber?: number;
+  self: UserSelfData;
 }
-
-interface ParamsTypes {
-  tweetNumber: string; // 동적라우팅에서 받아온 숫자값이여서 수가 아닌 스트링형태이다... 좀더 간결하게 변환하는법을 잘 생각해보자
-}
-
-const TweetContainer: React.FC<TweetDetailProps> = ({
-  getTweetDetailApi,
-  SelectedTweet,
-  replyList,
+const TweetContainer: React.FC<TweetContainerUseProps> = ({
+  postUserTweetApi,
+  retweetNumber,
+  replyNumber,
+  self,
 }) => {
-  const { tweetNumber } = useParams<ParamsTypes>();
+  const [ tweet, setTweet ] = useState('');
+  const [ imageFile, setImageFile ] = useState();
+  const [ image, setImage ] = useState('');
 
-  useEffect(()=> {
-    getTweetDetailApi({ tweetNumber: Number( tweetNumber )})
-  }, [tweetNumber])
+  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = event.currentTarget;
+
+    switch (name) {
+      case 'post':
+        postUserTweetApi({ tweet, imageFile, replyNumber, retweetNumber });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, files } = event.currentTarget as any;
+
+    switch (name) {
+      case 'tweet':
+        setTweet(value);
+        break;
+
+      case 'image':
+        const theFile = files[0];
+        setImageFile(theFile);
+
+        const reader = new FileReader();
+        reader.onloadend = ( finishedEvent ) => {
+          const { result } = finishedEvent.target as any;
+          setImage( result );
+        }
+        reader.readAsDataURL( theFile );
+        break;
+      
+      default:
+        break;
+    }
+  }
 
   return (
-    <Main components={<Tweet 
-      SelectedTweet={ SelectedTweet }
-      replyList={ replyList }
-    />}
-      title='Tweet'
+    <Tweet 
+      onClick={onClickHandler}
+      onChange={onChangeHandler}
+      self={self}
+      tweet={tweet}
+      image={image}
     />
   )
 }
 
 const mapStateToProps = (rootState: State) => ({
-  SelectedTweet: rootState.tweetDetailReducer.selectedTweet,
-  replyList: rootState.tweetDetailReducer.replys
+  self: rootState.userReducer.self
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getTweetDetailApi: ({ tweetNumber }: GetTweetDetailUseData) => {
-    return dispatch(getTweetDetailApi.request({ tweetNumber }));
+  postUserTweetApi: ({ tweet, imageFile, replyNumber, retweetNumber }: PostUserTweetUseData) => {
+    return dispatch(postUserTweetApi.request({ tweet, imageFile, replyNumber, retweetNumber }));
   }
 });
 

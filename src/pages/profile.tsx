@@ -1,16 +1,12 @@
 import React from 'react';
-import { ProfileCard, TweetCard } from '../components';
-import { TweetCardUseData } from '../components/base/tweetCard/tweetCard';
+import { Main } from './index';
+import { Profile } from '../containers/index';
 
-interface ProfilePageUseData {
-  tweetList: Array<TweetCardUseData>;
-}
-
-export default ({ tweetList }:  ProfilePageUseData) => {
+export default () => {
   return (
-    <>
-      <ProfileCard />
-      {tweetList.length > 0 ? tweetList.map((el: TweetCardUseData, key)=><TweetCard props={el} key={key}/>) : ""}
-    </>
+    <Main 
+      title="Profile"
+      component={<Profile />}
+    />
   )
 }

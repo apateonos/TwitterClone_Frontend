@@ -1,10 +1,9 @@
 import { GET_FOLLOW_USER_LIST, POST_FOLLOW_USER, DELETE_FOLLOW_USER } from './types';
-import { FollowUserUseData, GetFollowUserListUseData } from '../../api/follow';
+import { FollowUseData } from '../../api/follow';
 
 export const getFollowUserListApi = {
-  request: ({ userNumber }: GetFollowUserListUseData) => ({
+  request: () => ({
     type: GET_FOLLOW_USER_LIST['REQUEST'],
-    userNumber
   }),
   success: (res: any) => ({
     type: GET_FOLLOW_USER_LIST['SUCCESS'],
@@ -17,7 +16,7 @@ export const getFollowUserListApi = {
 };
 
 export const postFollowUserApi = {
-  request: ({ userNumber }: FollowUserUseData) => ({
+  request: ({ userNumber }: FollowUseData) => ({
     type: POST_FOLLOW_USER['REQUEST'],
     userNumber
   }),
@@ -32,7 +31,7 @@ export const postFollowUserApi = {
 };
 
 export const deleteFollowUserApi = {
-  request: ({ userNumber }: FollowUserUseData) => ({
+  request: ({ userNumber }: FollowUseData) => ({
     type: DELETE_FOLLOW_USER['REQUEST'],
     userNumber
   }),
