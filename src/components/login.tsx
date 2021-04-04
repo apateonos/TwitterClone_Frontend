@@ -16,8 +16,8 @@ export default ({ onClick, onChange, userUniqueName, password }: LoginComponentU
       <InfoInput onChange={onChange} name='password' value={password} placeholder='password...'/>
       <ButtonWrap>
         <WhiteButton onClick={onClick} name='login' text='Login'/>
-        <BlueButton onClick={onClick} name='modal' text='Create Account'/>
-    </ButtonWrap>
+        <BlueButton onClick={onClick} name='create' text='Create Account'/>
+      </ButtonWrap>
     </Container>
   )
 }

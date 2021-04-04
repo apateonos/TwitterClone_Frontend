@@ -20,7 +20,7 @@ export default ({ onClick, text, name, type, idx }: props) => {
 const Button = styled.button`
   width: 100%;
   border-radius: 25px;
-  padding: 8px 16px;
+  padding: 7px 15px;
 
   color: white;
   font-weight: 800;

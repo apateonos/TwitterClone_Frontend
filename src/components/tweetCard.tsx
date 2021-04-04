@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { tweetCardIcon } from '../assets/images/svg';
 import { CreateTime, UserImage, UserName, UserUniqueName, TweetText, IconButton } from './index';
+import { baseUrl } from '../config/config';
 
 interface TweetCardUseProps {
   onClick: Function;
@@ -49,6 +50,7 @@ export default ({
     retweetUserUniqueName,
     retweetContent,
   } = tweet;
+  
   return (
     <Container onClick={() => history.push(`/tweet/${tweetNumber}`)}>
       <TweetWrap>

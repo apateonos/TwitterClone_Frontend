@@ -7,7 +7,7 @@ import { createUserAccountApi } from '../store/actions/user';
 import { Create } from '../components/index';
 
 interface TweetDetailProps extends RouteComponentProps<any> {
-  createUserAccountApi: ({ userUniqueName, userName, password, profile }: CreateUserAccountUseData) => object; 
+  createUserAccountApi: ({ userUniqueName, userName, password, imageFile, profile }: CreateUserAccountUseData) => object; 
 }
 
 const SignContainer: React.FC<TweetDetailProps> = ({
@@ -19,6 +19,7 @@ const SignContainer: React.FC<TweetDetailProps> = ({
   const [ profile, setProfile ] = useState('');
   const [ userImage, setUserImage ] = useState('');
   const [ comfirmPassword, setComfirmPassword ] = useState('');
+  const [ imageFile, setImageFile ] = useState('');
 
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = event.currentTarget;
@@ -28,6 +29,7 @@ const SignContainer: React.FC<TweetDetailProps> = ({
         createUserAccountApi({
           userUniqueName,
           userName,
+          imageFile,
           password,
           profile
         })
@@ -39,7 +41,7 @@ const SignContainer: React.FC<TweetDetailProps> = ({
   }
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+    const { name, value, files } = event.currentTarget as any;
 
     switch (name) {
       case 'userUniqueName': 
@@ -59,6 +61,15 @@ const SignContainer: React.FC<TweetDetailProps> = ({
         break;
 
       case 'userImage':
+        const theFile = files[0];
+        setImageFile(theFile);
+
+        const reader = new FileReader();
+        reader.onloadend = ( finishedEvent ) => {
+          const { result } = finishedEvent.target as any;
+          setUserImage( result );
+        }
+        reader.readAsDataURL( theFile );
         break;
 
       case 'profile': 
@@ -75,6 +86,7 @@ const SignContainer: React.FC<TweetDetailProps> = ({
       onClick={onClickHandler}
       onChange={onChangeHandler}
       userUniqueName={userUniqueName}
+      userImage={userImage}
       userName={userName}
       password={password}
       comfirmPassword={comfirmPassword}
@@ -84,8 +96,8 @@ const SignContainer: React.FC<TweetDetailProps> = ({
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  createUserAccountApi: ({ userUniqueName, userName, password, profile }: CreateUserAccountUseData) => {
-    return dispatch(createUserAccountApi.request({ userUniqueName, userName, password, profile }));
+  createUserAccountApi: ({ userUniqueName, userName, password, imageFile, profile }: CreateUserAccountUseData) => {
+    return dispatch(createUserAccountApi.request({ userUniqueName, userName, password, imageFile, profile }));
   }
 });
 

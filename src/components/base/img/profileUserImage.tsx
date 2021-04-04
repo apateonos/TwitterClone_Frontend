@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { baseUrl } from '../../../config/config';
 
 interface ProfileUserImageUseProps {
   image: string;
@@ -7,7 +8,7 @@ interface ProfileUserImageUseProps {
 
 export default ({ image }: ProfileUserImageUseProps) => {
   return (
-    <ProfileUserImage src={image ? image : '/src/assets/images/default_image.jpg'}/>
+    <ProfileUserImage src={image ? baseUrl + image : '/src/assets/images/default_image.jpg'}/>
   )
 }
 

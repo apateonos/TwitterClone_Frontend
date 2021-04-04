@@ -18,6 +18,7 @@ function* postUserTweetApiSaga({ tweet, imageFile, replyNumber, retweetNumber }:
 function* watchPostUserTweetApiSaga() {
   while (true) {
     const { tweet, imageFile, replyNumber, retweetNumber } = yield take(types.POST_USER_TWEET[types.REQUEST]);
+    console.log('saga', tweet, imageFile, replyNumber, retweetNumber);
     yield fork(postUserTweetApiSaga, { tweet, imageFile, replyNumber, retweetNumber });
   }
 }

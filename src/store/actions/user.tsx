@@ -16,11 +16,12 @@ export const getUserTokenFromRefreshApi = {
 }
 
 export const createUserAccountApi = {
-  request: ({ userUniqueName, userName, password, profile }: CreateUserAccountUseData) => ({
+  request: ({ userUniqueName, userName, password, imageFile, profile }: CreateUserAccountUseData) => ({
     type: CREATE_USER_ACCOUNT['REQUEST'],
     userUniqueName,
     userName,
     password,
+    imageFile,
     profile
   }),
   success: (res: any) => ({

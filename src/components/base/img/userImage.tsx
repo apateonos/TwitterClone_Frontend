@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { baseUrl } from '../../../config/config';
 
 interface UserImageUseProps {
   image: string;
@@ -12,7 +13,7 @@ export default ({ image, type }: UserImageUseProps) => {
     normal: '40px'
   }
   return (
-    <UserImage imageSize={type ? imageSize[type] : imageSize.normal} src={image ? image : '/src/assets/images/default_image.jpg'} />
+    <UserImage imageSize={type ? imageSize[type] : imageSize.normal} src={image ? baseUrl + image : '/src/assets/images/default_image.jpg'} />
   )
 }
 
@@ -21,7 +22,7 @@ interface StyledUseProps {
 }
 const UserImage = styled.img<StyledUseProps>`
   width: ${props => props.imageSize};
-  height: width;
+  height: ${props => props.imageSize};
 
   border-radius: 50%;
   background: ${props => props.theme.color.borderGray};

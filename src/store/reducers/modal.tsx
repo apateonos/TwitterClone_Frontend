@@ -7,6 +7,7 @@ const initialState = {
 export default function (state = initialState, { type, payload }: any) {
   switch (type) {
     case 'CREATE_ACCOUNT':
+      console.log('heee??????????//')
       return {
         ...state,
         isModal: true,

@@ -6,17 +6,17 @@ export interface FollowUseData {
 }
 
 export const getFollowUserList = (): AxiosPromise => {
-  return get('/follow/user');
+  return get('follow/user');
 }
 
 export const postFollowUser = ({
   userNumber
 }: FollowUseData): AxiosPromise => {
-  return post('/follow/post', { userNumber });
+  return post('follow/post', { userNumber });
 };
 
 export const deleteFollowUser = ({
   userNumber
 }: FollowUseData): AxiosPromise => {
-  return del('/unfollow/del', { userNumber });
+  return del('unfollow/del', { userNumber });
 };

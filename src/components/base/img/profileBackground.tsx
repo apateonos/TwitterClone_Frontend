@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { baseUrl } from '../../../config/config';
 
 interface ProfileBackgroundUseProps {
   image: string;
@@ -7,15 +8,9 @@ interface ProfileBackgroundUseProps {
 
 export default ({ image }: ProfileBackgroundUseProps) => {
   return (
-      <ProfileBackground src={image ? image : '/src/assets/images/background_image.jpg'}/>    
+      <ProfileBackground src={image ? baseUrl + image : '/src/assets/images/background_image.jpg'}/>    
   )
 }
-
-const Container = styled.div`
-  position: relative;
-  width: 100%;
-  height: 200px;
-`;
 
 const ProfileBackground = styled.img`
   width: 100%;

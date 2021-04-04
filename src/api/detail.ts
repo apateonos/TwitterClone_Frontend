@@ -7,5 +7,5 @@ export interface GetDetailTweetUseData {
 export const getDetailTweet = ({
   tweetNumber
 }: GetDetailTweetUseData): AxiosPromise => {
-  return get('/detail', { tweetNumber })
+  return get('detail', { tweetNumber })
 }

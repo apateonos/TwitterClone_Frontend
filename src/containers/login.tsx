@@ -21,12 +21,13 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
 
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = event.currentTarget;
-
     switch (name) {
       case 'login':
         loginUserAccountApi({ userUniqueName, password });
+        break;
 
       case 'create':
+        console.log('너도실행돼?')
         createAccountModal();
 
       default:

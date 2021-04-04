@@ -41,8 +41,8 @@ const ImageLabel = styled.label`
   }
 
   svg {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     fill: ${props => props.theme.color.blue};
   }
 `;

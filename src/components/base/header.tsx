@@ -8,6 +8,14 @@ interface HeaderComponentUseProps {
 
 export default ({ onClick, title }: HeaderComponentUseProps) => {
   return (
-    <div></div>
-  )
+    <Container>
+    </Container>
+  ) 
 }
+
+const Container = styled.div`
+  width: 100%;
+  height: 50px;
+  background: white;
+  border-bottom: 1px solid ${props => props.theme.color.borderGray};
+`;

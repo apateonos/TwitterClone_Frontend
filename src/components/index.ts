@@ -29,7 +29,8 @@ export { default as CancelButton } from './base/buttons/cancelButton';
 //inputs
 export { default as AreaInput } from './base/inputs/areaInput';
 export { default as InfoInput } from './base/inputs/infoInput';
-
+export { default as UserImageInput } from './base/inputs/userImageInput';
+ 
 // components
 export { default as Tweet } from './tweet';
 export { default as TweetCard } from './tweetCard';

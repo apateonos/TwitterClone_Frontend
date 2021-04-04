@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { UserImage, AreaInput, TweetImage, CancelButton, InputIconButton, BlueButton } from './index';
 import { tweetIcon } from '../assets/images/svg';
+import { baseUrl } from '../config/config';
 
 interface TweetUseProps { 
   onClick: Function;
@@ -67,8 +68,17 @@ const CancelButtonWrap = styled.div`
   right: 20px;
 `;
 
-const ToolButtonWrap = styled.div``;
+const ToolButtonWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-const InputIconButtonWrap = styled.div``;
+const InputIconButtonWrap = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
-const TweetButtonWrap = styled.div``;
+const TweetButtonWrap = styled.div`
+  width: 150px;
+`;

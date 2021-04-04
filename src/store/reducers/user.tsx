@@ -31,7 +31,7 @@ export default function (state = initialState, { type, payload }: any) {
     case CHANGE_USER_INFORMATION['SUCCESS']:
       return {
         ...state,
-        self: payload.res
+        self: payload.self
       };
 
     case LOGOUT_USER_ACCOUNT['SUCCESS']:

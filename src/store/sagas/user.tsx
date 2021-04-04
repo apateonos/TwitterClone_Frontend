@@ -7,7 +7,7 @@ import { LoginUserAccountUseData, CreateUserAccountUseData, ChangeUserNameUseDat
 
 function* loginUserAccountApiSaga({ userUniqueName, password }: LoginUserAccountUseData) {
   try { 
-    const data: any = yield call(Api.loginUserAccount, { userUniqueName, password });
+    const data = yield call(Api.loginUserAccount, { userUniqueName, password });
     if (yield data.code === 'errors') throw Error;
     yield put(loginUserAccountApi.success(data));
     yield axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
@@ -25,9 +25,9 @@ function* watchLoginUserAccountApiSaga() {
   }
 }
 
-function* createUserAccountApiSaga({ userUniqueName, userName, password, profile }: CreateUserAccountUseData) {
+function* createUserAccountApiSaga({ userUniqueName, userName, password, imageFile, profile }: CreateUserAccountUseData) {
   try {
-    const data = yield call(Api.createUserAccount, { userUniqueName, userName, password, profile });
+    const data = yield call(Api.createUserAccount, { userUniqueName, userName, password, imageFile, profile });
     if (yield data.code === 'errors') throw Error;
     yield put(createUserAccountApi.success(data));
   } catch (err) {
@@ -37,8 +37,8 @@ function* createUserAccountApiSaga({ userUniqueName, userName, password, profile
 
 function* watchCreateUserAccountApiSaga() {
   while (true) {
-    const { userUniqueName, userName, password, profile } = yield take(types.CREATE_USER_ACCOUNT[types.REQUEST]);
-    yield fork(createUserAccountApiSaga, { userUniqueName, userName, password, profile });
+    const { userUniqueName, userName, password, imageFile, profile } = yield take(types.CREATE_USER_ACCOUNT[types.REQUEST]);
+    yield fork(createUserAccountApiSaga, { userUniqueName, userName, password, imageFile, profile });
   }
 }
 

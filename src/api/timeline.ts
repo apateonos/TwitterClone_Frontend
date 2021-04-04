@@ -7,5 +7,5 @@ export interface GetUserTimelineUseData {
 export const getUserTimeline = ({ 
   pickupCount 
 }: GetUserTimelineUseData): AxiosPromise => {
-  return get('/timeline', { pickupCount });
+  return get('timeline', { pickupCount });
 };

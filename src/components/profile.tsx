@@ -41,18 +41,22 @@ export default ({ onClick, isFollow, isSelf, user }: ProfileUseProps) => {
         <ProfileBackground image={profileBackground} />
         <ProfileUserImage image={userImage} />
       </ImageWrap>
-      <ButtonWrap>
-        {
-          isSelf
-          ? <WhiteButton name='setting' onClick={onClick} idx={userNumber} text='Setting'/>              
-          : isFollow
-          ? <WhiteButton name='unfollow' onClick={onClick} idx={userNumber} text='Unfollow'/> 
-          : <WhiteButton name='follow' onClick={onClick} idx={userNumber} text='Follow'/>
-        }
-      </ButtonWrap>
-      <UserName text={userName}/>
-      <UserUniqueName text={userUniqueName} />
-      <ProfileText text={profile}/>
+      <ProfileWrap>
+        <ButtonBox>
+          <ButtonWrap>
+            {
+              isSelf
+              ? <WhiteButton name='setting' onClick={onClick} idx={userNumber} text='Setting'/>              
+              : isFollow
+              ? <WhiteButton name='unfollow' onClick={onClick} idx={userNumber} text='Unfollow'/> 
+              : <WhiteButton name='follow' onClick={onClick} idx={userNumber} text='Follow'/>
+            }
+          </ButtonWrap>
+        </ButtonBox>
+        <UserName text={userName}/>
+        <UserUniqueName text={userUniqueName} />
+        <ProfileText text={profile}/>
+      </ProfileWrap>
     </Container>
   )
 }
@@ -71,7 +75,17 @@ const ImageWrap = styled.div`
   height: 200px;
 `;
 
+const ProfileWrap = styled.div`
+  margin: 10px 0;
+  padding: 0 25px;
+`;
+
 const ButtonWrap = styled.div`
   width: 120px;
   padding: 10px;
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;

@@ -1,6 +1,6 @@
 import axios from "axios";
+import { baseUrl } from '../config/config';
 
-const baseUrl = "http://127.0.0.1:4000";
 axios.defaults.withCredentials = true;
 
 const onSuccess = (response: any) => {

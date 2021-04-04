@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
+import { baseUrl } from '../../../config/config';
 
 interface TweetImageUseProps { 
   image: string;

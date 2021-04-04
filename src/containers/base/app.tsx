@@ -21,8 +21,7 @@ const AppContainer: React.FC<AppContainerProps> = ({
   const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
   return (
     <ThemeProvider theme={theme}>
-      <Route isLogin={isLogin} />
-      {isModal && <Modal />}
+      <Route isLogin={isLogin} isModal={isModal}/>
     </ThemeProvider>
   )
 }

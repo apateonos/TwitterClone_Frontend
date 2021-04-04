@@ -7,7 +7,7 @@ export interface GetUserProfileUseData {
 export const getUserProfile = ({
   userUniqueName
 }: GetUserProfileUseData): AxiosPromise => {
-  return get('/profile', { userUniqueName })
+  return get('profile', { userUniqueName })
 }
 
 export interface GetMoreUserTweetUseData{
@@ -17,5 +17,5 @@ export interface GetMoreUserTweetUseData{
 export const getMoreUserTweet = ({
   userUniqueName, pickupCount
 }: GetMoreUserTweetUseData): AxiosPromise => {
-  return get('/profile/tweet', { userUniqueName, pickupCount })
+  return get('profile/tweet', { userUniqueName, pickupCount })
 }
