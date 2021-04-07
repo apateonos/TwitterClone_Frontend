@@ -2,6 +2,6 @@ import React from 'react';
 
 export default () => {
   return (
-    <div>aside</div>
+    <div>아무것도 없어요!!</div>
   )
 }

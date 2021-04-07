@@ -25,9 +25,11 @@ const Button = styled.button`
   color: white;
   font-weight: 800;
   background: ${props => props.theme.color.blue};
+  border: 1px solid ${props => props.theme.color.white};
 
   transition-duration: 0.5s;
   :hover {
     background: ${props => props.theme.color.skyBlue};
+    border: 1px solid ${props => props.theme.color.skyBlue};
   }
 `;

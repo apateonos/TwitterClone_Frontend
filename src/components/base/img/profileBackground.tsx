@@ -8,7 +8,7 @@ interface ProfileBackgroundUseProps {
 
 export default ({ image }: ProfileBackgroundUseProps) => {
   return (
-      <ProfileBackground src={image ? baseUrl + image : '/src/assets/images/background_image.jpg'}/>    
+      <ProfileBackground src={image ? image : '/src/assets/images/background_image.jpg'}/>    
   )
 }
 

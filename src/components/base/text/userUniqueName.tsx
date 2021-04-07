@@ -6,11 +6,11 @@ interface GrayTextComponentUseProps {
 }
 export default ({text}:GrayTextComponentUseProps) => {
   return (
-    <TextBox id='name'>@{text}</TextBox>
+    <TextBox >@{text}</TextBox>
   )
 }
 
-const TextBox = styled.span`
+const TextBox = styled.p`
   color: ${props=> props.theme.color.grayText};
   padding: 1px;
 `;

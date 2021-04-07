@@ -1,73 +1,83 @@
-import { GET_USER_PROFILE, GET_MORE_USER_TWEET } from '../actions/types';
+import { GET_USER_PROFILE } from '../actions/types';
 
 const initialState: ProfileReducerUseData = {
   user: {},
   tweets: [],
+  follower: [],
+  following: [],
   error: ''
 };
 
 interface ProfileReducerUseData {
   user: {} | ProfileUserData;
   tweets: [] | Array<ProfileTweetsData>;
+  follower: [] | Array<ProfileFollowerData>
+  following: [] | Array<ProfileFollowingData>
   error: string;
 }
 
 export interface ProfileUserData {  
-  userNumber: number;
-  profileBackground: string;
-  userImage: string;
-  userName: string;
-  userUniqueName: string;
-  profile: string;
-  userCreatedTime: string;
-  userFollowerNumber: number;
-  userFollowingNumber: number;
+  id: number;
+  user_image: string;
+  display_name: string;
+  unique_name: string;
+  user_profile: string;
+  created_at: string;
+}
+
+export interface ProfileFollowingData {
+  id: number;
+  user_image: string;
+  display_name: string;
+  unique_name: string;
+}
+
+export interface ProfileFollowerData {
+  id: number;
+  user_image: string;
+  display_name: string;
+  unique_name: string;
 }
 
 export interface ProfileTweetsData {
-  userNumber: number;
-  userImage: string;
-  userUniqueName: string;
-  userName: string;
-  tweetNumber: number;
-  tweetContent: string;
-  tweetImage: string;
-  tweetCreatedTime: string;
-  replyTweetCount: number;
-  retweetCount: number;
-  retweetUserImage: string;
-  retweetNumber: number;
-  retweetUserName: string;
-  retweetUserUniqueName: string;
-  retweetContent: string;
+  user_id: number;
+  user_image: string;
+  unique_name: string;
+  display_name: string;
+
+  id: number;
+  tweet_text: string;
+  tweet_image: string;
+  created_at: string;
+  reply_count: number;
+  retweet_count: number;
+  
+  retweet_id: number;
+  retweet_user_id: string;
+  retweet_unique_name: string;
+  retweet_display_name: string;
+  retweet_text: string;
+  retweet_image: string;
 }
 
 export default function (state=initialState, { type, payload }: any) {
   switch (type) {
     case GET_USER_PROFILE['REQUEST']:
-    case GET_MORE_USER_TWEET['REQUEST']:
       return { ...state }
     
     case GET_USER_PROFILE['SUCCESS']:
       return {
         ...state,
-        pickupTime: payload.res.pickupTime,
-        user: payload.res.user,
-        tweets: payload.res.tweets
-      }
-
-    case GET_MORE_USER_TWEET['SUCCESS']:
-      return {
-        ...state,
-        pickupTime: payload.res.pickupTime,
-        tweets: payload.res.tweets
+        user: payload.user,
+        tweets: payload.tweets,
+        following: payload.following,
+        follower: payload.follower
       }
     
     case GET_USER_PROFILE['FAILURE']:
-    case GET_MORE_USER_TWEET['FAILURE']:
       return {
         ...state,
-        error: payload.err
+        error: payload.data
       }
     
     default:

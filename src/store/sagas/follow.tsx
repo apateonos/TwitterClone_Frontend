@@ -1,25 +1,8 @@
 import { all, fork, call, put, take } from 'redux-saga/effects';
 import * as Api from '../../api/follow';
 import * as types from '../actions/types';
-import { getFollowUserListApi, postFollowUserApi, deleteFollowUserApi } from '../actions/follow';
+import { postFollowUserApi, deleteFollowUserApi } from '../actions/follow';
 import { FollowUseData } from '../../api/follow';
-
-function* getFollowUserListApiSaga() {
-  try {
-    const data = yield call(Api.getFollowUserList);
-    if (yield data.code === 'errors') throw Error;
-    yield put(getFollowUserListApi.success(data));
-  } catch (err) {
-    yield put(getFollowUserListApi.failure(err));
-  }
-}
-
-function* watchGetFollowUserListApiSaga() {
-  while (true) {
-    yield take(types.GET_FOLLOW_USER_LIST[types.REQUEST]);
-    yield fork(getFollowUserListApiSaga);
-  }
-}
 
 function* postFollowUserApiSaga({ userNumber }: FollowUseData) {
   try {
@@ -57,7 +40,6 @@ function* watchDeleteFollowUserApiSaga() {
 
 export default function* () {
   yield all([
-    fork(watchGetFollowUserListApiSaga),
     fork(watchPostFollowUserApiSaga),
     fork(watchDeleteFollowUserApiSaga)
   ]);

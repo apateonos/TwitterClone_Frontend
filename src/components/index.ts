@@ -3,6 +3,7 @@ export { default as Header } from './base/header';
 export { default as Nav } from './base/nav';
 export { default as Modal } from './base/modal';
 export { default as Setting } from './base/setting';
+export { default as Search } from './base/search';
 
 //image
 export { default as UserImage } from './base/img/userImage';
@@ -16,6 +17,7 @@ export { default as UserUniqueName } from './base/text/userUniqueName';
 export { default as CreateTime } from './base/text/createTime';
 export { default as TweetText } from './base/text/tweetText';
 export { default as ProfileText } from './base/text/profileText';
+export { default as TweetInfoText } from './base/text/tweetInfoText';
 
 //button
 export { default as NavButton } from './base/buttons/navButton';
@@ -25,6 +27,8 @@ export { default as IconButton } from './base/buttons/iconButton';
 export { default as BlueButton } from './base/buttons/blueButton';
 export { default as WhiteButton } from './base/buttons/whiteButton';
 export { default as CancelButton } from './base/buttons/cancelButton';
+export { default as BranchButton } from './base/buttons/branchButton';
+export { default as CancelSmallButton } from './base/buttons/cancelSmallButton';
 
 //inputs
 export { default as AreaInput } from './base/inputs/areaInput';
@@ -39,3 +43,7 @@ export { default as Create } from './create';
 export { default as Profile } from './profile';
 export { default as Detail } from './detail';
 export { default as TweetList } from './tweetList';
+export { default as NotFoundAccount } from './notFoundAccount';
+export { default as NotFoundTweet } from './notFoundTweet';
+export { default as NotFoundDetail } from './notFoundDetail';
+export { default as Explore } from './explore';

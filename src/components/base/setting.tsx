@@ -7,19 +7,18 @@ interface SettingComponentUseData {
 }
 
 export interface SelfProps {
-  userName: string;
-  userUniqueName: string;
-  userImage: string;
+  user_image: string;
+  display_name: string;
+  unique_name: string;
 }
-
 export default ({ self }: SettingComponentUseData) => {
-  const { userImage, userName, userUniqueName } = self;
+  const { user_image, display_name, unique_name } = self;
   return (
     <Container>
-      <UserImage image={userImage ? userImage : '/src/assets/images/default_image.jpg'} />
+      <UserImage image={user_image ? user_image : '/src/assets/images/default_image.jpg'} />
       <UserInforamtionComponent>
-        <UserName text={userName}/>
-        <UserUniqueName text={userUniqueName}/>
+        <UserName text={display_name}/>
+        <UserUniqueName text={unique_name}/>
       </UserInforamtionComponent>
     </Container>
   )

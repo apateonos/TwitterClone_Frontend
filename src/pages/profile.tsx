@@ -1,12 +1,14 @@
 import React from 'react';
-import { Main } from './index';
-import { Profile } from '../containers/index';
+import { Container, MainComponent } from './base/main';
+import { Nav, Profile } from '../containers/index';
 
 export default () => {
   return (
-    <Main 
-      title="Profile"
-      component={<Profile />}
-    />
+    <Container>
+      <Nav />
+      <MainComponent>
+        <Profile />
+      </MainComponent>
+    </Container>
   )
 }

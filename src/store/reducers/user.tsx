@@ -11,10 +11,12 @@ interface UserReducer {
 }
 
 export interface UserSelfData {
-  userNumber: number;
-  userImage: string;
-  userName: string;
-  userUniqueName: string;
+  id: number;
+  user_image: string;
+  display_name: string;
+  unique_name: string;
+  profile: string;
+  created_at: string;
 }
 
 export default function (state = initialState, { type, payload }: any) {
@@ -48,7 +50,7 @@ export default function (state = initialState, { type, payload }: any) {
     case DELETE_USER_ACCOUNT['FAILURE']:
       return {
         ...state,
-        error: payload.err,
+        error: payload.data,
       };
 
     default:

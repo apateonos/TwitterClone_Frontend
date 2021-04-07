@@ -3,19 +3,18 @@ import { post, put, del } from './service';
 
 export interface PostUserTweetUseData {
   tweet: string;
-  imageFile: any;
+  imageFile: any|null;
   replyNumber?: number;
   retweetNumber?: number;
 }
 export const postUserTweet = ({
   tweet, imageFile, replyNumber, retweetNumber
 }: PostUserTweetUseData): AxiosPromise => {
-  console.log('api : ', tweet, imageFile, replyNumber, retweetNumber)
   const form = new FormData();
-  form.append('tweet', tweet);
-  form.append('image', imageFile);
-  form.append('replyNumber', replyNumber as any);
-  form.append('retweetNumber', retweetNumber as any);
+  if (tweet) form.append('tweet', tweet);
+  if (imageFile) form.append('imageFile', imageFile);
+  if (replyNumber) form.append('replyNumber', replyNumber as any);
+  if (retweetNumber) form.append('retweetNumber', retweetNumber as any);
   return post('tweet/post', form, {headers: {'Content-Type': 'multipart/form-data'}});
 };
 
@@ -40,5 +39,5 @@ export interface DeleteUserTweetUseData {
 export const deleteUserTweet = ({
   tweetNumber
 }: DeleteUserTweetUseData): AxiosPromise => {
-  return del('tweet/delete', { tweetNumber })
+  return del('tweet/del', { tweetNumber })
 }

@@ -1,19 +1,10 @@
-import { GET_FOLLOW_USER_LIST, POST_FOLLOW_USER, DELETE_FOLLOW_USER } from './types';
+import { POST_FOLLOW_USER, DELETE_FOLLOW_USER } from './types';
 import { FollowUseData } from '../../api/follow';
 
-export const getFollowUserListApi = {
-  request: () => ({
-    type: GET_FOLLOW_USER_LIST['REQUEST'],
-  }),
-  success: (res: any) => ({
-    type: GET_FOLLOW_USER_LIST['SUCCESS'],
-    payload: res,
-  }),
-  failure: (err: Error) => ({
-    type: GET_FOLLOW_USER_LIST['FAILURE'],
-    err: err.message,
-  }),
-};
+export const getFollowList = (res: any) => ({
+  type: "GET_FOLLOW_LIST",
+  payload: res,
+})
 
 export const postFollowUserApi = {
   request: ({ userNumber }: FollowUseData) => ({

@@ -5,6 +5,8 @@ import timelineReducer from './timeline';
 import detailReducer from './detail';
 import profileReducer from './profile';
 import modalReducer from './modal';
+import followReducer from './follow';
+import searchReducer from './search';
 
 export const rootReducer = combineReducers({
   userReducer,
@@ -12,7 +14,9 @@ export const rootReducer = combineReducers({
   detailReducer,
   timelineReducer,
   profileReducer,
-  modalReducer
+  modalReducer,
+  followReducer,
+  searchReducer
 });
 
 export type State = ReturnType<typeof rootReducer>;

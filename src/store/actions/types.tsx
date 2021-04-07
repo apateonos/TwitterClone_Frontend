@@ -40,3 +40,6 @@ export const GET_MORE_USER_TWEET = createRequestTypes('GET_MORE_USER_TWEET');
 
 //detail
 export const GET_DETAIL_TWEET = createRequestTypes('GET_DETAIL_TWEET');
+
+//explore
+export const GET_SEARCH_BY_KEYWORD = createRequestTypes('GET_SEARCH_BY_KEYWORD');

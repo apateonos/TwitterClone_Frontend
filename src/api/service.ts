@@ -21,7 +21,7 @@ const onError = (error: any) => {
 
 export const get = (url: string, params?: any) => {
   return axios
-    .get(baseUrl + url, params)
+    .get(baseUrl + url, { params })
     .then(onSuccess)
     .catch(onError);
 };
@@ -42,7 +42,7 @@ export const put = (url: string, params?: any, headers?: any) => {
 
 export const del = (url: string, params?: any) => {
   return axios
-    .delete(baseUrl + url, params)
+    .delete(baseUrl + url, {params})
     .then(onSuccess)
     .catch(onError);
 };

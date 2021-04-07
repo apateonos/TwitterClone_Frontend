@@ -5,6 +5,7 @@ import { tweetIcon } from '../assets/images/svg';
 import { baseUrl } from '../config/config';
 
 interface TweetUseProps { 
+  onSubmit: Function;
   onClick: Function;
   onChange: Function;
   self: SelfData;
@@ -13,19 +14,19 @@ interface TweetUseProps {
 }
 
 export interface SelfData {
-  userImage: string;
+  user_image: string;
 }
 
-export default ({ onClick, onChange, self, tweet, image }: TweetUseProps) => {
+export default ({ onSubmit, onClick, onChange, self, tweet, image }: TweetUseProps) => {
   return (
-    <Container>
-      <UserImage image={self.userImage} />
+    <Container onSubmit={(e)=> onSubmit} >
+      <UserImage image={self.user_image} />
       <WriteTweetWrap>
         <AreaInput onChange={onChange} value={tweet} name='tweet' placeholder='Tweets...' />
         {image && 
           <TweetImageWrap>
             <CancelButtonWrap>
-              <CancelButton name='imageCancel' onClick={onClick} /> 
+              <CancelButton name='cancel' onClick={onClick} /> 
             </CancelButtonWrap>
             <TweetImage image={image} />
           </TweetImageWrap>
@@ -36,7 +37,7 @@ export default ({ onClick, onChange, self, tweet, image }: TweetUseProps) => {
             <InputIconButton image={tweetIcon.gif} accept="image/gif" name="gif" onChange={onChange} id="gif_file" />
           </InputIconButtonWrap>
           <TweetButtonWrap>
-            <BlueButton onClick={onClick} text='TWEET' name='post' />
+            <BlueButton type='submit' onClick={onClick} text='TWEET' name='post' />
           </TweetButtonWrap>
         </ToolButtonWrap>
       </WriteTweetWrap>
@@ -44,7 +45,7 @@ export default ({ onClick, onChange, self, tweet, image }: TweetUseProps) => {
   )
 }
 
-const Container = styled.div`
+const Container = styled.form`
   display: flex;
   padding: 10px;
 

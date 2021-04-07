@@ -4,5 +4,6 @@ import followSaga from './follow';
 import timelineSaga from './timeline';
 import detailSaga from './detail';
 import profileSaga from './profile';
+import searchSaga from './search';
 
-export default [userSaga, followSaga, tweetSaga, detailSaga, timelineSaga, profileSaga];
+export default [userSaga, followSaga, tweetSaga, detailSaga, timelineSaga, profileSaga, searchSaga];

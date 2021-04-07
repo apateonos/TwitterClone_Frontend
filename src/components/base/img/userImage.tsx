@@ -13,7 +13,7 @@ export default ({ image, type }: UserImageUseProps) => {
     normal: '40px'
   }
   return (
-    <UserImage imageSize={type ? imageSize[type] : imageSize.normal} src={image ? baseUrl + image : '/src/assets/images/default_image.jpg'} />
+    <UserImage imageSize={type ? imageSize[type] : imageSize.normal} src={image ? image : '/src/assets/images/default_image.jpg'} />
   )
 }
 

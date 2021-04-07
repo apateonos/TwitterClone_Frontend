@@ -1,8 +1,8 @@
 import { all, fork, call, put, take } from 'redux-saga/effects';
 import * as Api from '../../api/profile';
 import * as types from '../actions/types';
-import { getUserProfileApi, getMoreUserTweetApi } from '../actions/profile';
-import { GetUserProfileUseData, GetMoreUserTweetUseData } from '../../api/profile';
+import { getUserProfileApi } from '../actions/profile';
+import { GetUserProfileUseData } from '../../api/profile';
 
 function* getUserProfileApiSaga({ userUniqueName }: GetUserProfileUseData) {
   try {
@@ -21,27 +21,8 @@ function* watchGetUserProfileApiSaga() {
   }
 }
 
-function* getMoreUserTweetApiSaga({ userUniqueName, pickupCount }: GetMoreUserTweetUseData) {
-  try {
-    const data = yield call(Api.getMoreUserTweet, { userUniqueName, pickupCount });
-    if (yield data.code === 'errors') throw Error;
-    yield put(getMoreUserTweetApi.success(data));
-  } catch (err) {
-    yield put(getMoreUserTweetApi.failure(err));
-  }
-}
-
-function* watchGetMoreUserTweetApiSaga() {
-  while (true) {
-    const { userUniqueName, pickupCount } = yield take(types.GET_MORE_USER_TWEET['REQUEST']);
-    yield fork(getMoreUserTweetApiSaga, { userUniqueName, pickupCount });
-  }
-}
-
-
 export default function* () {
   yield all([
-    fork(watchGetUserProfileApiSaga),
-    fork(watchGetMoreUserTweetApiSaga)
+    fork(watchGetUserProfileApiSaga)
   ])
 }

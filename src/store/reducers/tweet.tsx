@@ -25,7 +25,7 @@ export default function (state = initialState, { type, payload }: any) {
     case DELETE_USER_TWEET['FAILURE']:
       return {
         ...state,
-        error: payload.err,
+        error: payload.data,
       };
 
     default:

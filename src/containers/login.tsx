@@ -27,7 +27,6 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
         break;
 
       case 'create':
-        console.log('너도실행돼?')
         createAccountModal();
 
       default:
@@ -66,6 +65,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   loginUserAccountApi: ({ userUniqueName, password }: LoginUserAccountUseData) => {
     return dispatch(loginUserAccountApi.request({ userUniqueName, password }));
   },
+  
   createAccountModal: () => {
     return dispatch(modal.createAccount());
   }

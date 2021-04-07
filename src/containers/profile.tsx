@@ -4,44 +4,28 @@ import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from "../store/reducers/index";
 import { FollowUseData } from '../api/follow';
-import { GetUserProfileUseData, GetMoreUserTweetUseData } from '../api/profile';
+import { GetUserProfileUseData } from '../api/profile';
 import { modal } from '../store/actions/modal';
-import { getUserProfileApi, getMoreUserTweetApi } from '../store/actions/profile';
+import { getUserProfileApi } from '../store/actions/profile';
 import { deleteFollowUserApi, postFollowUserApi } from '../store/actions/follow';
-import { Tweet } from './index';
-import { Profile, TweetList } from '../components/index';
-import { OpenModalUseData } from '../store/actions/modal';
-import { ProfileTweetsData } from '../store/reducers/profile';
+import { Header, Tweet } from './index';
+import { NotFoundTweet, NotFoundAccount, Profile, TweetList } from '../components/index';
+import { ModalComponentData } from '../store/reducers/modal';
+import { ProfileTweetsData, ProfileUserData } from '../store/reducers/profile';
+import { UserSelfData } from '../store/reducers/user';
+import { FollowsData } from '../store/reducers/follow';
+import { Login } from './index';
 
 interface ProfileProps extends RouteComponentProps<any> {
   getUserProfileApi: ({ userUniqueName }: GetUserProfileUseData) => object;
-  getMoreUserTweetApi: ({ userUniqueName, pickupCount }: GetMoreUserTweetUseData) => object;
   postFollowUserApi: ({ userNumber }: FollowUseData) => object;
   deleteFollowUserApi: ({ userNumber }: FollowUseData) => object;
-  opneModal: ({ component }: OpenModalUseData) => object;
-  self: SelfData;
-  user: UserData;
+  openModal: ({ component }: ModalComponentData) => object;
+  self: UserSelfData;
+  user: ProfileUserData;
   tweets: Array<ProfileTweetsData>;
+  follows: Array<FollowsData>;
   post: [];
-}
-
-interface SelfData {
-  userNumber: number;
-  userImage: string;
-  userName: string;
-  userUniqueName: string;
-}
-
-interface UserData {
-  userNumber: number;
-  profileBackground: string;
-  userImage: string;
-  userName: string;
-  userUniqueName: string;
-  profile: string;
-  userCreatedTime: string;
-  userFollowerNumber: number;
-  userFollowingNumber: number;
 }
 
 interface ParamTypes {
@@ -52,20 +36,19 @@ const ProfileContainer: React.FC<ProfileProps> = ({
   getUserProfileApi, 
   postFollowUserApi,
   deleteFollowUserApi,
-  opneModal,
+  openModal,
   self,
   user,
   tweets,
+  follows,
   post,
 }) => {
-  const isSelf = self.userNumber === user.userNumber;
-  const isFollow = true;
+  const isUser = Object.keys(user).length > 0 && user.constructor === Object;
+  const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
+  const isSelf = self.id === user.id;
+  const isFollow = follows.filter(follow => follow.follow_user_id === user.id).length > 0;
   const { userUniqueName } = useParams<ParamTypes>();
-
-  useEffect(() => {
-    getUserProfileApi({ userUniqueName });
-  }, [post]);
-
+  
   useEffect(() => {
     getUserProfileApi({ userUniqueName });
   }, []);
@@ -77,9 +60,12 @@ const ProfileContainer: React.FC<ProfileProps> = ({
 
     switch (name) {
       case 'follow':
-        postFollowUserApi({ 
-          userNumber: idx 
-        });
+        if (isLogin) {
+          postFollowUserApi({ userNumber: idx });
+        }
+        else {
+          openModal({ component: <Login />});
+        }
         break;
       
       case 'unfollow':
@@ -89,13 +75,13 @@ const ProfileContainer: React.FC<ProfileProps> = ({
         break;
 
       case 'reply':
-        opneModal({
+        openModal({
           component: <Tweet replyNumber={idx}/>
         });
         break;
 
       case 'retweet':
-        opneModal({
+        openModal({
           component: <Tweet retweetNumber={idx}/>
         });
         break;
@@ -107,15 +93,24 @@ const ProfileContainer: React.FC<ProfileProps> = ({
 
   return (
     <>
+      <Header 
+        title='Profile'
+      />
       <Profile
         onClick={onClickHandler} 
         user={user}
+        isUser={isUser}
         isSelf={isSelf}
         isFollow={isFollow}
+        userUniqueName={userUniqueName}
       />
       <TweetList 
         onClick={onClickHandler}
         tweets={tweets}
+        notFound={isUser
+          ? <NotFoundTweet/>
+          : <NotFoundAccount/>
+        }
       />
     </>
   )
@@ -125,15 +120,13 @@ const mapStateToProps = (rootState: State) => ({
   self: rootState.userReducer.self,
   user: rootState.profileReducer.user,
   tweets: rootState.profileReducer.tweets,
-  post: rootState.tweetReducer.res
+  post: rootState.tweetReducer.res,
+  follows: rootState.followReducer.follows
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getUserProfileApi: ({ userUniqueName }: GetUserProfileUseData) => {
     return dispatch(getUserProfileApi.request({ userUniqueName }));
-  },
-  getMoreUserTweetApi: ({ userUniqueName, pickupCount }: GetMoreUserTweetUseData) => {
-    return dispatch(getMoreUserTweetApi.request({ userUniqueName, pickupCount }));
   },
   postFollowUserApi: ({ userNumber }: FollowUseData) => {
     return dispatch(postFollowUserApi.request({ userNumber }));
@@ -141,7 +134,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   deleteFollowUserApi: ({ userNumber }: FollowUseData) => {
     return dispatch(deleteFollowUserApi.request({ userNumber }));
   },
-  opneModal: ({ component }: OpenModalUseData) => {
+  openModal: ({ component }: ModalComponentData) => {
     return dispatch(modal.open({ component }));
   }
 });

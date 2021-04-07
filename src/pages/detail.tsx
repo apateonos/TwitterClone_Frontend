@@ -1,12 +1,14 @@
 import React from 'react';
-import { Detail } from '../containers/index';
-import { Main } from './index';
+import { Nav, Detail } from '../containers/index';
+import { Container, MainComponent } from './base/main';
 
 export default () => {
   return (
-    <Main
-      title="Tweet"
-      component={<Detail/>}
-    />
+    <Container>
+      <Nav />
+      <MainComponent>
+        <Detail />
+      </MainComponent>
+    </Container>
   )
 }

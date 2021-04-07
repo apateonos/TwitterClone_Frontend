@@ -11,21 +11,24 @@ interface TimelineReducerUseData {
 }
 
 export interface TimelineTweetsData {
-  userNumber: number;
-  userImage: string;
-  userUniqueName: string;
-  userName: string;
-  tweetNumber: number;
-  tweetContent: string;
-  tweetImage: string;
-  tweetCreatedTime: string;
-  replyTweetCount: number;
-  retweetCount: number;
-  retweetUserImage: string;
-  retweetNumber: number;
-  retweetUserName: string;
-  retweetUserUniqueName: string;
-  retweetContent: string;
+  user_id: number;
+  user_image: string;
+  unique_name: string;
+  display_name: string;
+
+  id: number;
+  tweet_text: string;
+  tweet_image: string;
+  created_at: string;
+  reply_count: number;
+  retweet_count: number;
+  
+  retweet_id: number;
+  retweet_user_id: string;
+  retweet_unique_name: string;
+  retweet_display_name: string;
+  retweet_text: string;
+  retweet_image: string;
 }
 
 export default function (state=initialState, { type, payload }: any) {
@@ -42,7 +45,7 @@ export default function (state=initialState, { type, payload }: any) {
     case GET_USER_TIMELINE['FAILURE']:
       return {
         ...state,
-        error: payload.err
+        error: payload.data
       }
 
     default:

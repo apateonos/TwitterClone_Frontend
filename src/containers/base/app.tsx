@@ -19,6 +19,7 @@ const AppContainer: React.FC<AppContainerProps> = ({
   isModal,
 }) => {
   const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
+  
   return (
     <ThemeProvider theme={theme}>
       <Route isLogin={isLogin} isModal={isModal}/>

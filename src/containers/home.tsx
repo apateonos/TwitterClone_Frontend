@@ -1,24 +1,30 @@
 import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from "../store/reducers/index";
 import { getUserTimelineApi } from '../store/actions/timeline';
 import { modal } from '../store/actions/modal';
-import { Tweet } from './index';
-import { TweetList } from '../components/index';
+import { Header, Tweet } from './index';
+import { NotFoundTweet, TweetList } from '../components/index';
 import { TimelineTweetsData } from '../store/reducers/timeline';
+import { deleteUserTweetApi } from '../store/actions/tweet';
+import { DeleteUserTweetUseData } from '../api/tweet';
+import { ModalComponentData } from '../store/reducers/modal';
 
 interface HomeContainerProps extends RouteComponentProps<any> {
   getUserTimelineApi: () => object;
-  useModal: (component: JSX.Element) => object;
+  deleteUserTweetApi: ({ tweetNumber }: DeleteUserTweetUseData) => object;
+  openModal: ({ component }: ModalComponentData) => object;
   tweets: Array<TimelineTweetsData>;
   post: [];
 }
 
 const HomeContainer: React.FC<HomeContainerProps> = ({
   getUserTimelineApi,
-  useModal,
+  deleteUserTweetApi,
+  openModal,
   tweets,
   post,
 }) => {
@@ -31,17 +37,21 @@ const HomeContainer: React.FC<HomeContainerProps> = ({
   }, []);
 
   const onClickHandler = (
-    event: React.MouseEvent<HTMLButtonElement>, tweetNumber?: number
+    event: React.MouseEvent<HTMLButtonElement>, idx: number
   ) => {
     const { name } = event.currentTarget;
 
     switch (name) {
       case 'reply':
-        useModal(<Tweet replyNumber={tweetNumber}/>);
+        openModal({component: <Tweet replyNumber={idx}/>});
         break;
 
       case 'retweet':
-        useModal(<Tweet retweetNumber={tweetNumber}/>);
+        openModal({component: <Tweet retweetNumber={idx}/>});
+        break;
+      
+      case 'delete':
+        deleteUserTweetApi({ tweetNumber: idx });
         break;
 
       default:
@@ -51,10 +61,16 @@ const HomeContainer: React.FC<HomeContainerProps> = ({
 
   return (
     <>
-      <Tweet />
+      <Header 
+        title='Home'
+      />
+      <TweetWrap>
+        <Tweet />
+      </TweetWrap>
       <TweetList 
         onClick={onClickHandler}
         tweets={tweets} 
+        notFound={<NotFoundTweet/>}
       />
     </>
   )
@@ -69,11 +85,19 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getUserTimelineApi: () => {
     return dispatch(getUserTimelineApi.request());
   },
-  useModal: (component: JSX.Element) => {
+  openModal: ({component}: ModalComponentData) => {
     return dispatch(modal.open({ component }));
+  },
+  deleteUserTweetApi: ({ tweetNumber }: DeleteUserTweetUseData) => {
+    return dispatch(deleteUserTweetApi.request({ tweetNumber }));
   }
 });
 
 export default withRouter(
   compose(connect(mapStateToProps, mapDispatchToProps))(HomeContainer)
 );
+
+const TweetWrap = styled.div`
+  border-bottom: 1px solid ${props => props.theme.color.borderGray};
+  margin-bottom: 15px;
+`;

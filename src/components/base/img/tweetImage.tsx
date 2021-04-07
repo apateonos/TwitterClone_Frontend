@@ -7,14 +7,14 @@ interface TweetImageUseProps {
 }
 export default ({ image }: TweetImageUseProps) => {
   return (
-    <TweetImage src={image}/>
+    <TweetImage src={image ? image : ''}/>
   )
 }
 
 const TweetImage = styled.img`
   width: 100%;
-  height: 300px;
+  height: width/7;
   border-radius: 50px;
-  border: 2px solid ${props => props.theme.color.borderGray};
   overflow: hidden;
+  object-fit: cover;
 `;

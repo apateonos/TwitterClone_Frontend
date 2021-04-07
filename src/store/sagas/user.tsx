@@ -4,12 +4,14 @@ import * as Api from '../../api/user';
 import * as types from '../actions/types';
 import { createUserAccountApi, loginUserAccountApi, changeUserNameApi, deleteUserAccountApi } from '../actions/user';
 import { LoginUserAccountUseData, CreateUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData } from '../../api/user';
+import { getFollowList } from '../actions/follow';
 
 function* loginUserAccountApiSaga({ userUniqueName, password }: LoginUserAccountUseData) {
   try { 
     const data = yield call(Api.loginUserAccount, { userUniqueName, password });
     if (yield data.code === 'errors') throw Error;
     yield put(loginUserAccountApi.success(data));
+    yield put(getFollowList(data)); // 정말 못생긴 코드여서 수정하고싶다... 한번 고민해보자...
     yield axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
     yield put({type: 'CLOSE_MODAL'});
     //yield window.sessionStorage.setIem("refresh", data.refresh); // https 설정이후 쿠키로 변경후 httpOnly 속성부여예정

@@ -6,11 +6,12 @@ import { cancelButtonIcon } from '../../../assets/images/svg';
 interface CancelButtonUseProps {
   onClick: Function;
   name: string;
+  idx?: number;
 }
 
-export default ({ onClick, name }: CancelButtonUseProps) => {
+export default ({ onClick, name, idx }: CancelButtonUseProps) => {
   return (
-    <Button onClick={(e)=>onClick(e)} name={name}>
+    <Button onClick={(e)=>{e.stopPropagation(); onClick(e, idx)}} name={name}>
       {cancelButtonIcon}
     </Button>
   )
@@ -21,6 +22,7 @@ const Button = styled.button`
   height: 35px;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
+  
   svg {
     width: 20px;
     height: 20px;

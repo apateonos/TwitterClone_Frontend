@@ -18,5 +18,5 @@ export const postFollowUser = ({
 export const deleteFollowUser = ({
   userNumber
 }: FollowUseData): AxiosPromise => {
-  return del('unfollow/del', { userNumber });
+  return del('follow/del', { userNumber });
 };

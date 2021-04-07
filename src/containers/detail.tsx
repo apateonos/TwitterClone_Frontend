@@ -5,14 +5,15 @@ import { connect } from 'react-redux';
 import { State } from "../store/reducers/index";
 import { getDetailTweetApi } from '../store/actions/detail';
 import { GetDetailTweetUseData } from '../api/detail';
-import { modal, OpenModalUseData } from '../store/actions/modal';
-import { Tweet } from './index';
-import { Detail, TweetList } from '../components/index';
+import { modal } from '../store/actions/modal';
+import { ModalComponentData } from '../store/reducers/modal';
+import { Header, Tweet } from './index';
+import { Detail, TweetList, NotFoundDetail } from '../components/index';
 import { DetailReplysData, DetailTweetData } from 'store/reducers/detail';
 
 interface DetailTweetUseProps extends RouteComponentProps<any> {
   getDetailTweetApi: ({ tweetNumber }: GetDetailTweetUseData) => object;
-  openModal: ({ component }: OpenModalUseData) => object;
+  openModal: ({ component }: ModalComponentData) => object;
   tweet: DetailTweetData;
   replys: Array<DetailReplysData>;
   post: any;
@@ -30,18 +31,20 @@ const TweetContainer: React.FC<DetailTweetUseProps> = ({
   post
 }) => {
   const { tweetNumber } = useParams<ParamsTypes>();
-  
+  const isTweet = Object.keys(tweet).length > 0 && tweet.constructor === Object;
+/*   
   useEffect(() => {
     getDetailTweetApi({ tweetNumber: Number( tweetNumber )});
   }, [post])
-
+*/
   useEffect(() => {
     getDetailTweetApi({ tweetNumber: Number( tweetNumber )});
   }, [tweetNumber]);
 
+/* 
   useEffect(() => {
     getDetailTweetApi({ tweetNumber: Number( tweetNumber )});
-  }, []);
+  }, []); */
 
   const onClickHandler = (
     event: React.MouseEvent<HTMLButtonElement>, idx: number
@@ -68,14 +71,24 @@ const TweetContainer: React.FC<DetailTweetUseProps> = ({
 
   return (
     <>
-      <Detail 
-        onClick={onClickHandler}
-        tweet={tweet}
-      />
-      <TweetList 
-        onClick={onClickHandler}
-        tweets={replys} 
-      />
+      {isTweet ? 
+        <>
+          <Header 
+            title='Tweet'
+          />
+          <Detail 
+            onClick={onClickHandler}
+            tweet={tweet}
+          />
+          <TweetList 
+            onClick={onClickHandler}
+            tweets={replys}
+            notFound={<></>}
+          />
+        </>
+      :
+        <NotFoundDetail />
+      }
     </>
   )
 }
@@ -90,7 +103,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getDetailTweetApi: ({ tweetNumber }: GetDetailTweetUseData) => {
     return dispatch(getDetailTweetApi.request({ tweetNumber }));
   },
-  openModal: ({ component }: OpenModalUseData) => {
+  openModal: ({ component }: ModalComponentData) => {
     return dispatch(modal.open({ component }));
   }
 });

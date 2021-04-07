@@ -23,6 +23,7 @@ export default ({
   comfirmPassword, 
   profile,
 }: SignComponentUseProps) => {  
+  
   return (
     <InputBox>
       <TitleText>Create Account</TitleText>

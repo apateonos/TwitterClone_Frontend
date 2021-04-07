@@ -23,20 +23,22 @@ export default ({ onClick, onChange, userUniqueName, password }: LoginComponentU
 }
 
 const Container = styled.form`
-  margin: 0 15px;
-  padding: 8px 0;
+  margin: 8px 0px;
+  padding: 0 15px;
 `;
 
 const ButtonWrap = styled.div`
+  margin-top: 5px;
   button: first-child {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
   }
 
   @media only screen and (min-width: 500px) {
     display: flex;
     justify-content: space-around;
-    
+
     button: first-child {
+      margin-bottom: 0;
       margin-right: 5px;
     }
   }

@@ -1,13 +1,27 @@
-const initialState = {
+const initialState: ModalReducer = {
   isModal: false,
   isCreateAccount: false,
-  component: ''
+  component: '',
 };
 
+interface ModalReducer {
+  isModal: boolean;
+  isCreateAccount: boolean;
+  component: ""|ModalComponentData;
+} 
+
+export interface ModalComponentData {
+  component: JSX.Element
+}
 export default function (state = initialState, { type, payload }: any) {
   switch (type) {
+    case 'LOGIN_ACCOUNT':
+      return {
+        ...state,
+        isCreateAccount: false,
+        isModal: true,
+      }
     case 'CREATE_ACCOUNT':
-      console.log('heee??????????//')
       return {
         ...state,
         isModal: true,

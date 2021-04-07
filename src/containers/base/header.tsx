@@ -7,9 +7,11 @@ import { State } from '../../store/reducers/index';
 
 interface HeaderContainerUseProps extends RouteComponentProps<any> {
   self: {};
+  title: JSX.Element | string;
 }
 const HeaderContainer: React.FC<HeaderContainerUseProps> = ({ 
-  self 
+  self,
+  title
 }) => {
   const [ width, setWidth ] = useState(window.document.body.clientWidth);
 
@@ -18,13 +20,14 @@ const HeaderContainer: React.FC<HeaderContainerUseProps> = ({
   },[])
 
   const onClickHandler = () => {
-
+    
   }
 
   return (
     <Header
+      width={width}
       onClick={onClickHandler}
-      title="HOME"
+      title={title}
     />
   )
 }

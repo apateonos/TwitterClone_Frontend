@@ -8,7 +8,6 @@ function* getDetailTweetApiSaga({ tweetNumber }: GetDetailTweetUseData) {
   try {
     const data = yield call(Api.getDetailTweet, { tweetNumber });
     if (yield data.code === 'errors') throw Error;
-    console.log(data);
     yield put(getDetailTweetApi.success(data));
   } catch (err) {
     yield put(getDetailTweetApi.failure(err));

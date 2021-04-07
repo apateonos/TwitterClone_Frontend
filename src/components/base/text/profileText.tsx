@@ -10,4 +10,4 @@ export default ({ text }: ProfileTextUseProps ) => {
   )
 }
 
-const Profile = styled.div``;
+const Profile = styled.p``;

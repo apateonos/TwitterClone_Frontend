@@ -14,6 +14,7 @@ interface TweetContainerUseProps extends RouteComponentProps<any> {
   replyNumber?: number;
   self: UserSelfData;
 }
+
 const TweetContainer: React.FC<TweetContainerUseProps> = ({
   postUserTweetApi,
   retweetNumber,
@@ -21,17 +22,32 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
   self,
 }) => {
   const [ tweet, setTweet ] = useState('');
-  const [ imageFile, setImageFile ] = useState();
+  const [ imageFile, setImageFile ] = useState(null);
   const [ image, setImage ] = useState('');
 
-  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const { name } = event.currentTarget;
 
-    switch (name) {
+    switch ( name ) {
       case 'post':
         postUserTweetApi({ tweet, imageFile, replyNumber, retweetNumber });
         break;
+      
+      default:
+        break;
+    }
+  }
+  
+  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = event.currentTarget;
 
+    switch ( name ) {
+
+      case 'cancel':
+        setImage('');
+        setImageFile(null);
+  
       default:
         break;
     }
@@ -64,6 +80,7 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
 
   return (
     <Tweet 
+      onSubmit={onSubmitHandler}
       onClick={onClickHandler}
       onChange={onChangeHandler}
       self={self}

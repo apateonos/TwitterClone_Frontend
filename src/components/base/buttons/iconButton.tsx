@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface IconButtonUseData {
-  tweetNumber: number;
+  idx: number;
   onClick: Function;
   name: string;
   color: string;
@@ -10,11 +10,11 @@ interface IconButtonUseData {
   count?: number;
 }
 
-export default ({ onClick, name, color, image, count, tweetNumber }: IconButtonUseData) => {
+export default ({ onClick, name, color, image, count, idx }: IconButtonUseData) => {
   return (
-    <ToolButton onClick={(event)=> {event.stopPropagation(); onClick(event, tweetNumber)}} name={name} color={color}>
+    <ToolButton onClick={(event)=> {event.stopPropagation(); onClick(event, idx)}} name={name} color={color}>
       <Icon>{image}</Icon>
-      {count && count > 0 && <TextBox>{count}</TextBox>}
+      {count && <TextBox>{count}</TextBox>}
     </ToolButton>
   )
 }
@@ -67,4 +67,8 @@ const Icon = styled.div`
 const TextBox = styled.span`
   color: ${props => props.theme.color.grayText};
   transition-duration: 0.5s;
+
+  @media only screen and (max-width: 300px) {
+    display: none;
+  }
 `;

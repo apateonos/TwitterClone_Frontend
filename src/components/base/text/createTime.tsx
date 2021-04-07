@@ -21,12 +21,14 @@ export default ({time}:props) => {
 
     result *= 60;
     if (result > 1) {
-      return `${Math.floor(result)}minitess..`
+      return `${Math.floor(result)}minutes..`
     }
 
     result *= 60;
     return `${Math.floor(result)}seconds...`
   }
+  
+  setInterval(setTime, 1000);
   
   return (
     <Container>{setTime(time)}</Container>
@@ -38,7 +40,7 @@ const monthNames = [
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
 ];
 
-const Container = styled.span`
+const Container = styled.p`
   color: ${props => props.theme.color.grayText};
   padding: 1px;
 `;
