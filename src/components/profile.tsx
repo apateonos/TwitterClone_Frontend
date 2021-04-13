@@ -2,7 +2,7 @@
 import React from 'react';
 import user from 'store/sagas/user';
 import styled from 'styled-components';
-import { ProfileBackground, ProfileUserImage, WhiteButton, UserName, UserUniqueName, ProfileText } from './index';
+import { ProfileBackground, ProfileUserImage, WhiteButton, UserName, UserUniqueName, ProfileText, CountButton } from './index';
 import { baseUrl } from '../config/config';
 
 interface ProfileUseProps {
@@ -10,12 +10,14 @@ interface ProfileUseProps {
   isUser: boolean;
   isFollow: boolean;
   isSelf: boolean;
-  user: ProfileUseData;
   userUniqueName: string;
+  user: ProfileUseData;
+  following: Array<ProfileFollowingUseData>;
+  follower: Array<ProfileFollowerUseData>;
 }
 
 export interface ProfileUseData {
-  id: number;
+  user_id: number;
   user_image: string;
   display_name: string;
   unique_name: string;
@@ -23,9 +25,23 @@ export interface ProfileUseData {
   created_at: string;
 }
 
-export default ({ onClick, isUser, isFollow, isSelf, user, userUniqueName }: ProfileUseProps) => {
+export interface ProfileFollowingUseData {
+  user_id: number;
+  user_image: string;
+  display_name: string;
+  unique_name: string;
+}
+
+export interface ProfileFollowerUseData {
+  user_id: number;
+  user_image: string;
+  display_name: string;
+  unique_name: string;
+}
+
+export default ({ onClick, isUser, isFollow, isSelf, user, follower, following, userUniqueName }: ProfileUseProps) => {
   const { 
-    id,
+    user_id,
     user_image,
     display_name,
     unique_name,
@@ -47,10 +63,10 @@ export default ({ onClick, isUser, isFollow, isSelf, user, userUniqueName }: Pro
             <ButtonWrap>
               {
                 isSelf
-                ? <WhiteButton name='setting' onClick={onClick} idx={id} text='Setting'/>              
+                ? <WhiteButton name='setting' onClick={onClick} idx={user_id} text='Setting'/>              
                 : isFollow
-                ? <WhiteButton name='unfollow' onClick={onClick} idx={id} text='Unfollow'/> 
-                : <WhiteButton name='follow' onClick={onClick} idx={id} text='Follow'/>
+                ? <WhiteButton name='unfollow' onClick={onClick} idx={user_id} text='Unfollow'/> 
+                : <WhiteButton name='follow' onClick={onClick} idx={user_id} text='Follow'/>
               }
             </ButtonWrap>
           </ButtonBox>
@@ -59,6 +75,10 @@ export default ({ onClick, isUser, isFollow, isSelf, user, userUniqueName }: Pro
             <UserUniqueName text={unique_name} />
           </UserInfoWrap>
           <ProfileText text={user_profile}/>
+          <CountButtonWrap>
+            <CountButton onClick={onClick} count={follower.length} name='follower' text='follower' />
+            <CountButton onClick={onClick} count={following.length} name='following' text='following' />
+          </CountButtonWrap>
         </ProfileWrap>
         : 
         <ProfileWrap>
@@ -120,9 +140,13 @@ const ButtonWrap = styled.div`
   margin: 9px 0;
 `;
 
+const CountButtonWrap = styled.div`
+  padding: 5px;
+`;
 const ButtonBox = styled.div`
   display: flex;
   justify-content: flex-end;
+  
   @media only screen and (min-width: 300px) {
     justify-content: flex-end;
   } 

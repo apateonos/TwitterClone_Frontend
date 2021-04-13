@@ -6,11 +6,12 @@ interface props {
   name: string;
   value: string;
   placeholder: string;
+  type?: string;
 }
 
-export default ({onChange, name, value, placeholder}: props) => {
+export default ({onChange, name, value, placeholder, type}: props) => {
   return (
-    <InfoInput onChange={(e)=>onChange(e)} name={name} value={value} placeholder={placeholder}/>
+    <InfoInput onChange={(e)=>onChange(e)} type={type ? type : 'text'} name={name} value={value} placeholder={placeholder}/>
   )
 }
 

@@ -10,10 +10,13 @@ import { ModalComponentData } from '../store/reducers/modal';
 import { Header, Tweet } from './index';
 import { Detail, TweetList, NotFoundDetail } from '../components/index';
 import { DetailReplysData, DetailTweetData } from 'store/reducers/detail';
+import { DeleteUserTweetUseData } from '../api/tweet';
+import { deleteUserTweetApi } from '../store/actions/tweet';
 
 interface DetailTweetUseProps extends RouteComponentProps<any> {
   getDetailTweetApi: ({ tweetNumber }: GetDetailTweetUseData) => object;
   openModal: ({ component }: ModalComponentData) => object;
+  deleteUserTweetApi: ({ tweetNumber }: DeleteUserTweetUseData) => object;
   tweet: DetailTweetData;
   replys: Array<DetailReplysData>;
   post: any;
@@ -24,6 +27,7 @@ interface ParamsTypes {
 }
 
 const TweetContainer: React.FC<DetailTweetUseProps> = ({
+  deleteUserTweetApi,
   getDetailTweetApi,
   openModal,
   tweet,
@@ -32,23 +36,15 @@ const TweetContainer: React.FC<DetailTweetUseProps> = ({
 }) => {
   const { tweetNumber } = useParams<ParamsTypes>();
   const isTweet = Object.keys(tweet).length > 0 && tweet.constructor === Object;
-/*   
-  useEffect(() => {
-    getDetailTweetApi({ tweetNumber: Number( tweetNumber )});
-  }, [post])
-*/
-  useEffect(() => {
-    getDetailTweetApi({ tweetNumber: Number( tweetNumber )});
-  }, [tweetNumber]);
 
-/* 
   useEffect(() => {
     getDetailTweetApi({ tweetNumber: Number( tweetNumber )});
-  }, []); */
+  }, [tweetNumber, post]);
 
   const onClickHandler = (
     event: React.MouseEvent<HTMLButtonElement>, idx: number
   ) => {
+    event.stopPropagation();
     const { name } = event.currentTarget;
 
     switch (name) {
@@ -62,6 +58,10 @@ const TweetContainer: React.FC<DetailTweetUseProps> = ({
         openModal({
           component: <Tweet retweetNumber={idx}/>
         });
+        break;
+
+      case 'delete':
+        deleteUserTweetApi({ tweetNumber: idx });
         break;
 
       default:
@@ -105,6 +105,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   openModal: ({ component }: ModalComponentData) => {
     return dispatch(modal.open({ component }));
+  },
+  deleteUserTweetApi: ({ tweetNumber }: DeleteUserTweetUseData) => {
+    return dispatch(deleteUserTweetApi.request({ tweetNumber }));
   }
 });
 

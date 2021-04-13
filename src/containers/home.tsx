@@ -32,10 +32,6 @@ const HomeContainer: React.FC<HomeContainerProps> = ({
     getUserTimelineApi();
   }, [post]);
 
-  useEffect(() => {
-    getUserTimelineApi();
-  }, []);
-
   const onClickHandler = (
     event: React.MouseEvent<HTMLButtonElement>, idx: number
   ) => {

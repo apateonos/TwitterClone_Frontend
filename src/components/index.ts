@@ -29,6 +29,7 @@ export { default as WhiteButton } from './base/buttons/whiteButton';
 export { default as CancelButton } from './base/buttons/cancelButton';
 export { default as BranchButton } from './base/buttons/branchButton';
 export { default as CancelSmallButton } from './base/buttons/cancelSmallButton';
+export { default as CountButton } from './base/buttons/countButton';
 
 //inputs
 export { default as AreaInput } from './base/inputs/areaInput';
@@ -47,3 +48,12 @@ export { default as NotFoundAccount } from './notFoundAccount';
 export { default as NotFoundTweet } from './notFoundTweet';
 export { default as NotFoundDetail } from './notFoundDetail';
 export { default as Explore } from './explore';
+export { default as UserCard } from './userCard';
+export { default as UserList } from './userList';
+export { default as RoomList } from './roomList';
+export { default as RoomCard } from './roomCard';
+export { default as Message } from './message';
+export { default as MessageCard } from './messageCard';
+
+// Not Found
+export { default as NotFoundRoom } from './notFoundRoom'; 

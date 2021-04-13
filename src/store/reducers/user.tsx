@@ -2,16 +2,18 @@ import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, CHANGE_USER_INFORMATION, LOGOU
 
 const initialState = {
   self: {},
-  error: "",
+  token: '',
+  error: '',
+  signError: '',
 };
 
 interface UserReducer {
   self: {} | UserSelfData;
-  error: string;
+  error: any;
 }
 
 export interface UserSelfData {
-  id: number;
+  user_id: number;
   user_image: string;
   display_name: string;
   unique_name: string;
@@ -33,7 +35,8 @@ export default function (state = initialState, { type, payload }: any) {
     case CHANGE_USER_INFORMATION['SUCCESS']:
       return {
         ...state,
-        self: payload.self
+        self: payload.self,
+        token: payload.token
       };
 
     case LOGOUT_USER_ACCOUNT['SUCCESS']:
@@ -43,7 +46,6 @@ export default function (state = initialState, { type, payload }: any) {
         self: {}
       }
       
-    case CREATE_USER_ACCOUNT['FAILURE']:
     case LOGIN_USER_ACCOUNT['FAILURE']:
     case CHANGE_USER_INFORMATION['FAILURE']:
     case LOGOUT_USER_ACCOUNT['FAILURE']:
@@ -53,6 +55,12 @@ export default function (state = initialState, { type, payload }: any) {
         error: payload.data,
       };
 
+    
+    case CREATE_USER_ACCOUNT['FAILURE']:
+      return {
+        ...state,
+        signError: payload.data,
+      }
     default:
       return { ...state };
   }

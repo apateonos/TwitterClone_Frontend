@@ -3,21 +3,33 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from '../store/reducers/index';
-import { Explore, TweetList, NotFoundTweet } from '../components/index';
+import { Explore, TweetList, UserList, NotFoundTweet } from '../components/index';
 import { SearchResultsData } from '../store/reducers/search';
 import { Header, Tweet, Search } from './index';
 import { ModalComponentData } from '../store/reducers/modal';
 import { modal } from '../store/actions/modal';
+import { FollowUseData } from '../api/follow';
+import { Login } from './index';
+import { UserSelfData } from '../store/reducers/user';
+import { deleteFollowUserApi, postFollowUserApi } from '../store/actions/follow';
+
 
 interface SearchProps extends RouteComponentProps<any> {
+  postFollowUserApi: ({ userNumber }: FollowUseData) => object;
+  deleteFollowUserApi: ({ userNumber }: FollowUseData) => object;
   openModal: ({ component }: ModalComponentData) => object;
   results: Array<SearchResultsData>;
+  self: UserSelfData;
 }
 
 const SearchContainer: React.FC<SearchProps> = ({
+  postFollowUserApi,
+  deleteFollowUserApi,
   openModal,
-  results
+  results,
+  self
 }) => {
+  const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
   const [ sortType, setSortType ] = useState('latest');
   const [ buttonIdx, setButtonIdx ] = useState(1);
 
@@ -25,6 +37,21 @@ const SearchContainer: React.FC<SearchProps> = ({
     const { name } = event.currentTarget;
 
     switch ( name ) {
+      case 'follow':
+        if (isLogin) {
+          postFollowUserApi({ userNumber: idx });
+        }
+        else {
+          openModal({ component: <Login />});
+        }
+        break;
+      
+      case 'unfollow':
+        deleteFollowUserApi({ 
+          userNumber: idx 
+        });
+        break;
+
       case 'reply':
         openModal({component: <Tweet replyNumber={idx}/>});
         break;
@@ -43,9 +70,9 @@ const SearchContainer: React.FC<SearchProps> = ({
         setSortType('top');
         break;
 
-      case 'user':
+      case 'people':
         setButtonIdx(idx);
-
+        setSortType('people');
         break;
 
       case 'photo':
@@ -67,22 +94,42 @@ const SearchContainer: React.FC<SearchProps> = ({
         onClick={onClickHandler}
         buttonIdx={buttonIdx}
       />
-      <TweetList
-        onClick={onClickHandler}
-        tweets={sort[sortType as 'latest'|'top'|'photo'](results).reverse()}
-        notFound={<></>}
-      />
+      {sortType !== 'people' ?
+        <TweetList
+          onClick={onClickHandler}
+          tweets={sort[sortType as 'latest'|'top'|'photo'](results).reverse()}
+          notFound={<></>}
+        />
+        :
+        <UserList 
+          onClick={onClickHandler}
+          users={results.filter((item, i) => {
+            return (
+              results.findIndex((item2, j) => {
+                return item.user_id === item2.user_id;
+              }) === i
+            );
+          })}
+        />
+      }
     </>
   )
 }
 
 const mapStateToProps = (rootState: State) => ({
-  results: rootState.searchReducer.results
+  results: rootState.searchReducer.results,
+  self: rootState.userReducer.self
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openModal: ({ component }: ModalComponentData) => {
     return dispatch(modal.open({ component }));
+  },
+  postFollowUserApi: ({ userNumber }: FollowUseData) => {
+    return dispatch(postFollowUserApi.request({ userNumber }));
+  },
+  deleteFollowUserApi: ({ userNumber }: FollowUseData) => {
+    return dispatch(deleteFollowUserApi.request({ userNumber }));
   }
 });
 

@@ -18,7 +18,7 @@ export interface DetailTweetData {
   unique_name: string;
   display_name: string;
 
-  id: number;
+  tweet_id: number;
   tweet_text: string;
   tweet_image: string;
   created_at: string;
@@ -27,6 +27,7 @@ export interface DetailTweetData {
   
   retweet_id: number;
   retweet_user_id: string;
+  retweet_user_image: string;
   retweet_unique_name: string;
   retweet_display_name: string;
   retweet_text: string;
@@ -39,7 +40,7 @@ export interface DetailReplysData {
   unique_name: string;
   display_name: string;
 
-  id: number;
+  tweet_id: number;
   tweet_text: string;
   tweet_image: string;
   created_at: string;
@@ -48,6 +49,7 @@ export interface DetailReplysData {
   
   retweet_id: number;
   retweet_user_id: string;
+  retweet_user_image: string;
   retweet_unique_name: string;
   retweet_display_name: string;
   retweet_text: string;

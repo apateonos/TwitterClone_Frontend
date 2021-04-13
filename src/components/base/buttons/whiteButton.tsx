@@ -11,7 +11,7 @@ interface props {
 
 export default ({ onClick, text, name, type, idx }: props) => {
   return (
-    <Button name={name} onClick={(e)=>onClick(e, idx)} type={type ? type : "button"}>
+    <Button name={name} onClick={(e)=>{e.stopPropagation(); onClick(e, idx)}} type={type ? type : "button"}>
       {text}
     </Button>
   )

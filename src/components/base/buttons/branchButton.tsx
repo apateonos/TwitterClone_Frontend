@@ -1,25 +1,46 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { branchButtonIcon } from '../../../assets/images/svg';
 
 interface MoreVertUseProps {
   onClick: Function;
-  list: Array<string>;
+  list: Array<BranchProps>;
+}
+
+interface BranchProps {
+  text: string;
+  name: string;
   idx: number;
 }
-export default () => {
+export default ({ onClick, list }:MoreVertUseProps) => {
   const [ isVert, setIsVert ] = useState(false);
+
+  const useClickOutside = (ref: any, callback: any) => {
+    const handleClick = (e: any) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        callback();
+      }
+    };
+
+    React.useEffect(() => {
+      document.addEventListener('click', handleClick);
+      return () => {
+        document.removeEventListener('click', handleClick);
+      }
+    });
+  }
+
+  const clickRef = React.useRef() as any;
+  useClickOutside(clickRef, ()=>{setIsVert(false)});
   return (
-    <Container>
+    <Container >
       {isVert && 
         <>
-          <BranchBox>
-            <Branch>asdmlsd</Branch>
-            <Branch>asmdlasme</Branch>
+          <BranchBox ref={clickRef}>
+          {
+            list.map((el, key) => <Branch name={el.name} onClick={(e) => {onClick(e, el.idx); setIsVert(false)}} key={key}>{el.text}</Branch>)
+          }
           </BranchBox>
-          <OnBranchBackground 
-            onClick={(event) => {event.stopPropagation(); setIsVert(false)}}
-          ></OnBranchBackground>
         </>
       }
       <Button onClick={(event)=>{event.stopPropagation(); setIsVert(true);}}>{branchButtonIcon}</Button>
@@ -35,7 +56,7 @@ const Button = styled.button`
   width: 30px;
   height: 30px;
   border-radius: 50%;
-
+  
   :hover {
     background: ${props => props.theme.color.glassBlue};
   }
@@ -44,7 +65,7 @@ const Button = styled.button`
 const BranchBox = styled.div`
   position: absolute;
   right: 0;
-  z-index: 9999;
+  z-index: 1;
   shadow: 5px;
   background: ${props => props.theme.color.white};
   box-shadow: 0px 0px 20px ${props => props.theme.color.borderGray};
@@ -54,9 +75,11 @@ const BranchBox = styled.div`
   }
 `;
 
-const Branch = styled.div`
+const Branch = styled.button`
+  width: 200px;
   padding: 8px 15px;
 
+  font-size: 16px;
   transition-duration: 0.6s;
   :hover {
     background: ${props => props.theme.color.borderBackgroundGray};

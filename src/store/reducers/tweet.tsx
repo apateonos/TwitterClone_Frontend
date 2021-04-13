@@ -17,7 +17,7 @@ export default function (state = initialState, { type, payload }: any) {
     case DELETE_USER_TWEET['SUCCESS']:
       return {
         ...state,
-        res: payload.res
+        res: payload.result
       };
 
     case POST_USER_TWEET['FAILURE']:
@@ -25,7 +25,7 @@ export default function (state = initialState, { type, payload }: any) {
     case DELETE_USER_TWEET['FAILURE']:
       return {
         ...state,
-        error: payload.data,
+        error: payload.data
       };
 
     default:

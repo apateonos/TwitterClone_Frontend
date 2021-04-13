@@ -10,11 +10,12 @@ export interface PostUserTweetUseData {
 export const postUserTweet = ({
   tweet, imageFile, replyNumber, retweetNumber
 }: PostUserTweetUseData): AxiosPromise => {
+  console.log('>>>>>>>>>>>>..',retweetNumber);
   const form = new FormData();
   if (tweet) form.append('tweet', tweet);
   if (imageFile) form.append('imageFile', imageFile);
-  if (replyNumber) form.append('replyNumber', replyNumber as any);
-  if (retweetNumber) form.append('retweetNumber', retweetNumber as any);
+  if (replyNumber) form.append('replyNumber', replyNumber.toString());
+  if (retweetNumber) form.append('retweetNumber', retweetNumber.toString());
   return post('tweet/post', form, {headers: {'Content-Type': 'multipart/form-data'}});
 };
 

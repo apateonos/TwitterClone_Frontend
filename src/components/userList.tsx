@@ -1,0 +1,24 @@
+import React from 'react';
+import styled from 'styled-components';
+import { UserCardUseData } from './userCard';
+import { UserCard } from './index';
+
+interface UserListUseProps {
+  onClick: Function;
+  users: Array<UserCardUseData>;
+}
+
+export default ({ onClick, users }: UserListUseProps) => {
+  return (
+    <Container>
+      {
+        users.length > 0 
+          ? users.map((el, idx)=> <UserCard onClick={onClick} user={el} key={idx} />)
+          : ''
+      }
+    </Container>
+  )
+}
+
+const Container = styled.section`
+`;

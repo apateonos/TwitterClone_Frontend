@@ -15,7 +15,7 @@ export const postUserTweetApi = {
   }),
   failure: (err: Error) => ({
     type: POST_USER_TWEET['FAILURE'],
-    err: err.message,
+    payload: err,
   }), 
 };
 
@@ -32,7 +32,7 @@ export const updateUserTweetApi = {
   }),
   failure: (err: Error) => ({
     type: UPDATE_USER_TWEET['FAILURE'],
-    err: err.message,
+    payload: err,
   }), 
 };
 
@@ -47,6 +47,6 @@ export const deleteUserTweetApi = {
   }),
   failure: (err: Error) => ({
     type: DELETE_USER_TWEET['FAILURE'],
-    err: err.message,
+    payload: err,
   }), 
 };

@@ -17,7 +17,7 @@ interface ProfileReducerUseData {
 }
 
 export interface ProfileUserData {  
-  id: number;
+  user_id: number;
   user_image: string;
   display_name: string;
   unique_name: string;
@@ -26,17 +26,19 @@ export interface ProfileUserData {
 }
 
 export interface ProfileFollowingData {
-  id: number;
+  user_id: number;
   user_image: string;
   display_name: string;
   unique_name: string;
+  user_profile: string;
 }
 
 export interface ProfileFollowerData {
-  id: number;
+  user_id: number;
   user_image: string;
   display_name: string;
   unique_name: string;
+  user_profile: string;
 }
 
 export interface ProfileTweetsData {
@@ -45,7 +47,7 @@ export interface ProfileTweetsData {
   unique_name: string;
   display_name: string;
 
-  id: number;
+  tweet_id: number;
   tweet_text: string;
   tweet_image: string;
   created_at: string;
@@ -54,6 +56,7 @@ export interface ProfileTweetsData {
   
   retweet_id: number;
   retweet_user_id: string;
+  retweet_user_image: string;
   retweet_unique_name: string;
   retweet_display_name: string;
   retweet_text: string;

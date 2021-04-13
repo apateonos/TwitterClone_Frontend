@@ -16,7 +16,7 @@ export interface TimelineTweetsData {
   unique_name: string;
   display_name: string;
 
-  id: number;
+  tweet_id: number;
   tweet_text: string;
   tweet_image: string;
   created_at: string;
@@ -25,6 +25,7 @@ export interface TimelineTweetsData {
   
   retweet_id: number;
   retweet_user_id: string;
+  retweet_user_image: string;
   retweet_unique_name: string;
   retweet_display_name: string;
   retweet_text: string;
@@ -39,7 +40,7 @@ export default function (state=initialState, { type, payload }: any) {
     case GET_USER_TIMELINE['SUCCESS']:
       return {
         ...state,
-        tweets: payload.res,
+        tweets: payload.timeline,
       }
 
     case GET_USER_TIMELINE['FAILURE']:

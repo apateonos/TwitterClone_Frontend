@@ -7,6 +7,5 @@ export interface GetUserProfileUseData {
 export const getUserProfile = ({
   userUniqueName
 }: GetUserProfileUseData): AxiosPromise => {
-  console.log(userUniqueName);
   return get('profile', { userUniqueName })
 }

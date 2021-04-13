@@ -15,8 +15,9 @@ export interface SearchResultsData {
   user_image: string;
   unique_name: string;
   display_name: string;
+  user_profile: string;
 
-  id: number;
+  tweet_id: number;
   tweet_text: string;
   tweet_image: string;
   created_at: string;
@@ -26,6 +27,7 @@ export interface SearchResultsData {
   
   retweet_id: number;
   retweet_user_id: string;
+  retweet_user_image: string;
   retweet_unique_name: string;
   retweet_display_name: string;
   retweet_text: string;
@@ -46,7 +48,7 @@ export default function (state = initialState, { type, payload }: any) {
     case GET_SEARCH_BY_KEYWORD['FAILURE']:
       return {
         ...state,
-        err: payload.err
+        err: payload.data
       }
     
     default:

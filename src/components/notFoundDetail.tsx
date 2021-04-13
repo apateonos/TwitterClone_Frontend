@@ -8,7 +8,8 @@ export default () => {
       <TitleWrap>
         <MainTitleWrap>
           <MainTitle>
-There is no tweet you are looking for.</MainTitle>
+            There is no tweet you are looking for.
+          </MainTitle>
         </MainTitleWrap>
         <Link to='/explore'>
           <SubTitle>Try more search?</SubTitle>

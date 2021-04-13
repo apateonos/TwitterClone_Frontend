@@ -6,7 +6,6 @@ import Route from '../../routes/route';
 import '../../assets/style/main.scss';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../assets/style/lib/theme';
-import { Modal } from '../../components/index';
 
 interface AppContainerProps {
   self: any;

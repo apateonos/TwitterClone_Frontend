@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
+import { State } from "../store/reducers/index";
 import { LoginUserAccountUseData } from 'api/user';
 import { loginUserAccountApi } from '../store/actions/user';
 import { modal } from '../store/actions/modal';
@@ -10,22 +11,34 @@ import { Login } from '../components/index';
 interface LoginContainerUseProps extends RouteComponentProps<any> {
   loginUserAccountApi: ({ userUniqueName, password }: LoginUserAccountUseData) => object;
   createAccountModal: () => object;
+  error: any;
 }
 
 const LoginContainer: React.FC<LoginContainerUseProps> = ({
   loginUserAccountApi,
   createAccountModal,
+  error
 }) => {
   const [ userUniqueName, setUserUniqueName ] = useState('');
   const [ password, setPassword ] = useState('');
 
-  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const { name } = event.currentTarget;
     switch (name) {
       case 'login':
         loginUserAccountApi({ userUniqueName, password });
         break;
 
+      default:
+        break;
+    }
+  }
+
+  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = event.currentTarget;
+
+    switch (name) {
       case 'create':
         createAccountModal();
 
@@ -50,16 +63,34 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
         break;
     }
   }
-
+  
+  const errorCode = (error: string) => {
+    switch (error) {
+      case 'ER_INVAILD_UNIQUENAME':
+        return 2;
+      case 'ER_INVAILD_PASSWORD':
+        return 3;
+      default:
+        return 0;
+    }
+  }
+  
   return (
     <Login 
+      onSubmit={onSubmitHandler}
       onClick={onClickHandler}
       onChange={onChangeHandler}
       userUniqueName={userUniqueName}
       password={password}
+      error={errorCode(error.code)}
+      errorMessage={error.message}
     />
   )
 }
+
+const mapStateToProps = (rootState: State) => ({
+  error: rootState.userReducer.error
+})
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loginUserAccountApi: ({ userUniqueName, password }: LoginUserAccountUseData) => {
@@ -72,7 +103,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default withRouter(
-  compose(connect(null, mapDispatchToProps))(LoginContainer)
+  compose(connect(mapStateToProps, mapDispatchToProps))(LoginContainer)
 );
 
 interface VerificationInputUseData {

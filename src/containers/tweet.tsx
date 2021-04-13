@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ interface TweetContainerUseProps extends RouteComponentProps<any> {
   retweetNumber?: number;
   replyNumber?: number;
   self: UserSelfData;
+  post: any;
 }
 
 const TweetContainer: React.FC<TweetContainerUseProps> = ({
@@ -20,29 +21,25 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
   retweetNumber,
   replyNumber,
   self,
+  post,
 }) => {
   const [ tweet, setTweet ] = useState('');
   const [ imageFile, setImageFile ] = useState(null);
   const [ image, setImage ] = useState('');
+  
+  useEffect(() => {
+    setTweet('');
+    setImageFile(null);
+    setImage('');
+  }, [post]);
 
-  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = event.currentTarget;
 
     switch ( name ) {
       case 'post':
         postUserTweetApi({ tweet, imageFile, replyNumber, retweetNumber });
         break;
-      
-      default:
-        break;
-    }
-  }
-  
-  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const { name } = event.currentTarget;
-
-    switch ( name ) {
 
       case 'cancel':
         setImage('');
@@ -80,7 +77,6 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
 
   return (
     <Tweet 
-      onSubmit={onSubmitHandler}
       onClick={onClickHandler}
       onChange={onChangeHandler}
       self={self}
@@ -91,7 +87,8 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
 }
 
 const mapStateToProps = (rootState: State) => ({
-  self: rootState.userReducer.self
+  self: rootState.userReducer.self,
+  post: rootState.tweetReducer.res
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

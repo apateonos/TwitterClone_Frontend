@@ -7,6 +7,7 @@ import profileReducer from './profile';
 import modalReducer from './modal';
 import followReducer from './follow';
 import searchReducer from './search';
+import messageReducer from './message';
 
 export const rootReducer = combineReducers({
   userReducer,
@@ -16,7 +17,8 @@ export const rootReducer = combineReducers({
   profileReducer,
   modalReducer,
   followReducer,
-  searchReducer
+  searchReducer,
+  messageReducer
 });
 
 export type State = ReturnType<typeof rootReducer>;

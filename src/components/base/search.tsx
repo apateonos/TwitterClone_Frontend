@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { nav } from '../../assets/images/svg';
 import { CancelSmallButton } from '../index';
@@ -8,17 +8,36 @@ interface SearchComponentUseProps {
   onClick: Function;
   onChange: Function;
   keyword: string;
-  isFocus: boolean;
-  clickRef: any;
+  placeholder?: string;
 }
 
-export default ({ onSubmit, onClick, onChange, keyword, isFocus, clickRef }: SearchComponentUseProps) => {
+export default ({ onSubmit, onClick, onChange, keyword, placeholder }: SearchComponentUseProps) => {
+  const [ isFocus, setIsFocus ] = useState(false);
+
+  const useClickOutside = (ref: any, callback: any) => {
+    const handleClick = (e: any) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        callback();
+      }
+    };
+
+    React.useEffect(() => {
+      document.addEventListener('click', handleClick);
+      return () => {
+        document.removeEventListener('click', handleClick);
+      }
+    });
+  }
+
+  const clickRef = React.useRef() as any;
+  useClickOutside(clickRef, ()=>setIsFocus(false));
+
   return (
     <Container isFocus={isFocus} name='search' onSubmit={(e) => onSubmit(e)} >
       <IconWrap isFocus={isFocus}>
         {nav.explore}
       </IconWrap>
-      <SearchInput ref={clickRef} onClick={(e)=> onClick(e)} onChange={(e) => onChange(e)} name='search' value={keyword}/>
+      <SearchInput ref={clickRef} onClick={(e)=> onClick(e)} onChange={(e) => onChange(e)} name='search' value={keyword} placeholder={placeholder}/>
       {keyword.length > 0 && isFocus &&
         <CancelButtonWrap >
           <CancelSmallButton onClick={onClick} name='cancel' type='button'/>

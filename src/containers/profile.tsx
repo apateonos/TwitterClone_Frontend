@@ -9,22 +9,30 @@ import { modal } from '../store/actions/modal';
 import { getUserProfileApi } from '../store/actions/profile';
 import { deleteFollowUserApi, postFollowUserApi } from '../store/actions/follow';
 import { Header, Tweet } from './index';
-import { NotFoundTweet, NotFoundAccount, Profile, TweetList } from '../components/index';
+import { NotFoundTweet, NotFoundAccount, Profile, TweetList, UserList } from '../components/index';
 import { ModalComponentData } from '../store/reducers/modal';
-import { ProfileTweetsData, ProfileUserData } from '../store/reducers/profile';
+import { ProfileFollowerData, ProfileFollowingData, ProfileTweetsData, ProfileUserData } from '../store/reducers/profile';
 import { UserSelfData } from '../store/reducers/user';
 import { FollowsData } from '../store/reducers/follow';
 import { Login } from './index';
+import { deleteUserTweetApi } from '../store/actions/tweet';
+import { DeleteUserTweetUseData } from '../api/tweet';
+import { CreateRoomUseData } from '../socket/write';
+import { createRoomSocket } from '../store/actions/message';
 
 interface ProfileProps extends RouteComponentProps<any> {
   getUserProfileApi: ({ userUniqueName }: GetUserProfileUseData) => object;
   postFollowUserApi: ({ userNumber }: FollowUseData) => object;
   deleteFollowUserApi: ({ userNumber }: FollowUseData) => object;
   openModal: ({ component }: ModalComponentData) => object;
+  deleteUserTweetApi: ({ tweetNumber }: DeleteUserTweetUseData) => object;
+  createRoomSocket: ({ users }: CreateRoomUseData) => object;
   self: UserSelfData;
   user: ProfileUserData;
   tweets: Array<ProfileTweetsData>;
   follows: Array<FollowsData>;
+  follower: Array<ProfileFollowerData>;
+  following: Array<ProfileFollowingData>;
   post: [];
 }
 
@@ -37,25 +45,31 @@ const ProfileContainer: React.FC<ProfileProps> = ({
   postFollowUserApi,
   deleteFollowUserApi,
   openModal,
+  deleteUserTweetApi,
+  createRoomSocket,
   self,
   user,
   tweets,
   follows,
+  following,
+  follower,
   post,
 }) => {
   const isUser = Object.keys(user).length > 0 && user.constructor === Object;
   const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
-  const isSelf = self.id === user.id;
-  const isFollow = follows.filter(follow => follow.follow_user_id === user.id).length > 0;
+  const isSelf = isLogin && self.user_id === user.user_id;
+  const isFollow = follows.filter(follow => follow.follow_user_id === user.user_id).length > 0;
   const { userUniqueName } = useParams<ParamTypes>();
-  
+
   useEffect(() => {
     getUserProfileApi({ userUniqueName });
-  }, []);
+  }, [post]);
 
   const onClickHandler = (
     event: React.MouseEvent<HTMLButtonElement>, idx: number,
   ) => {
+    event.stopPropagation();
+    console.log('click');
     const { name } = event.currentTarget;
 
     switch (name) {
@@ -74,6 +88,14 @@ const ProfileContainer: React.FC<ProfileProps> = ({
         });
         break;
 
+      case 'follower':
+        openModal({ component: <UserList onClick={onClickHandler} users={follower} />})
+        break;
+
+      case 'following':
+        openModal({ component: <UserList onClick={onClickHandler} users={following} />})
+        break;
+      
       case 'reply':
         openModal({
           component: <Tweet replyNumber={idx}/>
@@ -86,6 +108,16 @@ const ProfileContainer: React.FC<ProfileProps> = ({
         });
         break;
 
+      case 'delete':
+        console.log('delete');
+        deleteUserTweetApi({ tweetNumber: idx });
+        break;
+
+      case 'message':
+        console.log('message');
+        createRoomSocket({ users: [idx] })
+        break;
+      
       default:
         break;
     }
@@ -98,10 +130,12 @@ const ProfileContainer: React.FC<ProfileProps> = ({
       />
       <Profile
         onClick={onClickHandler} 
-        user={user}
         isUser={isUser}
         isSelf={isSelf}
         isFollow={isFollow}
+        user={user}
+        follower={follower}
+        following={following}
         userUniqueName={userUniqueName}
       />
       <TweetList 
@@ -121,7 +155,9 @@ const mapStateToProps = (rootState: State) => ({
   user: rootState.profileReducer.user,
   tweets: rootState.profileReducer.tweets,
   post: rootState.tweetReducer.res,
-  follows: rootState.followReducer.follows
+  follows: rootState.followReducer.follows,
+  following: rootState.profileReducer.following,
+  follower: rootState.profileReducer.follower
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -136,6 +172,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   openModal: ({ component }: ModalComponentData) => {
     return dispatch(modal.open({ component }));
+  },
+  deleteUserTweetApi: ({ tweetNumber }: DeleteUserTweetUseData) => {
+    return dispatch(deleteUserTweetApi.request({ tweetNumber }));
+  },
+  createRoomSocket: ({ users }: CreateRoomUseData) => {
+    return dispatch(createRoomSocket.request({ users }));
   }
 });
 

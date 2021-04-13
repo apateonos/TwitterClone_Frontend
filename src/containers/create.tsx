@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
+import { State } from "../store/reducers/index";
 import { CreateUserAccountUseData } from '../api/user';
 import { createUserAccountApi } from '../store/actions/user';
 import { Create } from '../components/index';
 
 interface TweetDetailProps extends RouteComponentProps<any> {
   createUserAccountApi: ({ userUniqueName, userName, password, imageFile, profile }: CreateUserAccountUseData) => object; 
+  error: any;
 }
 
 const SignContainer: React.FC<TweetDetailProps> = ({
-  createUserAccountApi
+  createUserAccountApi,
+  error
 }) => {
   const [ userUniqueName, setUserUniqueName ] = useState('');
   const [ userName, setUserName ] = useState('');
@@ -20,12 +23,22 @@ const SignContainer: React.FC<TweetDetailProps> = ({
   const [ userImage, setUserImage ] = useState('');
   const [ comfirmPassword, setComfirmPassword ] = useState('');
   const [ imageFile, setImageFile ] = useState('');
+  const [ errorMessage, setErrorMessage ] = useState('');
+  const [ errorNumber, setErrorNumber ] = useState(0);
 
-  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const { name } = event.currentTarget;
-    
+
     switch ( name ) {
       case 'create':
+        const checkVaild = verificationInputs({ userUniqueName, userName, password, comfirmPassword });
+
+        if (checkVaild) {
+          setErrorNumber(checkVaild);
+          setErrorMessage(errorText[checkVaild - 3]);
+          break;
+        }
         createUserAccountApi({
           userUniqueName,
           userName,
@@ -33,6 +46,20 @@ const SignContainer: React.FC<TweetDetailProps> = ({
           password,
           profile
         })
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = event.currentTarget;
+    
+    switch ( name ) {
+      case 'imageCancel':
+        setImageFile('');
+        setUserImage('');
         break;
 
       default:
@@ -81,8 +108,23 @@ const SignContainer: React.FC<TweetDetailProps> = ({
     }
   }
 
+  const errorCode = (error: string) => {
+    switch (error) {
+      case 'ER_INVAILD_UNIQUENAME':
+        return 3;
+      case 'ER_INVAILD_USERNAME':
+        return 4;
+      case 'ER_INVAILD_PASSWORD':
+        return 5;
+
+      default:
+        return 0;
+    }
+  }
+
   return (
     <Create 
+      onSubmit={onSubmitHandler}
       onClick={onClickHandler}
       onChange={onChangeHandler}
       userUniqueName={userUniqueName}
@@ -91,9 +133,15 @@ const SignContainer: React.FC<TweetDetailProps> = ({
       password={password}
       comfirmPassword={comfirmPassword}
       profile={profile}
+      error={error !== '' ? errorCode(error.code) : errorNumber}
+      message={error !== '' ? error.message : errorMessage}
     />
   )
 }
+
+const mapStateToProps = (rootState: State) => ({
+  error: rootState.userReducer.signError
+})
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   createUserAccountApi: ({ userUniqueName, userName, password, imageFile, profile }: CreateUserAccountUseData) => {
@@ -102,7 +150,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default withRouter(
-  compose(connect(null, mapDispatchToProps))(SignContainer)
+  compose(connect(mapStateToProps, mapDispatchToProps))(SignContainer)
 );
 
 interface VerificationInputUseData {
@@ -113,11 +161,18 @@ interface VerificationInputUseData {
 }
 
 const verificationInputs = ({ userUniqueName, userName, password, comfirmPassword }: VerificationInputUseData) => {
-  if ( userUniqueName === '' ) return 'enter your ID or Email...';
-  if ( userName !== undefined && userName === '' ) return 'enter your DisplayName...';
-  if ( password === '' ) return 'enter your password...';
-  if ( comfirmPassword !== undefined && comfirmPassword === '' ) return 'enter your comfirm password...';
-  if ( comfirmPassword !== undefined && comfirmPassword !== password ) return "it's different password between comfirm password...";
-
+  if ( userUniqueName.length < 4 ) return 3;
+  if ( userName.length < 4 ) return 4;
+  if ( password.length < 4 ) return 5;
+  if ( comfirmPassword.length < 4 ) return 6;
+  if ( comfirmPassword !== password ) return 6;
   return false;
 };
+
+const errorText = [
+  'unique name must be at least 4 characters long.',
+  'display name must be at least 4 characters long.',
+  'password must be at least 4 characters long.',
+  'enter comfirm password.',
+  "it's different password between comfirm password"
+]

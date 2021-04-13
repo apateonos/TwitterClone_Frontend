@@ -5,7 +5,6 @@ import { tweetIcon } from '../assets/images/svg';
 import { baseUrl } from '../config/config';
 
 interface TweetUseProps { 
-  onSubmit: Function;
   onClick: Function;
   onChange: Function;
   self: SelfData;
@@ -17,9 +16,9 @@ export interface SelfData {
   user_image: string;
 }
 
-export default ({ onSubmit, onClick, onChange, self, tweet, image }: TweetUseProps) => {
+export default ({ onClick, onChange, self, tweet, image }: TweetUseProps) => {
   return (
-    <Container onSubmit={(e)=> onSubmit} >
+    <Container >
       <UserImage image={self.user_image} />
       <WriteTweetWrap>
         <AreaInput onChange={onChange} value={tweet} name='tweet' placeholder='Tweets...' />
@@ -37,7 +36,7 @@ export default ({ onSubmit, onClick, onChange, self, tweet, image }: TweetUsePro
             <InputIconButton image={tweetIcon.gif} accept="image/gif" name="gif" onChange={onChange} id="gif_file" />
           </InputIconButtonWrap>
           <TweetButtonWrap>
-            <BlueButton type='submit' onClick={onClick} text='TWEET' name='post' />
+            <BlueButton onClick={onClick} text='TWEET' name='post' />
           </TweetButtonWrap>
         </ToolButtonWrap>
       </WriteTweetWrap>
@@ -73,6 +72,7 @@ const ToolButtonWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 const InputIconButtonWrap = styled.div`

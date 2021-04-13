@@ -23,10 +23,8 @@ const NavContainer: React.FC<NavContainerUseProps> = ({
   self
 }) => {
   const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
-  const [ width, setWidth ] = useState(window.document.body.clientWidth); 
-  const history = useHistory();
-  const params = useParams();
-  console.log(history.location.pathname);
+  const [ width, setWidth ] = useState(window.document.body.clientWidth);
+
   useEffect(()=> {
     window.addEventListener('resize', ()=> setWidth(window.document.body.clientWidth));
   }, [])

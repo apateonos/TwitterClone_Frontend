@@ -14,7 +14,7 @@ export default ({ onClick, tweets, notFound }: TweetListUseProps) => {
     <Container>
       {
         tweets.length > 0 
-          ? tweets.map((el, idx)=> <TweetCard onClick={onClick} tweet={el} key={idx} />)
+          ? tweets.map((el, key)=> <TweetCard onClick={onClick} tweet={el} key={key} />)
           : notFound
       }
     </Container>

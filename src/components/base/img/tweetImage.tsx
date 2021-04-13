@@ -14,7 +14,7 @@ export default ({ image }: TweetImageUseProps) => {
 const TweetImage = styled.img`
   width: 100%;
   height: width/7;
-  border-radius: 50px;
+  border-radius: 10px;
   overflow: hidden;
   object-fit: cover;
 `;

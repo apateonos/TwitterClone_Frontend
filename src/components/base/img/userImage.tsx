@@ -4,13 +4,14 @@ import { baseUrl } from '../../../config/config';
 
 interface UserImageUseProps {
   image: string;
-  type?: 'large'|'normal';
+  type?: 'large'|'normal'|'small';
 }
 
 export default ({ image, type }: UserImageUseProps) => {
   const imageSize = {
     large: '50px',
-    normal: '40px'
+    normal: '40px',
+    small: '20px'
   }
   return (
     <UserImage imageSize={type ? imageSize[type] : imageSize.normal} src={image ? image : '/src/assets/images/default_image.jpg'} />

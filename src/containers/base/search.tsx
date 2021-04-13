@@ -17,25 +17,6 @@ const SearchContainer: React.FC<SearchProps> = ({
   results
 }) => {
   const [ keyword, setKeyword ] = useState('');
-  const [ isFocus, setIsFocus ] = useState(false);
-
-  const useClickOutside = (ref: any, callback: any) => {
-    const handleClick = (e: any) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        callback();
-      }
-    };
-
-    React.useEffect(() => {
-      document.addEventListener('click', handleClick);
-      return () => {
-        document.removeEventListener('click', handleClick);
-      }
-    });
-  }
-
-  const clickRef = React.useRef();
-  useClickOutside(clickRef, ()=>setIsFocus(false));
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -43,7 +24,6 @@ const SearchContainer: React.FC<SearchProps> = ({
     
     switch ( name ) {
       case 'search':
-        console.log('submit!!');
         getSearchByKeywordApi({ keyword });
         break;
 
@@ -56,18 +36,11 @@ const SearchContainer: React.FC<SearchProps> = ({
     const { name } = event.currentTarget;
 
     switch ( name ) {
-      case 'cancel':
-        console.log('cancel!!');
+      case 'cancel':        
         setKeyword('');
         break;
 
-      case 'search':
-        console.log('input!');
-        setIsFocus(true);
-        break;
-
       default:
-        console.log('default!!');
         break;
     }
   }
@@ -91,8 +64,6 @@ const SearchContainer: React.FC<SearchProps> = ({
       onClick={onClickHandler}
       onChange={onChangeHandler}
       keyword={keyword}
-      isFocus={isFocus}
-      clickRef={clickRef}
     />
   )
 }

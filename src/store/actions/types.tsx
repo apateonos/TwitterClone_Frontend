@@ -43,3 +43,11 @@ export const GET_DETAIL_TWEET = createRequestTypes('GET_DETAIL_TWEET');
 
 //explore
 export const GET_SEARCH_BY_KEYWORD = createRequestTypes('GET_SEARCH_BY_KEYWORD');
+
+//socket
+export const CREATE_ROOM = createRequestTypes('CREATE_ROOM');
+export const SEND_MESSAGE = createRequestTypes('SEND_MESSAGE');
+export const LEAVE_ROOM = createRequestTypes('LEAVE_ROOM');
+
+//message
+export const GET_MESSAGE_LIST = createRequestTypes('GET_MESSAGE_LIST')

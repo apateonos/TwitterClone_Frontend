@@ -13,7 +13,9 @@ function* loginUserAccountApiSaga({ userUniqueName, password }: LoginUserAccount
     yield put(loginUserAccountApi.success(data));
     yield put(getFollowList(data)); // 정말 못생긴 코드여서 수정하고싶다... 한번 고민해보자...
     yield axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
-    yield put({type: 'CLOSE_MODAL'});
+    yield put({ type: 'CLOSE_MODAL' });
+    yield put({ type: 'CONNECTION_SOCKET', token: data.token });
+    //yield put({ type: 'ACCESS_SOCKET', token: data.token });
     //yield window.sessionStorage.setIem("refresh", data.refresh); // https 설정이후 쿠키로 변경후 httpOnly 속성부여예정
   } catch (err) {
     yield put(loginUserAccountApi.failure(err));
