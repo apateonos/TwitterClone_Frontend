@@ -1,4 +1,4 @@
-import { BlueButton } from './index';
+import { BlueButton } from '../../index';
 import React from 'react';
 import styled from 'styled-components';
 

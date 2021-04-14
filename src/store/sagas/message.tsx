@@ -17,13 +17,6 @@ function* getMessageListApiSaga () {
   }
 }
 
-function* watchGetMessageListApiSaga () {
-  while (true) {
-    yield take(type.GET_MESSAGE_LIST['REQUEST']);
-    yield fork(getMessageListApiSaga);
-  }
-}
-
 function* watchReadSocketChannelSaga (socket: any) {
   const channel = yield call(readSocketChannel, socket);
   while (true) {
@@ -35,9 +28,11 @@ function* watchReadSocketChannelSaga (socket: any) {
 function* createRoomSocketSaga (socket: any, { users }: CreateRoomUseData) {
   try {
     const data = yield call(Soc.createRoom, socket, { users });
-    if (yield data.code === 'errors') throw Error;
+    if (yield data.code === 'errors') throw Error; 
     yield put(createRoomSocket.success(data));
+    yield call(joinRoom, socket);
   } catch (err) {
+    console.log(err);
     yield put(createRoomSocket.failure(err));
   }
 }
@@ -62,7 +57,7 @@ function* sendMessageSocketSaga (socket: any, { room_id, message }: SendMessageU
 function* watchSendMessageSocketSaga (socket: any) {
   while (true) {
     const { room_id, message } = yield take(type.SEND_MESSAGE['REQUEST']);
-    yield fork(sendMessageSocketSaga, socket, { room_id, message })
+    yield fork(sendMessageSocketSaga, socket, { room_id, message });
   }
 }
 
@@ -95,13 +90,13 @@ function* watchSocketFlowSaga () {
     const { token } = yield take('CONNECTION_SOCKET');
     const socket = yield call(connection, token);
     yield call(joinRoom, socket);
+    yield fork(getMessageListApiSaga);
     yield fork(socketHandlerSaga, socket);
   }
 }
 
 export default function* () {
   yield all([
-    fork(watchGetMessageListApiSaga),
     fork(watchSocketFlowSaga)
   ])
 }

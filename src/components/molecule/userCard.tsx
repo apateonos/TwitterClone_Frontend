@@ -1,10 +1,10 @@
-import { UserImage, UserName, UserUniqueName, BlueButton } from './index';
-import { baseUrl } from '../config/config';
+import { UserImage, UserName, UserUniqueName, BlueButton } from '../index';
+import { baseUrl } from '../../config/config';
 import React from 'react';
 import styled from 'styled-components';
-import { State } from "../store/reducers/index";
+import { State } from "../../store/reducers/index";
 import { useSelector } from 'react-redux';
-import { FollowsData } from '../store/reducers/follow';
+import { FollowsData } from '../../store/reducers/follow';
 import { useHistory } from 'react-router';
 
 interface UserCardUseProps {

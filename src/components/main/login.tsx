@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { InfoInput, WhiteButton, BlueButton } from './index';
+import { InfoInput, WhiteButton, BlueButton } from '../index';
 
 interface LoginComponentUseProps {
   onSubmit: Function;

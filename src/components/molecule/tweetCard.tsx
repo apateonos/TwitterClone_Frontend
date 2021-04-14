@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import { tweetCardIcon } from '../assets/images/svg';
-import { CreateTime, UserImage, UserName, UserUniqueName, TweetText, IconButton, TweetImage, BranchButton } from './index';
-import { baseUrl } from '../config/config';
+import { tweetCardIcon } from '../../assets/images/svg';
+import { CreateTime, UserImage, UserName, UserUniqueName, TweetText, IconButton, TweetImage, BranchButton } from '../index';
+import { baseUrl } from '../../config/config';
 import { useSelector } from 'react-redux';
-import { State } from '../store/reducers/index';
+import { State } from '../../store/reducers/index';
 
 interface TweetCardUseProps {
   onClick: Function;

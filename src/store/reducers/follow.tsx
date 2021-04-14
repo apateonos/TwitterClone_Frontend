@@ -23,7 +23,7 @@ export default function (state = initialState, { type, payload }: any) {
         follows: payload.follows
       }
     
-      case POST_FOLLOW_USER['REQUEST']:
+    case POST_FOLLOW_USER['REQUEST']:
     case DELETE_FOLLOW_USER['REQUEST']:
       return { ...state };
 

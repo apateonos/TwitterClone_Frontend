@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
+import { withRouter, RouteComponentProps, useParams, useHistory } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { State } from "../store/reducers/index";
-import { Header } from './index';
-import { RoomList } from '../components/index'; 
-import { CreateRoomUseData, SendMessageUseData, LeaveRoomUseData } from '../socket/write';
-import { createRoomSocket, sendMessageSocket, leaveRoomSocket, getMessageListApi } from '../store/actions/message';
-import { UserSelfData } from 'store/reducers/user';
-import { FollowsData } from 'store/reducers/follow';
-import { Message } from '../components/index';
-import { MessageData } from 'store/reducers/message';
+import { Header } from './index'; 
+import { SendMessageUseData, LeaveRoomUseData } from '../socket/write';
+import { sendMessageSocket, leaveRoomSocket, getMessageListApi } from '../store/actions/message';
+import { UserSelfData } from '../store/reducers/user';
+import { GlassButton, Message } from '../components/index';
+import { MessageData } from '../store/reducers/message';
+import { messageIcon }  from '../assets/images/svg';
 
 interface MessageContainerProps extends RouteComponentProps<any> {
   getMessageList: () => object;
@@ -33,7 +32,7 @@ const MessageContainer: React.FC<MessageContainerProps> = ({
 }) => {
   const { room_id } = useParams<ParamsTypes>();
   const [ message, setMessage ] = useState('');
-
+  const history = useHistory();
   useEffect(() => {
     getMessageList()
   }, []);
@@ -41,7 +40,6 @@ const MessageContainer: React.FC<MessageContainerProps> = ({
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { name } = event.currentTarget;
-
     switch ( name ) {
       case 'send':
         sendMessageSocket({ room_id, message });
@@ -55,10 +53,10 @@ const MessageContainer: React.FC<MessageContainerProps> = ({
 
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = event.currentTarget;
-
     switch ( name ) {
-      case 'branch':
-        break;
+      case 'exit':
+        leaveRoomSocket({ room_id });
+        return history.push('/message');
 
       default:
         break;
@@ -67,11 +65,9 @@ const MessageContainer: React.FC<MessageContainerProps> = ({
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
     switch ( name ) {
       case 'message':
-        setMessage(value);
-        break;
+        return setMessage(value);
 
       default:
         break;
@@ -80,14 +76,14 @@ const MessageContainer: React.FC<MessageContainerProps> = ({
 
   return (
     <>
-      <Header title='Message'/>
+      <Header title='Message' side={<GlassButton onClick={onClickHandler} name='exit'/>}/>
       <Message
         onSubmit={onSubmitHandler} 
         onClick={onClickHandler} 
         onChange={onChangeHandler} 
         self={self.user_id}
         message={message}
-        messageList={
+        messages={
           messages.length > 0
           ? messages.filter(m => m.room_id === room_id)
           : []

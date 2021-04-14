@@ -27,8 +27,7 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
     const { name } = event.currentTarget;
     switch (name) {
       case 'login':
-        loginUserAccountApi({ userUniqueName, password });
-        break;
+        return loginUserAccountApi({ userUniqueName, password });
 
       default:
         break;
@@ -37,10 +36,9 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
 
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = event.currentTarget;
-
     switch (name) {
       case 'create':
-        createAccountModal();
+        return createAccountModal();
 
       default:
         break;
@@ -49,7 +47,6 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
     switch (name) {
       case 'userUniqueName': 
         setUserUniqueName(value);
@@ -63,18 +60,7 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
         break;
     }
   }
-  
-  const errorCode = (error: string) => {
-    switch (error) {
-      case 'ER_INVAILD_UNIQUENAME':
-        return 2;
-      case 'ER_INVAILD_PASSWORD':
-        return 3;
-      default:
-        return 0;
-    }
-  }
-  
+
   return (
     <Login 
       onSubmit={onSubmitHandler}
@@ -105,14 +91,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default withRouter(
   compose(connect(mapStateToProps, mapDispatchToProps))(LoginContainer)
 );
-
-interface VerificationInputUseData {
-  userUniqueName: string;
-  password: string;
+  
+const errorCode = (error: string) => {
+  switch (error) {
+    case 'ER_INVAILD_UNIQUENAME':
+      return 2;
+    case 'ER_INVAILD_PASSWORD':
+      return 3;
+    default:
+      return 0;
+  }
 }
-const verificationInputs = ({ userUniqueName, password }: VerificationInputUseData) => {
-  if ( userUniqueName === '' ) return 'enter your ID or Email...';
-  if ( password === '' ) return 'enter your password...';
-
-  return false;
-};

@@ -1,39 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { State } from "../store/reducers/index";
 import { Header } from './index';
 import { RoomList } from '../components/index'; 
-import { CreateRoomUseData, SendMessageUseData, LeaveRoomUseData } from '../socket/write';
-import { createRoomSocket, sendMessageSocket, leaveRoomSocket } from '../store/actions/message';
+import { CreateRoomUseData, LeaveRoomUseData } from '../socket/write';
+import { createRoomSocket, leaveRoomSocket } from '../store/actions/message';
 import { UserSelfData } from 'store/reducers/user';
 import { FollowsData } from 'store/reducers/follow';
 import { ModalComponentData } from '../store/reducers/modal';
 import { modal } from '../store/actions/modal';
+import { MessageData, MessageRoomData } from 'store/reducers/message';
 
 interface MessageContainerProps extends RouteComponentProps<any> {
   createRoomSocket: ({ users }: CreateRoomUseData) => object;
   leaveRoomSocket: ({ room_id }: LeaveRoomUseData) => object;
   openModal: ({ component }: ModalComponentData) => object;
-  self: UserSelfData;
-  follows: FollowsData;
-  rooms: any;
-  messages: any;
+  rooms: Array<MessageRoomData>;
+  messages: Array<MessageData>;
 }
 
 const MessageContainer: React.FC<MessageContainerProps> = ({
   createRoomSocket,
   leaveRoomSocket,
   openModal,
-  self,
-  follows,
+  messages,
   rooms,
-  messages
 }) => {
-  const [ isRoom, setIsRoom ] = useState('');
-  const [ message, setMessage ] = useState('');
-  
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { name } = event.currentTarget;
@@ -49,11 +43,9 @@ const MessageContainer: React.FC<MessageContainerProps> = ({
 
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { name } = event.currentTarget;
-
     switch ( name ) {
       case 'modal':
-        openModal({ component: <></>})
-        break;
+        return openModal({ component: <></>})
 
       default:
         break;
@@ -62,7 +54,6 @@ const MessageContainer: React.FC<MessageContainerProps> = ({
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-
     switch ( name ) {
       case 'search':
         break;
@@ -80,15 +71,13 @@ const MessageContainer: React.FC<MessageContainerProps> = ({
         onClick={onClickHandler} 
         onChange={onChangeHandler} 
         keyword={''}
-        roomList={[]}
+        roomList={rooms}
       />
     </>
   )
 }
 
 const mapStateToProps = (rootState: State) => ({
-  self: rootState.userReducer.self,
-  follows: rootState.followReducer.follows,
   rooms: rootState.messageReducer.rooms,
   messages: rootState.messageReducer.messages
 })

@@ -6,4 +6,4 @@ export { default as Tweet } from './detail';
 export { default as Explore } from './explore';
 export { default as NotFound } from './notFound';
 export { default as Message } from './message';
-export { default as MessageRoom } from './messageRoom';
+export { default as Room } from './room';

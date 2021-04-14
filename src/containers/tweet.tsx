@@ -23,14 +23,14 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
   self,
   post,
 }) => {
-  const [ tweet, setTweet ] = useState('');
   const [ imageFile, setImageFile ] = useState(null);
+  const [ tweet, setTweet ] = useState('');
   const [ image, setImage ] = useState('');
   
   useEffect(() => {
-    setTweet('');
     setImageFile(null);
     setImage('');
+    setTweet('');
   }, [post]);
 
   const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,13 +38,13 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
 
     switch ( name ) {
       case 'post':
-        postUserTweetApi({ tweet, imageFile, replyNumber, retweetNumber });
-        break;
+        return postUserTweetApi({ tweet, imageFile, replyNumber, retweetNumber });
 
       case 'cancel':
-        setImage('');
+        setImage(''); 
         setImageFile(null);
-  
+        break;
+        
       default:
         break;
     }
@@ -55,8 +55,7 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
 
     switch (name) {
       case 'tweet':
-        setTweet(value);
-        break;
+        return setTweet(value);
 
       case 'image':
         const theFile = files[0];

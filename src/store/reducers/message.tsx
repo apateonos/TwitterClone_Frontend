@@ -2,12 +2,14 @@ import { GET_MESSAGE_LIST, CREATE_ROOM, SEND_MESSAGE, LEAVE_ROOM } from '../acti
 
 const initialState: MessageReducerUseData = {
   messages: [],
+  now: '',
   rooms: [],
   err: ''
 }
 
 interface MessageReducerUseData {
   messages: [] | Array<MessageData>;
+  now: string;
   rooms: [] | Array<MessageRoomData>;
   err: string;
 }
@@ -22,6 +24,9 @@ export interface MessageData {
 }
 
 export interface MessageRoomData {
+  user_image: string;
+  display_name: string;
+  unique_name: string;
   room_id: string;
 }
 
@@ -34,10 +39,9 @@ export default function (state=initialState, { type, payload }: any) {
       return { ...state }
 
     case GET_MESSAGE_LIST['SUCCESS']:
-      return {
-        ...state,
+      return { ...state,
         messages: payload.messages,
-        rooms: payload.rooms
+        rooms: payload.rooms,
       }
     
     case SEND_MESSAGE['SUCCESS']:
@@ -51,17 +55,17 @@ export default function (state=initialState, { type, payload }: any) {
     case 'RECEIVE_INVITED':
       return {
         ...state,
-        rooms: [ ...state.rooms, payload ]
+        rooms: [ ...state.rooms, payload.room_id ],
+        now: payload.room_id
       }
     
     case LEAVE_ROOM['SUCCESS']:
       return {
         ...state,
-        rooms: [...state.rooms.slice(0, payload.index), ...state.rooms.slice(payload.index + 1)]
+        rooms: payload.rooms
       }
     
     case 'RECEIVE_USER_LEAVE':
-
     case GET_MESSAGE_LIST['FAILURE']:
     case CREATE_ROOM['FAILURE']:
     case SEND_MESSAGE['FAILURE']:

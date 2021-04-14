@@ -2,8 +2,8 @@
 import React from 'react';
 import user from 'store/sagas/user';
 import styled from 'styled-components';
-import { ProfileBackground, ProfileUserImage, WhiteButton, UserName, UserUniqueName, ProfileText, CountButton } from './index';
-import { baseUrl } from '../config/config';
+import { ProfileBackground, ProfileUserImage, WhiteButton, UserName, UserUniqueName, ProfileText, CountButton } from '../index';
+import { baseUrl } from '../../config/config';
 
 interface ProfileUseProps {
   onClick: Function;

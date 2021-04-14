@@ -1,13 +1,12 @@
 import { io } from 'socket.io-client';
 
-const url = 'http://localhost:4000';
+const url = 'http://3.23.130.154:3000';
 
 const onSuccess = (response: any) => {
-  return response.data;
+  return response;
 };
 
 const onError = (error: any) => {
-  console.error(error);
   return Promise.reject(error.message);
 };
 
@@ -48,5 +47,5 @@ export function connection(token: string) {
 }
 
 export function joinRoom( socket: any ) {
-  return socket.emit('join room')
+  return socket.emit('join room');
 }

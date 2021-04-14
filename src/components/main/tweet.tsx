@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { UserImage, AreaInput, TweetImage, CancelButton, InputIconButton, BlueButton } from './index';
-import { tweetIcon } from '../assets/images/svg';
-import { baseUrl } from '../config/config';
+import { UserImage, AreaInput, TweetImage, CancelButton, InputIconButton, BlueButton } from '../index';
+import { tweetIcon } from '../../assets/images/svg';
+import { baseUrl } from '../../config/config';
 
 interface TweetUseProps { 
   onClick: Function;

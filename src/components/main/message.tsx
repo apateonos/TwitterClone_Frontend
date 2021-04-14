@@ -1,24 +1,22 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styled from 'styled-components';
-import { MessageCard } from './index';
-import { MessageCardUseData } from './messageCard';
-import { messageIcon } from '../assets/images/svg';
+import { MessageList } from '../index';
+import { MessageCardUseData } from '../molecule/messageCard';
+import { messageIcon } from '../../assets/images/svg';
 
 interface MessageUseProps {
   onSubmit: Function;
   onClick: Function;
   onChange: Function;
-  messageList: Array<MessageCardUseData>;
+  messages: Array<MessageCardUseData>;
   message: string
   self: number;
 }
-export default ({ onSubmit, onClick, onChange, messageList, message, self }: MessageUseProps) => {
+export default ({ onSubmit, onClick, onChange, messages, message, self }: MessageUseProps) => {
+
   return (
     <Container>
-        <MessageList>
-          {messageList.length > 0 ? messageList.map((el) => <MessageCard message={el} self={self} />) : ''}
-        </MessageList>
-      
+      <MessageList messages={messages} self={self} />
       <InputWrap name='send' onSubmit={(e) => onSubmit(e)}>
         <MessageInput name='message' onChange={(e) => onChange(e)} value={message}/>
         <SendButton type='submit'>{messageIcon.send}</SendButton>
@@ -30,12 +28,6 @@ export default ({ onSubmit, onClick, onChange, messageList, message, self }: Mes
 const Container = styled.div`
   background: white;
 `;
-
-const MessageList = styled.div`
-  height: calc(100vh - 100px);
-  overflow-y:scroll;
-  padding: 0 15px;
-  `;
 
 const InputWrap = styled.form`
   display: flex;

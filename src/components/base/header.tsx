@@ -5,13 +5,19 @@ interface HeaderComponentUseProps {
   onClick: Function;
   title: string|JSX.Element;
   width: number;
+  side: any;
 }
 
-export default ({ onClick, title, width }: HeaderComponentUseProps) => {
+export default ({ onClick, title, width, side }: HeaderComponentUseProps) => {
   return (
     <Header>
       {width < 500 && <Button>  </Button>}
       {title}
+      {side &&
+        <Wrap>
+          {side}
+        </Wrap>
+      }
     </Header>
   )
 }
@@ -21,6 +27,7 @@ const Header = styled.header`
   top: 0;
   z-index: 2;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 50px;
@@ -29,6 +36,10 @@ const Header = styled.header`
   font-size: 20px;
   font-weight: 800;
   border-bottom: 1px solid ${props => props.theme.color.borderGray};
+`;
+
+const Wrap = styled.div`
+  align-items: center;
 `;
 
 const Button = styled.button`

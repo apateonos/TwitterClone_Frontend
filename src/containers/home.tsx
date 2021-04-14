@@ -7,7 +7,7 @@ import { State } from "../store/reducers/index";
 import { getUserTimelineApi } from '../store/actions/timeline';
 import { modal } from '../store/actions/modal';
 import { Header, Tweet } from './index';
-import { NotFoundTweet, TweetList } from '../components/index';
+import { Home } from '../components/index';
 import { TimelineTweetsData } from '../store/reducers/timeline';
 import { deleteUserTweetApi } from '../store/actions/tweet';
 import { DeleteUserTweetUseData } from '../api/tweet';
@@ -60,13 +60,9 @@ const HomeContainer: React.FC<HomeContainerProps> = ({
       <Header 
         title='Home'
       />
-      <TweetWrap>
-        <Tweet />
-      </TweetWrap>
-      <TweetList 
+      <Home 
         onClick={onClickHandler}
-        tweets={tweets} 
-        notFound={<NotFoundTweet/>}
+        tweets={tweets}
       />
     </>
   )
@@ -92,8 +88,3 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default withRouter(
   compose(connect(mapStateToProps, mapDispatchToProps))(HomeContainer)
 );
-
-const TweetWrap = styled.div`
-  border-bottom: 1px solid ${props => props.theme.color.borderGray};
-  margin-bottom: 15px;
-`;

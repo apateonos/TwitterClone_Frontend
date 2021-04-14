@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { withRouter, RouteComponentProps, useParams, useHistory } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from "../store/reducers/index";
@@ -33,6 +33,7 @@ interface ProfileProps extends RouteComponentProps<any> {
   follows: Array<FollowsData>;
   follower: Array<ProfileFollowerData>;
   following: Array<ProfileFollowingData>;
+  isMessage: string
   post: [];
 }
 
@@ -54,68 +55,53 @@ const ProfileContainer: React.FC<ProfileProps> = ({
   following,
   follower,
   post,
+  isMessage,
 }) => {
+  const [ sendMessage, setSendMessage ] = useState(false);
   const isUser = Object.keys(user).length > 0 && user.constructor === Object;
   const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
   const isSelf = isLogin && self.user_id === user.user_id;
   const isFollow = follows.filter(follow => follow.follow_user_id === user.user_id).length > 0;
   const { userUniqueName } = useParams<ParamTypes>();
+  const history = useHistory();
+
+  useEffect(() => {
+   if (sendMessage) history.push(`/message/${isMessage}`);
+  }, [isMessage])
 
   useEffect(() => {
     getUserProfileApi({ userUniqueName });
   }, [post]);
 
-  const onClickHandler = (
-    event: React.MouseEvent<HTMLButtonElement>, idx: number,
-  ) => {
+  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>, idx: number) => {
     event.stopPropagation();
-    console.log('click');
     const { name } = event.currentTarget;
 
     switch (name) {
       case 'follow':
-        if (isLogin) {
-          postFollowUserApi({ userNumber: idx });
-        }
-        else {
-          openModal({ component: <Login />});
-        }
-        break;
+        return isLogin ? postFollowUserApi({ userNumber: idx }) : openModal({ component: <Login />});
       
       case 'unfollow':
-        deleteFollowUserApi({ 
-          userNumber: idx 
-        });
-        break;
+        return deleteFollowUserApi({ userNumber: idx });
 
       case 'follower':
-        openModal({ component: <UserList onClick={onClickHandler} users={follower} />})
-        break;
+        return openModal({ component: <UserList onClick={onClickHandler} users={follower} />});
 
       case 'following':
-        openModal({ component: <UserList onClick={onClickHandler} users={following} />})
-        break;
-      
+        return openModal({ component: <UserList onClick={onClickHandler} users={following} />});
+        
       case 'reply':
-        openModal({
-          component: <Tweet replyNumber={idx}/>
-        });
-        break;
+        return openModal({ component: <Tweet replyNumber={idx}/> });
 
       case 'retweet':
-        openModal({
-          component: <Tweet retweetNumber={idx}/>
-        });
-        break;
+        return openModal({ component: <Tweet retweetNumber={idx}/> });
 
       case 'delete':
-        console.log('delete');
-        deleteUserTweetApi({ tweetNumber: idx });
-        break;
+        return deleteUserTweetApi({ tweetNumber: idx });
 
       case 'message':
-        console.log('message');
-        createRoomSocket({ users: [idx] })
+        setSendMessage(true);
+        createRoomSocket({ users: [idx] });
         break;
       
       default:
@@ -125,9 +111,7 @@ const ProfileContainer: React.FC<ProfileProps> = ({
 
   return (
     <>
-      <Header 
-        title='Profile'
-      />
+      <Header title='Profile' />
       <Profile
         onClick={onClickHandler} 
         isUser={isUser}
@@ -157,10 +141,14 @@ const mapStateToProps = (rootState: State) => ({
   post: rootState.tweetReducer.res,
   follows: rootState.followReducer.follows,
   following: rootState.profileReducer.following,
-  follower: rootState.profileReducer.follower
+  follower: rootState.profileReducer.follower,
+  isMessage: rootState.messageReducer.now,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  openModal: ({ component }: ModalComponentData) => {
+    return dispatch(modal.open({ component }));
+  },
   getUserProfileApi: ({ userUniqueName }: GetUserProfileUseData) => {
     return dispatch(getUserProfileApi.request({ userUniqueName }));
   },
@@ -169,9 +157,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
   deleteFollowUserApi: ({ userNumber }: FollowUseData) => {
     return dispatch(deleteFollowUserApi.request({ userNumber }));
-  },
-  openModal: ({ component }: ModalComponentData) => {
-    return dispatch(modal.open({ component }));
   },
   deleteUserTweetApi: ({ tweetNumber }: DeleteUserTweetUseData) => {
     return dispatch(deleteUserTweetApi.request({ tweetNumber }));

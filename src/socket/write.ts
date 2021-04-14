@@ -12,6 +12,7 @@ export interface SendMessageUseData {
   message: string;
 }
 export const sendMessage = ( socket: any, { room_id, message }: SendMessageUseData ) => {
+  console.log(room_id, message);
   return emit( socket, 'send message', { room_id, message });
 }
 

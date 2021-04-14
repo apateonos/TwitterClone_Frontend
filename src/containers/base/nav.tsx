@@ -34,16 +34,13 @@ const NavContainer: React.FC<NavContainerUseProps> = ({
 
     switch ( name ) {
       case 'login':
-        loginModal()
-        break;
+        return loginModal();
 
       case 'create':
-        createAccountModal()
-        break;
+        return createAccountModal();
 
       case 'tweet':
-        openModal({ component: <Tweet/>})
-        break;
+        return openModal({ component: <Tweet/>});
 
       default:
         break;

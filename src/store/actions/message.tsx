@@ -21,7 +21,7 @@ export const createRoomSocket = {
     users
   }),
   success: (res: any) => ({
-    type: CREATE_ROOM['SUCEESS'],
+    type: CREATE_ROOM['SUCCESS'],
     payload: res
   }),
   failure: (err: Error) => ({
@@ -52,7 +52,7 @@ export const leaveRoomSocket = {
     room_id
   }),
   success: (res: any) => ({
-    type: LEAVE_ROOM['SUCEESS'],
+    type: LEAVE_ROOM['SUCCESS'],
     payload: res
   }),
   failure: (err: any) => ({
@@ -75,3 +75,8 @@ export const receiveUserLeaveSocket = (res: any) => ({
   type: 'RECEIVE_USER_LEAVE',
   payload: res
 })
+
+export const messageRoomLeave = {
+  type: 'ROOM_PAGE_UNMOUNT',
+  payload: false
+}

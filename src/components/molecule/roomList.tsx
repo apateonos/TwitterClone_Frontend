@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { NotFoundRoom, Search } from './index';
+import { NotFoundRoom, Search, RoomCard } from '../index';
+import { RoomCardUseData } from './roomCard';
 
 interface MessageComponentuseProps {
   onSubmit: Function;
   onClick: Function;
   onChange: Function;
   keyword: string;
-  roomList: Array<any>
+  roomList: Array<RoomCardUseData>;
 }
 
 export default ({ onSubmit, onClick, onChange, keyword, roomList }: MessageComponentuseProps) => {
@@ -24,9 +25,9 @@ export default ({ onSubmit, onClick, onChange, keyword, roomList }: MessageCompo
       </SearchWrap>
       <RoomList>
         {roomList.length > 0 
-          ? roomList.map((el) => <div>{el}</div>) 
-          : <NotFoundRoom onClick={onClick} 
-        />}
+          ? roomList.map((el, key) => <RoomCard onClick={onClick} key={key} data={el}/>) 
+          : <NotFoundRoom onClick={onClick} />
+        }
       </RoomList>
     </>
   )

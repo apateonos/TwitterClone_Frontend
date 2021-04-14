@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { TweetCard } from './index';
+import { TweetCard } from '../index';
 import { TweetCardUseData } from './tweetCard';
 
 interface TweetListUseProps {

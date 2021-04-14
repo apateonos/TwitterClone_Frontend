@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { UserImage, UserName, UserUniqueName, TweetText, TweetImage, TweetInfoText, IconButton } from './index';
-import { tweetCardIcon } from '../assets/images/svg';
-import { baseUrl } from '../config/config';
+import { UserImage, UserName, UserUniqueName, TweetText, TweetImage, TweetInfoText, IconButton } from '../index';
+import { tweetCardIcon } from '../../assets/images/svg';
+import { baseUrl } from '../../config/config';
 
 interface DetailUseProps {
   onClick: Function;

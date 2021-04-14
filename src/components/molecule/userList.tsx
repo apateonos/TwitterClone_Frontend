@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { UserCardUseData } from './userCard';
-import { UserCard } from './index';
+import { UserCard } from '../index';
 
 interface UserListUseProps {
   onClick: Function;

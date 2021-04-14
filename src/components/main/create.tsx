@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { UserImageInput, UserImage, InfoInput, AreaInput, WhiteButton, CancelButton } from './index';
+import { UserImageInput, UserImage, InfoInput, AreaInput, WhiteButton, CancelButton } from '../index';
 
 interface SignComponentUseProps {
   onSubmit: Function;

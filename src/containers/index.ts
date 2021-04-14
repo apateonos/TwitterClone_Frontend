@@ -14,4 +14,4 @@ export { default as Tweet } from './tweet';
 export { default as Create } from './create';
 export { default as Explore } from './explore';
 export { default as Message } from './message';
-export { default as MessageRoom } from './messageRoom';
+export { default as Room } from './room';
