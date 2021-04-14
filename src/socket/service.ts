@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 
-const url = 'http://3.23.130.154:3000';
+const url = 'https://18.220.165.19:4000/';
 
 const onSuccess = (response: any) => {
   return response;
