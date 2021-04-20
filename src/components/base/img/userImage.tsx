@@ -11,10 +11,13 @@ export default ({ image, type }: UserImageUseProps) => {
   const imageSize = {
     large: '50px',
     normal: '40px',
-    small: '20px'
+    small: '20px',
   }
   return (
-    <UserImage imageSize={type ? imageSize[type] : imageSize.normal} src={image ? image : '/src/assets/images/default_image.jpg'} />
+    <UserImage 
+      imageSize={type ? imageSize[type] : imageSize.normal} 
+      src={image ? baseUrl + image : ''} 
+    />
   )
 }
 

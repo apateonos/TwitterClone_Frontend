@@ -2,9 +2,9 @@ import { GetUserProfileUseData } from '../../api/profile';
 import { GET_USER_PROFILE } from '../actions/types';
 
 export const getUserProfileApi = {
-  request: ({ userUniqueName }: GetUserProfileUseData) => ({
+  request: ({ unique_name }: GetUserProfileUseData) => ({
     type: GET_USER_PROFILE['REQUEST'],
-    userUniqueName
+    unique_name
   }),
   success: (res: any) => ({
     type: GET_USER_PROFILE['SUCCESS'],

@@ -8,7 +8,6 @@ export function readSocketChannel(socket: any) {
     });
     socket.on('receive invite', (item: any) => {
       emit(receiveInviteRoomSocket(item));
-      emit(socket.emit('join invite', {item}));
     })
     socket.on('receive leave', (item: any) => {
       emit(receiveUserLeaveSocket(item))

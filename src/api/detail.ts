@@ -2,10 +2,10 @@ import axios, { AxiosPromise } from 'axios';
 import { get } from './service';
 
 export interface GetDetailTweetUseData {
-  tweetNumber: number;
-}
+  tweet_id: number;
+};
 export const getDetailTweet = ({
-  tweetNumber
+  tweet_id
 }: GetDetailTweetUseData): AxiosPromise => {
-  return get('detail', { tweetNumber })
-}
+  return get('detail', { tweet_id })
+};

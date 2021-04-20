@@ -1,28 +1,37 @@
-import { POST_USER_TWEET, UPDATE_USER_TWEET, DELETE_USER_TWEET } from '../actions/types';
+import { POST_TWEET, DELETE_TWEET, POST_RETWEET, DELETE_RETWEET, POST_HEART, DELETE_HEART } from '../actions/types';
 
 const initialState = {
-  res: [],
+  res: {},
   error: ''
 };
 
 export default function (state = initialState, { type, payload }: any) {
   switch (type) {
-    case POST_USER_TWEET['REQUEST']:
-    case UPDATE_USER_TWEET['REQUEST']:
-    case DELETE_USER_TWEET['REQUEST']:
+    case POST_TWEET['REQUEST']:
+    case DELETE_TWEET['REQUEST']:
+    case POST_RETWEET['REQUEST']:
+    case DELETE_RETWEET['REQUEST']:
+    case POST_HEART['REQUEST']:
+    case DELETE_HEART['REQUEST']:
       return { ...state };
 
-    case POST_USER_TWEET['SUCCESS']:
-    case UPDATE_USER_TWEET['SUCCESS']:
-    case DELETE_USER_TWEET['SUCCESS']:
+    case POST_TWEET['REQUEST']:
+    case DELETE_TWEET['REQUEST']:
+    case POST_RETWEET['REQUEST']:
+    case DELETE_RETWEET['REQUEST']:
+    case POST_HEART['REQUEST']:
+    case DELETE_HEART['REQUEST']:
       return {
         ...state,
         res: payload.result
       };
 
-    case POST_USER_TWEET['FAILURE']:
-    case UPDATE_USER_TWEET['FAILURE']:
-    case DELETE_USER_TWEET['FAILURE']:
+    case POST_TWEET['REQUEST']:
+    case DELETE_TWEET['REQUEST']:
+    case POST_RETWEET['REQUEST']:
+    case DELETE_RETWEET['REQUEST']:
+    case POST_HEART['REQUEST']:
+    case DELETE_HEART['REQUEST']:
       return {
         ...state,
         error: payload.data

@@ -2,10 +2,10 @@ import axios, { AxiosPromise } from 'axios';
 import { get } from './service';
 
 export interface GetUserProfileUseData {
-  userUniqueName: string;
-}
+  unique_name: string;
+};
 export const getUserProfile = ({
-  userUniqueName
+  unique_name
 }: GetUserProfileUseData): AxiosPromise => {
-  return get('profile', { userUniqueName })
-}
+  return get('profile', { unique_name })
+};

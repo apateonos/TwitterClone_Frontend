@@ -12,7 +12,7 @@ interface CancelButtonUseProps {
 
 export default ({ onClick, name, idx, type }: CancelButtonUseProps) => {
   return (
-    <Button onClick={(e)=>{e.stopPropagation(); onClick(e, idx)}} name={name} type={type ? type : 'button'}>
+    <Button onClick={(e)=>onClick(e, idx)} name={name} type={type ? type : 'button'}>
       {cancelButtonIcon}
     </Button>
   )

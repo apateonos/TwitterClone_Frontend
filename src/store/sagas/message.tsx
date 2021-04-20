@@ -1,21 +1,10 @@
 import { fork, take, call, put, all } from 'redux-saga/effects';
 import { CreateRoomUseData, SendMessageUseData, LeaveRoomUseData } from '../../socket/write';
 import * as Soc from '../../socket/write';
-import * as Api from '../../api/message';
 import * as type from '../actions/types';
 import { readSocketChannel } from '../../socket/read';
-import { getMessageListApi, createRoomSocket, sendMessageSocket, leaveRoomSocket } from '../actions/message';
+import { createRoomSocket, sendMessageSocket, leaveRoomSocket } from '../actions/message';
 import { connection, joinRoom } from '../../socket/service';
-
-function* getMessageListApiSaga () {
-  try {
-    const data = yield call(Api.getMessageList);
-    if (yield data.code === 'error') throw Error;
-    yield put(getMessageListApi.success(data));
-  } catch (err) {
-    yield put(getMessageListApi.failure(err));
-  }
-}
 
 function* watchReadSocketChannelSaga (socket: any) {
   const channel = yield call(readSocketChannel, socket);
@@ -90,7 +79,6 @@ function* watchSocketFlowSaga () {
     const { token } = yield take('CONNECTION_SOCKET');
     const socket = yield call(connection, token);
     yield call(joinRoom, socket);
-    yield fork(getMessageListApiSaga);
     yield fork(socketHandlerSaga, socket);
   }
 }

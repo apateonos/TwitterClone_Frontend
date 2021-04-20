@@ -1,6 +1,6 @@
 import { BlueButton } from '../index';
 import { Create, Login } from '../../containers/index';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
@@ -11,17 +11,20 @@ import { modal } from '../../store/actions/modal';
 interface ModalComponentUseProps extends RouteComponentProps {
   closeModal: () => object;
   component: JSX.Element;
-  isCreateAccount: boolean;
   self: {};
 }
 
 const ModalComponent: React.FC<ModalComponentUseProps> = ({
   closeModal,
   component,
-  isCreateAccount,
   self
 }) => {
-  const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
+  const [ isLogin, setIsLogin ] = useState(false);
+
+  useEffect(() => {
+    const loginCheck = Object.keys(self).length > 0 && self.constructor === Object;
+    setIsLogin(loginCheck);
+  }, [self]);
 
   return (
     <Container>
@@ -32,7 +35,7 @@ const ModalComponent: React.FC<ModalComponentUseProps> = ({
           </ButtonWrap>
         </Headline>
         <Section>
-          {isLogin ? component : isCreateAccount ? <Create /> : <Login /> }
+          {component}
         </Section>
       </Board>
     </Container>

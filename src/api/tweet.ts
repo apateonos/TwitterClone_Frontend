@@ -1,44 +1,62 @@
 import axios, { AxiosPromise } from 'axios';
-import { post, put, del } from './service';
+import { post, del } from './service';
 
-export interface PostUserTweetUseData {
-  tweet: string;
-  imageFile: any|null;
-  replyNumber?: number;
-  retweetNumber?: number;
+export interface PostTweetUseData {
+  tweet_text: string;
+  tweet_image: any|null;
+  reply_id?: number;
 }
-export const postUserTweet = ({
-  tweet, imageFile, replyNumber, retweetNumber
-}: PostUserTweetUseData): AxiosPromise => {
-  console.log('>>>>>>>>>>>>..',retweetNumber);
-  const form = new FormData();
-  if (tweet) form.append('tweet', tweet);
-  if (imageFile) form.append('imageFile', imageFile);
-  if (replyNumber) form.append('replyNumber', replyNumber.toString());
-  if (retweetNumber) form.append('retweetNumber', retweetNumber.toString());
-  return post('tweet/post', form, {headers: {'Content-Type': 'multipart/form-data'}});
+export const postTweet = ({
+  tweet_text, tweet_image, reply_id,
+}: PostTweetUseData): AxiosPromise => {
+  return post('tweet/post', {
+    tweet_text,
+    tweet_image,
+    reply_id,
+  }, {headers: {'Content-Type': 'multipart/form-data'}});
 };
 
-export interface UpdateUserTweetUseData {
-  tweetNumber: number,
-  tweet: string,
-  imageFile: any,
+export interface DeleteTweetUseData {
+  tweet_id: number,
 }
-export const updateUserTweet = ({
-  tweetNumber, tweet, imageFile
-}: UpdateUserTweetUseData): AxiosPromise => {
-  const form = new FormData();
-  form.append('tweetNumber', tweetNumber as any);
-  form.append('tweet', tweet);
-  form.append('image', imageFile);
-  return put('tweet/update', form, {headers: {'Content-Type': 'multipart/form-data'}});
+export const deleteTweet = ({
+  tweet_id
+}: DeleteTweetUseData): AxiosPromise => {
+  return del('tweet/del', { tweet_id });
+}
+
+export interface PostRetweetUseData {
+  tweet_id: number;
+}
+export const postRetweet = ({
+  tweet_id
+}: PostRetweetUseData): AxiosPromise => {
+  return post('retweet/post', { tweet_id });
 };
 
-export interface DeleteUserTweetUseData {
-  tweetNumber: number,
+export interface DeleteRetweetUseData {
+  tweet_id: number
+};
+export const deleteRetweet = ({
+  tweet_id
+}: DeleteRetweetUseData): AxiosPromise => {
+  return del('retweet/del', { tweet_id });
 }
-export const deleteUserTweet = ({
-  tweetNumber
-}: DeleteUserTweetUseData): AxiosPromise => {
-  return del('tweet/del', { tweetNumber })
+
+export interface PostHeartUseData {
+  tweet_id: number;
+}
+export const postHeart = ({
+  tweet_id
+}: PostHeartUseData): AxiosPromise => {
+  return post('heart/post', { tweet_id });
+};
+
+export interface DeleteHeartUseData {
+  tweet_id: number
+};
+export const deleteHeart = ({
+  tweet_id
+}: DeleteHeartUseData): AxiosPromise => {
+  return del('heart/del', { tweet_id });
 }

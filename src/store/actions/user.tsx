@@ -1,25 +1,25 @@
-import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, CHANGE_USER_INFORMATION, LOGOUT_USER_ACCOUNT, DELETE_USER_ACCOUNT, GET_USER_TOKEN_FROM_REFRESH } from './types';
-import { CreateUserAccountUseData, LoginUserAccountUseData, ChangeUserNameUseData, DeleteUserAccountUseData } from '../../api/user';
+import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, EDIT_USER_ACCOUNT, LOGOUT_USER_ACCOUNT, DELETE_USER_ACCOUNT, GET_TOKEN_FROM_REFRESH, POST_FOLLOW_USER, DELETE_FOLLOW_USER } from './types';
+import { CreateUserAccountUseData, LoginUserAccountUseData, EditUserAccountUseData, DeleteUserAccountUseData, FollowUseData } from '../../api/user';
 
-export const getUserTokenFromRefreshApi = {
+export const getTokenFromRefreshApi = {
   request: () => ({
-    type: GET_USER_TOKEN_FROM_REFRESH['REQUEST'],
+    type: GET_TOKEN_FROM_REFRESH['REQUEST'],
   }),
   success: (res: any) => ({
-    type: GET_USER_TOKEN_FROM_REFRESH['SUCCESS'],
+    type: GET_TOKEN_FROM_REFRESH['SUCCESS'],
     payload: res,
   }),
   failure: (err: Error) => ({
-    type: GET_USER_TOKEN_FROM_REFRESH['FAILURE'],
+    type: GET_TOKEN_FROM_REFRESH['FAILURE'],
     payload: err
   })
 }
 
 export const createUserAccountApi = {
-  request: ({ userUniqueName, userName, password, imageFile, profile }: CreateUserAccountUseData) => ({
+  request: ({ unique_name, user_name, password, imageFile, profile }: CreateUserAccountUseData) => ({
     type: CREATE_USER_ACCOUNT['REQUEST'],
-    userUniqueName,
-    userName,
+    unique_name,
+    user_name,
     password,
     imageFile,
     profile
@@ -35,9 +35,9 @@ export const createUserAccountApi = {
 };
 
 export const loginUserAccountApi = {
-  request: ({ userUniqueName, password }: LoginUserAccountUseData) => ({
+  request: ({ unique_name, password }: LoginUserAccountUseData) => ({
     type: LOGIN_USER_ACCOUNT['REQUEST'],
-    userUniqueName,
+    unique_name,
     password
   }),
   success: (res: any) => ({
@@ -50,17 +50,17 @@ export const loginUserAccountApi = {
   }), 
 };
 
-export const changeUserNameApi = {
-  request: ({ userName }: ChangeUserNameUseData) => ({
-    type: CHANGE_USER_INFORMATION['REQUEST'],
-    userName
+export const editUserAccountApi = {
+  request: ({ user_name }: EditUserAccountUseData) => ({
+    type: EDIT_USER_ACCOUNT['REQUEST'],
+    user_name
   }),
   success: (res: any) => ({
-    type: CHANGE_USER_INFORMATION['SUCCESS'],
+    type: EDIT_USER_ACCOUNT['SUCCESS'],
     payload: res,
   }),
   failure: (err: Error) => ({
-    type: CHANGE_USER_INFORMATION['FAILURE'],
+    type: EDIT_USER_ACCOUNT['FAILURE'],
     payload: err,
   }),
 }; 
@@ -92,4 +92,34 @@ export const deleteUserAccountApi = {
     type: DELETE_USER_ACCOUNT['FAILURE'],
     payload: err,
   }),
-}; 
+};
+
+export const postFollowUserApi = {
+  request: ({ follower_id }: FollowUseData) => ({
+    type: POST_FOLLOW_USER['REQUEST'],
+    follower_id
+  }),
+  success: (res: any) => ({
+    type: POST_FOLLOW_USER['SUCCESS'],
+    payload: res,
+  }),
+  failure: (err: Error) => ({
+    type: POST_FOLLOW_USER['FAILURE'],
+    err: err.message,
+  }),
+};
+
+export const deleteFollowUserApi = {
+  request: ({ follower_id }: FollowUseData) => ({
+    type: DELETE_FOLLOW_USER['REQUEST'],
+    follower_id
+  }),
+  success: (res: any) => ({
+    type: DELETE_FOLLOW_USER['SUCCESS'],
+    payload: res,
+  }),
+  failure: (err: Error) => ({
+    type: DELETE_FOLLOW_USER['FAILURE'],
+    err: err.message,
+  }),
+};

@@ -1,65 +1,119 @@
 import { all, fork, call, put, take } from 'redux-saga/effects';
 import * as Api from '../../api/tweet';
 import * as types from '../actions/types';
-import { postUserTweetApi, updateUserTweetApi, deleteUserTweetApi } from '../actions/tweet';
-import { PostUserTweetUseData, UpdateUserTweetUseData, DeleteUserTweetUseData } from '../../api/tweet';
+import { postTweetApi, deleteTweetApi, postRetweetApi, deleteRetweetApi, postHeartApi, deleteHeartApi } from '../actions/tweet';
+import { PostTweetUseData, DeleteTweetUseData, PostRetweetUseData, DeleteRetweetUseData, PostHeartUseData, DeleteHeartUseData } from '../../api/tweet';
 
-function* postUserTweetApiSaga({ tweet, imageFile, replyNumber, retweetNumber }: PostUserTweetUseData) {
+function* postTweetApiSaga({ tweet_text, tweet_image, reply_id }: PostTweetUseData) {
   try {
-    const data = yield call(Api.postUserTweet, { tweet, imageFile, replyNumber, retweetNumber });
+    const data = yield call(Api.postTweet, { tweet_text, tweet_image, reply_id });
     if (yield data.code === 'errors') throw Error;
-    yield put(postUserTweetApi.success(data));
+    yield put(postTweetApi.success(data));
     yield put({type: 'CLOSE_MODAL'});
   } catch (err) {
-    yield put(postUserTweetApi.failure(err));
+    yield put(postTweetApi.failure(err));
   }
 }
 
-function* watchPostUserTweetApiSaga() {
+function* watchPostTweetApiSaga() {
   while (true) {
-    const { tweet, imageFile, replyNumber, retweetNumber } = yield take(types.POST_USER_TWEET[types.REQUEST]);
-    yield fork(postUserTweetApiSaga, { tweet, imageFile, replyNumber, retweetNumber });
+    const { tweet_text, tweet_image, reply_id } = yield take(types.POST_TWEET['REQUEST']);
+    yield fork(postTweetApiSaga, { tweet_text, tweet_image, reply_id });
   }
 }
 
-function* updateUserTweetApiSaga({ tweetNumber, tweet, imageFile }: UpdateUserTweetUseData){
+function* deleteTweetApiSaga({ tweet_id }: DeleteTweetUseData){
   try {
-    const data = yield call(Api.updateUserTweet, { tweetNumber, tweet, imageFile });
+    const data = yield call(Api.deleteTweet, { tweet_id });
     if (yield data.code === 'error') throw Error;
-    yield put(updateUserTweetApi.success(data));
+    yield put(deleteTweetApi.success(data));
   } catch (err) {
-    yield put(updateUserTweetApi.failure(err));
+    yield put(deleteTweetApi.failure(err));
   }
 }
 
-function* watchUpdateUserTweetApiSaga() {
+function* watchDeleteTweetApiSaga() {
   while (true) {
-    const { tweetNumber, tweet, imageFile } = yield take(types.UPDATE_USER_TWEET[types.REQUEST]);
-    yield fork(updateUserTweetApiSaga, { tweetNumber, tweet, imageFile });
+    const { tweet_id } = yield take(types.DELETE_TWEET['REQUEST']);
+    yield fork(deleteTweetApiSaga, { tweet_id });
   }
 }
 
-function* deleteUserTweetApiSaga({ tweetNumber }: DeleteUserTweetUseData){
+function* postRetweetApiSaga({ tweet_id }: PostRetweetUseData){
   try {
-    const data = yield call(Api.deleteUserTweet, { tweetNumber });
+    const data = yield call(Api.postRetweet, { tweet_id });
     if (yield data.code === 'error') throw Error;
-    yield put(deleteUserTweetApi.success(data));
+    yield put(postRetweetApi.success(data));
   } catch (err) {
-    yield put(deleteUserTweetApi.failure(err));
+    yield put(postRetweetApi.failure(err));
   }
 }
 
-function* watchDeleteUserTweetApiSaga() {
+function* watchPostRetweetApiSaga() {
   while (true) {
-    const { tweetNumber } = yield take(types.DELETE_USER_TWEET[types.REQUEST]);
-    yield fork(deleteUserTweetApiSaga, { tweetNumber });
+    const { tweet_id } = yield take(types.POST_RETWEET['REQUEST']);
+    yield fork(postRetweetApiSaga, { tweet_id });
+  }
+}
+
+function* deleteRetweetApiSaga({ tweet_id }: DeleteRetweetUseData){
+  try {
+    const data = yield call(Api.deleteRetweet, { tweet_id });
+    if (yield data.code === 'error') throw Error;
+    yield put(deleteRetweetApi.success(data));
+  } catch (err) {
+    yield put(deleteRetweetApi.failure(err));
+  }
+}
+
+function* watchDeleteRetweetApiSaga() {
+  while (true) {
+    const { tweet_id } = yield take(types.DELETE_RETWEET['REQUEST']);
+    yield fork(deleteRetweetApiSaga, { tweet_id });
+  }
+}
+
+function* postHeartApiSaga({ tweet_id }: PostHeartUseData){
+  try {
+    const data = yield call(Api.postHeart, { tweet_id });
+    if (yield data.code === 'error') throw Error;
+    yield put(postHeartApi.success(data));
+  } catch (err) {
+    yield put(postHeartApi.failure(err));
+  }
+}
+
+function* watchPostHeartApiSaga() {
+  while (true) {
+    const { tweet_id } = yield take(types.POST_HEART['REQUEST']);
+    yield fork(postHeartApiSaga, { tweet_id });
+  }
+}
+
+function* deleteHeartApiSaga({ tweet_id }: DeleteHeartUseData){
+  try {
+    const data = yield call(Api.deleteHeart, { tweet_id });
+    if (yield data.code === 'error') throw Error;
+    yield put(deleteHeartApi.success(data));
+  } catch (err) {
+    yield put(deleteHeartApi.failure(err));
+  }
+}
+
+function* watchDeleteHeartApiSaga() {
+  while (true) {
+    const { tweet_id } = yield take(types.DELETE_HEART['REQUEST']);
+    yield fork(deleteHeartApiSaga, { tweet_id });
   }
 }
 
 export default function* () {
   yield all([
-    fork(watchPostUserTweetApiSaga),
-    fork(watchUpdateUserTweetApiSaga),
-    fork(watchDeleteUserTweetApiSaga)
+    fork(watchPostTweetApiSaga),
+    fork(watchDeleteTweetApiSaga),
+    fork(watchPostRetweetApiSaga),
+    fork(watchDeleteRetweetApiSaga),
+    fork(watchPostHeartApiSaga),
+    fork(watchDeleteHeartApiSaga),
   ]);
 }

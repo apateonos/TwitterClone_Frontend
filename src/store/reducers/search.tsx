@@ -7,7 +7,7 @@ const initialState: SearchReducerUseData = {
 
 interface SearchReducerUseData {
   results: [] | SearchResultsData;
-  err: string;
+  err: any;
 }
 
 export interface SearchResultsData {

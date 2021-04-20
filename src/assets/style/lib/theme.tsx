@@ -1,19 +1,36 @@
-const color = {
-    white: '#fff',
-    borderGray: '#cfcfcf',
-    postBackgroundGray: '#f8f9fb',
-    borderBackgroundGray: '#efefef',
-    cardHoverGray: '#f8f8f8',
-    blue: '#39a1f1',
-    lightBlue: '#8fcef9',
-    skyBlue: '#a8dafd',
-    glassBlue: '#1da1f21a',
-    grayText: '#5b7083',
-    black: "#000000",
+const theme = (skin: string) => {
+    switch (skin) {
+        case 'dark':
+            return darkSkin;
+        default:
+            return defaultSkin;
+    }
 }
 
-const theme = {
-    color
+const defaultSkin = {
+    main: '#39a1f1',
+    mainHover: '#1da1f21a',
+    mainLight: '#8fcef9',
+    border: '#cfcfcf',
+    base: '#ffffff',
+    baseHover: '#f8f8f8',
+    textTitle: '#000000',
+    textMain: '#5b7083',
+    textSub: '',
+    textDesc: '',
+}
+
+const darkSkin = {
+    main: '#39a1f1',
+    mainHover: '#1da1f21a',
+    mainLight: '#8fcef9',
+    border: '#cfcfcf',
+    base: '#000000',
+    baseHover: '#f8f8f8',
+    textTitle: '#ffffff',
+    textMain: '#5b7083',
+    textSub: '',
+    textDesc: '',
 }
 
 export default theme;

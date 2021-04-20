@@ -21,7 +21,8 @@ const HeaderContainer: React.FC<HeaderContainerUseProps> = ({
     window.addEventListener('resize', ()=> setWidth(window.document.body.clientWidth))
   },[])
 
-  const onClickHandler = () => {
+  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const { name } = event.currentTarget;
     
   }
 

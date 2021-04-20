@@ -75,8 +75,3 @@ export const receiveUserLeaveSocket = (res: any) => ({
   type: 'RECEIVE_USER_LEAVE',
   payload: res
 })
-
-export const messageRoomLeave = {
-  type: 'ROOM_PAGE_UNMOUNT',
-  payload: false
-}

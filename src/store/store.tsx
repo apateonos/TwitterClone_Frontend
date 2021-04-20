@@ -2,8 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { rootReducer } from '../store/reducers/index';
 import rootSaga from './sagas/index';
-// import logger from 'redux-logger';
-//import saga from './sagas/ping';
+
 function configureStore() {
   const sagaMiddleware = createSagaMiddleware();
   const composeEnhancers =

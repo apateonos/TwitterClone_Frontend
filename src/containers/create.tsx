@@ -8,7 +8,7 @@ import { createUserAccountApi } from '../store/actions/user';
 import { Create } from '../components/index';
 
 interface TweetDetailProps extends RouteComponentProps<any> {
-  createUserAccountApi: ({ userUniqueName, userName, password, imageFile, profile }: CreateUserAccountUseData) => object; 
+  createUserAccountApi: ({ unique_name, user_name, password, user_image, profile }: CreateUserAccountUseData) => object; 
   error: any;
 }
 
@@ -16,33 +16,24 @@ const SignContainer: React.FC<TweetDetailProps> = ({
   createUserAccountApi,
   error
 }) => {
-  const [ userUniqueName, setUserUniqueName ] = useState('');
-  const [ userName, setUserName ] = useState('');
+  const [ preview_image, setPreViewImage ] = useState('');
+  const [ unique_name, setUniqueName ] = useState('');
+  const [ user_name, setUserName ] = useState('');
   const [ password, setPassword ] = useState('');
+  const [ comfirm_password, setComfirmPassword ] = useState('');
   const [ profile, setProfile ] = useState('');
-  const [ userImage, setUserImage ] = useState('');
-  const [ comfirmPassword, setComfirmPassword ] = useState('');
-  const [ imageFile, setImageFile ] = useState('');
-  const [ errorMessage, setErrorMessage ] = useState('');
-  const [ errorNumber, setErrorNumber ] = useState(0);
-
+  const [ user_image, setUserImage ] = useState('');
+  
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { name } = event.currentTarget;
 
     switch ( name ) {
       case 'create':
-        const checkVaild = verificationInputs({ userUniqueName, userName, password, comfirmPassword });
-
-        if (checkVaild) {
-          setErrorNumber(checkVaild);
-          setErrorMessage(errorText[checkVaild - 3]);
-          break;
-        }
         createUserAccountApi({
-          userUniqueName,
-          userName,
-          imageFile,
+          unique_name,
+          user_name,
+          user_image,
           password,
           profile
         })
@@ -58,8 +49,6 @@ const SignContainer: React.FC<TweetDetailProps> = ({
     
     switch ( name ) {
       case 'imageCancel':
-        setImageFile('');
-        setUserImage('');
         break;
 
       default:
@@ -71,38 +60,30 @@ const SignContainer: React.FC<TweetDetailProps> = ({
     const { name, value, files } = event.currentTarget as any;
 
     switch (name) {
-      case 'userUniqueName': 
-        setUserUniqueName(value);
-        break;
-
+      case 'uniqueName': 
+        return setUniqueName(value);
+        
       case 'userName': 
-        setUserName(value);
-        break;
-
+        return setUserName(value);
+        
       case 'password': 
-        setPassword(value); 
-        break;
-
+        return setPassword(value); 
+        
       case 'comfirmPassword': 
-        setComfirmPassword(value); 
-        break;
-
+        return setComfirmPassword(value); 
+        
+      case 'profile': 
+        return setProfile(value);
+         
       case 'userImage':
         const theFile = files[0];
-        setImageFile(theFile);
-
         const reader = new FileReader();
         reader.onloadend = ( finishedEvent ) => {
           const { result } = finishedEvent.target as any;
           setUserImage( result );
         }
-        reader.readAsDataURL( theFile );
-        break;
-
-      case 'profile': 
-        setProfile(value) 
-        break;
-
+        return reader.readAsDataURL( theFile );
+        
       default:
         break;
     }
@@ -140,12 +121,12 @@ const SignContainer: React.FC<TweetDetailProps> = ({
 }
 
 const mapStateToProps = (rootState: State) => ({
-  error: rootState.userReducer.signError
+  //error: rootState.userReducer.signError
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  createUserAccountApi: ({ userUniqueName, userName, password, imageFile, profile }: CreateUserAccountUseData) => {
-    return dispatch(createUserAccountApi.request({ userUniqueName, userName, password, imageFile, profile }));
+  createUserAccountApi: ({ unique_name, user_name, password, user_image, profile }: CreateUserAccountUseData) => {
+    return dispatch(createUserAccountApi.request({ unique_name, user_name, password, user_image, profile }));
   }
 });
 

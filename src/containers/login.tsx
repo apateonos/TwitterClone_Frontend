@@ -6,28 +6,30 @@ import { State } from "../store/reducers/index";
 import { LoginUserAccountUseData } from 'api/user';
 import { loginUserAccountApi } from '../store/actions/user';
 import { modal } from '../store/actions/modal';
+import { Create } from './index';
 import { Login } from '../components/index';
 
 interface LoginContainerUseProps extends RouteComponentProps<any> {
-  loginUserAccountApi: ({ userUniqueName, password }: LoginUserAccountUseData) => object;
-  createAccountModal: () => object;
+  loginUserAccountApi: ({ unique_name, password }: LoginUserAccountUseData) => object;
+  openModal: () => object;
   error: any;
 }
 
 const LoginContainer: React.FC<LoginContainerUseProps> = ({
   loginUserAccountApi,
-  createAccountModal,
+  openModal,
   error
 }) => {
-  const [ userUniqueName, setUserUniqueName ] = useState('');
+  const [ unique_name, setUniqueName ] = useState('');
   const [ password, setPassword ] = useState('');
 
   const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { name } = event.currentTarget;
+
     switch (name) {
       case 'login':
-        return loginUserAccountApi({ userUniqueName, password });
+        return loginUserAccountApi({ unique_name, password });
 
       default:
         break;
@@ -38,7 +40,7 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
     const { name } = event.currentTarget;
     switch (name) {
       case 'create':
-        return createAccountModal();
+        return openModal(<Create />);
 
       default:
         break;
@@ -48,13 +50,11 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     switch (name) {
-      case 'userUniqueName': 
-        setUserUniqueName(value);
-        break;
-
+      case 'uniqueName': 
+        return setUniqueName(value);
+        
       case 'password': 
-        setPassword(value); 
-        break;
+        return setPassword(value); 
 
       default:
         break;
@@ -62,15 +62,7 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
   }
 
   return (
-    <Login 
-      onSubmit={onSubmitHandler}
-      onClick={onClickHandler}
-      onChange={onChangeHandler}
-      userUniqueName={userUniqueName}
-      password={password}
-      error={errorCode(error.code)}
-      errorMessage={error.message}
-    />
+    <></>
   )
 }
 
@@ -79,12 +71,12 @@ const mapStateToProps = (rootState: State) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loginUserAccountApi: ({ userUniqueName, password }: LoginUserAccountUseData) => {
-    return dispatch(loginUserAccountApi.request({ userUniqueName, password }));
+  loginUserAccountApi: ({ unique_name, password }: LoginUserAccountUseData) => {
+    return dispatch(loginUserAccountApi.request({ unique_name, password }));
   },
   
-  createAccountModal: () => {
-    return dispatch(modal.createAccount());
+  openModal: (component: JSX.Element) => {
+    return dispatch(modal.open(component));
   }
 });
 

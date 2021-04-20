@@ -7,7 +7,7 @@ const initialState: TimelineReducerUseData = {
 
 interface TimelineReducerUseData {
   tweets: [] | TimelineTweetsData;
-  error: string;
+  error: any;
 }
 
 export interface TimelineTweetsData {
@@ -22,14 +22,7 @@ export interface TimelineTweetsData {
   created_at: string;
   reply_count: number;
   retweet_count: number;
-  
-  retweet_id: number;
-  retweet_user_id: string;
-  retweet_user_image: string;
-  retweet_unique_name: string;
-  retweet_display_name: string;
-  retweet_text: string;
-  retweet_image: string;
+  heart_count: number;
 }
 
 export default function (state=initialState, { type, payload }: any) {

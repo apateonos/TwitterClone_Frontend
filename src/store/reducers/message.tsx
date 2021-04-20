@@ -65,7 +65,6 @@ export default function (state=initialState, { type, payload }: any) {
         rooms: payload.rooms
       }
     
-    case 'RECEIVE_USER_LEAVE':
     case GET_MESSAGE_LIST['FAILURE']:
     case CREATE_ROOM['FAILURE']:
     case SEND_MESSAGE['FAILURE']:

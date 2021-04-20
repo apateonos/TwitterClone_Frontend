@@ -5,7 +5,6 @@ import timelineReducer from './timeline';
 import detailReducer from './detail';
 import profileReducer from './profile';
 import modalReducer from './modal';
-import followReducer from './follow';
 import searchReducer from './search';
 import messageReducer from './message';
 
@@ -16,7 +15,6 @@ export const rootReducer = combineReducers({
   timelineReducer,
   profileReducer,
   modalReducer,
-  followReducer,
   searchReducer,
   messageReducer
 });
