@@ -1,13 +1,13 @@
-const theme = (skin: string) => {
-    switch (skin) {
+/* const theme = (color: string) => {
+    switch (color) {
         case 'dark':
-            return darkSkin;
+            return darkColor;
         default:
-            return defaultSkin;
+            return defaultColor;
     }
-}
+} */
 
-const defaultSkin = {
+const defaultColor = {
     main: '#39a1f1',
     mainHover: '#1da1f21a',
     mainLight: '#8fcef9',
@@ -20,7 +20,7 @@ const defaultSkin = {
     textDesc: '',
 }
 
-const darkSkin = {
+const darkColor = {
     main: '#39a1f1',
     mainHover: '#1da1f21a',
     mainLight: '#8fcef9',
@@ -33,4 +33,4 @@ const darkSkin = {
     textDesc: '',
 }
 
-export default theme;
+export default defaultColor;

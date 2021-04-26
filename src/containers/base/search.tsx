@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { State } from "../../store/reducers/index";
 import { getSearchByKeywordApi } from '../../store/actions/search';
 import { GetSearchByKeywordUseData } from '../../api/search';
-import { Search } from '../../components/index';
 
 interface SearchProps extends RouteComponentProps<any> {
   getSearchByKeywordApi: ({ keyword }: GetSearchByKeywordUseData) => object;
@@ -59,17 +58,12 @@ const SearchContainer: React.FC<SearchProps> = ({
   }
 
   return (
-    <Search 
-      onSubmit={onSubmitHandler}
-      onClick={onClickHandler}
-      onChange={onChangeHandler}
-      keyword={keyword}
-    />
+    <></>
   )
 }
 
 const mapStateToProps = (rootState: State) => ({
-  results: rootState.searchReducer?.results
+  results: rootState.searchReducer.results
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

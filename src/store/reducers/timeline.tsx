@@ -6,15 +6,15 @@ const initialState: TimelineReducerUseData = {
 };
 
 interface TimelineReducerUseData {
-  tweets: [] | TimelineTweetsData;
+  tweets: [] | Array<TweetData>;
   error: any;
 }
 
-export interface TimelineTweetsData {
+export interface TweetData {
   user_id: number;
   user_image: string;
   unique_name: string;
-  display_name: string;
+  user_name: string;
 
   tweet_id: number;
   tweet_text: string;

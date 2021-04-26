@@ -4,9 +4,9 @@ import * as types from '../actions/types';
 import { getDetailTweetApi } from '../actions/detail';
 import { GetDetailTweetUseData } from '../../api/detail';
 
-function* getDetailTweetApiSaga({ tweetNumber }: GetDetailTweetUseData) {
+function* getDetailTweetApiSaga({ tweet_id }: GetDetailTweetUseData) {
   try {
-    const data = yield call(Api.getDetailTweet, { tweetNumber });
+    const data = yield call(Api.getDetailTweet, { tweet_id });
     if (yield data.code === 'errors') throw Error;
     yield put(getDetailTweetApi.success(data));
   } catch (err) {
@@ -16,8 +16,8 @@ function* getDetailTweetApiSaga({ tweetNumber }: GetDetailTweetUseData) {
 
 function* watchgetDetailTweetApiSaga() {
   while (true) {
-    const { tweetNumber } = yield take(types.GET_DETAIL_TWEET['REQUEST']);
-    yield fork(getDetailTweetApiSaga, { tweetNumber });
+    const { tweet_id } = yield take(types.GET_DETAIL_TWEET['REQUEST']);
+    yield fork(getDetailTweetApiSaga, { tweet_id });
   } 
 }
 

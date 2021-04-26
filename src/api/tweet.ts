@@ -3,60 +3,45 @@ import { post, del } from './service';
 
 export interface PostTweetUseData {
   tweet_text: string;
-  tweet_image: any|null;
+  imageFile: any|null;
   reply_id?: number;
 }
-export const postTweet = ({
-  tweet_text, tweet_image, reply_id,
-}: PostTweetUseData): AxiosPromise => {
-  return post('tweet/post', {
-    tweet_text,
-    tweet_image,
-    reply_id,
-  }, {headers: {'Content-Type': 'multipart/form-data'}});
+export const postTweet = (data: PostTweetUseData): AxiosPromise => {
+  const header = {headers: {'Content-Type': 'multipart/form-data'}};
+  return post('tweet/post', data, header);
 };
 
 export interface DeleteTweetUseData {
   tweet_id: number,
 }
-export const deleteTweet = ({
-  tweet_id
-}: DeleteTweetUseData): AxiosPromise => {
-  return del('tweet/del', { tweet_id });
+export const deleteTweet = (data: DeleteTweetUseData): AxiosPromise => {
+  return del('tweet/del', data);
 }
 
 export interface PostRetweetUseData {
   tweet_id: number;
 }
-export const postRetweet = ({
-  tweet_id
-}: PostRetweetUseData): AxiosPromise => {
-  return post('retweet/post', { tweet_id });
+export const postRetweet = (data: PostRetweetUseData): AxiosPromise => {
+  return post('retweet/post', data);
 };
 
 export interface DeleteRetweetUseData {
   tweet_id: number
 };
-export const deleteRetweet = ({
-  tweet_id
-}: DeleteRetweetUseData): AxiosPromise => {
-  return del('retweet/del', { tweet_id });
+export const deleteRetweet = (data: DeleteRetweetUseData): AxiosPromise => {
+  return del('retweet/del', data);
 }
 
 export interface PostHeartUseData {
   tweet_id: number;
 }
-export const postHeart = ({
-  tweet_id
-}: PostHeartUseData): AxiosPromise => {
-  return post('heart/post', { tweet_id });
+export const postHeart = (data: PostHeartUseData): AxiosPromise => {
+  return post('heart/post', data);
 };
 
 export interface DeleteHeartUseData {
   tweet_id: number
 };
-export const deleteHeart = ({
-  tweet_id
-}: DeleteHeartUseData): AxiosPromise => {
-  return del('heart/del', { tweet_id });
+export const deleteHeart = (data: DeleteHeartUseData): AxiosPromise => {
+  return del('heart/del', data);
 }

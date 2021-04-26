@@ -2,10 +2,10 @@ import { POST_TWEET, DELETE_TWEET, POST_RETWEET, DELETE_RETWEET, POST_HEART, DEL
 import { PostTweetUseData, DeleteTweetUseData, PostRetweetUseData, DeleteRetweetUseData, PostHeartUseData, DeleteHeartUseData } from '../../api/tweet';
 
 export const postTweetApi = {
-  request: ({ tweet_text, tweet_image, reply_id }: PostTweetUseData) => ({
+  request: ({ tweet_text, imageFile, reply_id }: PostTweetUseData) => ({
     type: POST_TWEET['REQUEST'],
     tweet_text,
-    tweet_image,
+    imageFile,
     reply_id,
   }),
   success: (res: any) => ({

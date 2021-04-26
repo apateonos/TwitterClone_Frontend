@@ -3,92 +3,50 @@ import { useParams, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from "../store/reducers/index";
-import { getDetailTweetApi } from '../store/actions/detail';
+import { useClick } from '../handler/index';
 import { GetDetailTweetUseData } from '../api/detail';
-import { modal } from '../store/actions/modal';
-import { ModalComponentData } from '../store/reducers/modal';
-import { Header, Tweet } from './index';
-import { Detail, TweetList, NotFoundDetail } from '../components/index';
-import { DetailReplysData, DetailTweetData } from 'store/reducers/detail';
-import { DeleteUserTweetUseData } from '../api/tweet';
-import { deleteUserTweetApi } from '../store/actions/tweet';
+import { getDetailTweetApi } from '../store/actions/detail';
+import { ReplyData, TweetData } from '../store/reducers/detail';
+import { Detail, TweetList } from '../components/index';
+import { HeartData, RetweetData } from 'store/reducers/tweet';
 
-interface DetailTweetUseProps extends RouteComponentProps<any> {
-  getDetailTweetApi: ({ tweetNumber }: GetDetailTweetUseData) => object;
-  openModal: ({ component }: ModalComponentData) => object;
-  deleteUserTweetApi: ({ tweetNumber }: DeleteUserTweetUseData) => object;
-  tweet: DetailTweetData;
-  replys: Array<DetailReplysData>;
-  post: any;
+interface DetailContainerUseProps extends RouteComponentProps<any> {
+  getDetailTweetApi: ({ tweet_id }: GetDetailTweetUseData) => object;
+  tweet: TweetData;
+  replys: Array<ReplyData>;
+  retweets: Array<RetweetData>;
+  hearts: Array<HeartData>;
+  res: {};
 }
 
 interface ParamsTypes {
-  tweetNumber: string; // 동적라우팅에서 받아온 숫자값이여서 수가 아닌 스트링형태이다... 좀더 간결하게 변환하는법을 잘 생각해보자
+  tweet_id: string; // 동적라우팅에서 받아온 숫자값이여서 수가 아닌 스트링형태이다... 좀더 간결하게 변환하는법을 잘 생각해보자
 }
 
-const TweetContainer: React.FC<DetailTweetUseProps> = ({
-  deleteUserTweetApi,
-  getDetailTweetApi,
-  openModal,
-  tweet,
-  replys,
-  post
+const DetailContainer: React.FC<DetailContainerUseProps> = ({
+  getDetailTweetApi, tweet, replys, retweets, hearts, res
 }) => {
-  const { tweetNumber } = useParams<ParamsTypes>();
-  const isTweet = Object.keys(tweet).length > 0 && tweet.constructor === Object;
+  const { tweet_id } = useParams<ParamsTypes>();
+  const onClickHandler = useClick();
 
   useEffect(() => {
-    getDetailTweetApi({ tweetNumber: Number( tweetNumber )});
-  }, [tweetNumber, post]);
-
-  const onClickHandler = (
-    event: React.MouseEvent<HTMLButtonElement>, idx: number
-  ) => {
-    event.stopPropagation();
-    const { name } = event.currentTarget;
-
-    switch (name) {
-      case 'reply':
-        openModal({
-          component: <Tweet replyNumber={idx}/>
-        });
-        break;
-
-      case 'retweet':
-        openModal({
-          component: <Tweet retweetNumber={idx}/>
-        });
-        break;
-
-      case 'delete':
-        deleteUserTweetApi({ tweetNumber: idx });
-        break;
-
-      default:
-        break;
-    }
-  }
+    getDetailTweetApi({ tweet_id: Number( tweet_id )});
+  }, [tweet_id, res]);
 
   return (
     <>
-      {isTweet ? 
-        <>
-          <Header 
-            title='Tweet'
-          />
-          <Detail 
-            onClick={onClickHandler}
-            tweet={tweet}
-          />
-          <TweetList 
-            onClick={onClickHandler}
-            tweets={replys}
-            notFound={<></>}
-          />
-        </>
-      :
-        <NotFoundDetail />
-      }
+      <Detail 
+        onClick={onClickHandler}
+        tweet={tweet}
+        retweets={retweets}
+        hearts={hearts}
+      />
+      <TweetList
+        onClick={onClickHandler}
+        tweets={replys}
+        retweets={retweets}
+        hearts={hearts} 
+      />
     </>
   )
 }
@@ -96,21 +54,17 @@ const TweetContainer: React.FC<DetailTweetUseProps> = ({
 const mapStateToProps = (rootState: State) => ({
   tweet: rootState.detailReducer.tweet,
   replys: rootState.detailReducer.replys,
-  post: rootState.tweetReducer.res
+  retweets: rootState.tweetReducer.retweets,
+  hearts: rootState.tweetReducer.hearts,
+  res: rootState.tweetReducer.res
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getDetailTweetApi: ({ tweetNumber }: GetDetailTweetUseData) => {
-    return dispatch(getDetailTweetApi.request({ tweetNumber }));
-  },
-  openModal: ({ component }: ModalComponentData) => {
-    return dispatch(modal.open({ component }));
-  },
-  deleteUserTweetApi: ({ tweetNumber }: DeleteUserTweetUseData) => {
-    return dispatch(deleteUserTweetApi.request({ tweetNumber }));
+  getDetailTweetApi: ({ tweet_id }: GetDetailTweetUseData) => {
+    return dispatch(getDetailTweetApi.request({ tweet_id }));
   }
 });
 
 export default withRouter(
-  compose(connect(mapStateToProps, mapDispatchToProps))(TweetContainer)
+  compose(connect(mapStateToProps, mapDispatchToProps))(DetailContainer)
 );

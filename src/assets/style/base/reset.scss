@@ -152,10 +152,14 @@ button {
   background: transparent;
 }
 input {
-  border: none;
+  outline: none;
+}
+input:focus {
   outline: none;
 }
 * {
+  padding: none;
+  margin: none;
   font-family: 'Spoqa Han Sans', sans-serif;
 }
 

@@ -1,61 +1,21 @@
-import { BlueButton } from '../index';
-import { Create, Login } from '../../containers/index';
-import React, { useEffect, useState } from 'react';
+import { EmphasisButton } from '../../atoms/buttons';
+import React from 'react';
 import styled from 'styled-components';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Dispatch, compose } from 'redux';
-import { connect } from 'react-redux';
-import { State } from '../../store/reducers/index';
-import { modal } from '../../store/actions/modal';
 
-interface ModalComponentUseProps extends RouteComponentProps {
-  closeModal: () => object;
+interface ModalComponentUseProps {
+  onClick: Function;
   component: JSX.Element;
-  self: {};
 }
-
-const ModalComponent: React.FC<ModalComponentUseProps> = ({
-  closeModal,
-  component,
-  self
-}) => {
-  const [ isLogin, setIsLogin ] = useState(false);
-
-  useEffect(() => {
-    const loginCheck = Object.keys(self).length > 0 && self.constructor === Object;
-    setIsLogin(loginCheck);
-  }, [self]);
-
+export default ({ onClick, component }: ModalComponentUseProps) => {
   return (
-    <Container>
-      <Board>
-        <Headline>
-          <ButtonWrap>
-            <BlueButton onClick={()=>closeModal()} name='modal' text='Back' />
-          </ButtonWrap>
-        </Headline>
-        <Section>
-          {component}
-        </Section>
-      </Board>
-    </Container>
+    <div>
+      <div>
+        <EmphasisButton name='close' onClick={onClick} text='Back' />
+      </div>
+      {component}
+    </div>
   )
 }
-
-const mapStateToProps = (rootState: State) => ({
-  component: rootState.modalReducer.component,
-  isCreateAccount: rootState.modalReducer.isCreateAccount,
-  self: rootState.userReducer.self
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeModal: () => {
-    return dispatch(modal.close());
-  }
-});
-
-export default withRouter(
-  compose(connect(mapStateToProps, mapDispatchToProps))(ModalComponent));
 
 const Container = styled.div`
   z-index: 9999;

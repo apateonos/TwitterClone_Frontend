@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home, Login, Profile, Tweet, Explore, Message, Room, NotFound } from '../pages/index';
-import { Modal } from '../components/index';
+import { Modal } from '../containers/index';
 
 interface props {
   isLogin: boolean;

@@ -4,9 +4,9 @@ import * as types from '../actions/types';
 import { getUserProfileApi } from '../actions/profile';
 import { GetUserProfileUseData } from '../../api/profile';
 
-function* getUserProfileApiSaga({ userUniqueName }: GetUserProfileUseData) {
+function* getUserProfileApiSaga({ unique_name }: GetUserProfileUseData) {
   try {
-    const data = yield call(Api.getUserProfile, { userUniqueName });
+    const data = yield call(Api.getUserProfile, { unique_name });
     if (yield data.code === 'errors') throw Error;
     yield put(getUserProfileApi.success(data));
   } catch (err) {
@@ -16,8 +16,8 @@ function* getUserProfileApiSaga({ userUniqueName }: GetUserProfileUseData) {
 
 function* watchGetUserProfileApiSaga() {
   while (true) {
-    const { userUniqueName } = yield take(types.GET_USER_PROFILE['REQUEST']);
-    yield fork(getUserProfileApiSaga, { userUniqueName });
+    const { unique_name } = yield take(types.GET_USER_PROFILE['REQUEST']);
+    yield fork(getUserProfileApiSaga, { unique_name });
   }
 }
 

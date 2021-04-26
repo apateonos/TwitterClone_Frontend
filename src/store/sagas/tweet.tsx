@@ -4,9 +4,9 @@ import * as types from '../actions/types';
 import { postTweetApi, deleteTweetApi, postRetweetApi, deleteRetweetApi, postHeartApi, deleteHeartApi } from '../actions/tweet';
 import { PostTweetUseData, DeleteTweetUseData, PostRetweetUseData, DeleteRetweetUseData, PostHeartUseData, DeleteHeartUseData } from '../../api/tweet';
 
-function* postTweetApiSaga({ tweet_text, tweet_image, reply_id }: PostTweetUseData) {
+function* postTweetApiSaga({ tweet_text, imageFile, reply_id }: PostTweetUseData) {
   try {
-    const data = yield call(Api.postTweet, { tweet_text, tweet_image, reply_id });
+    const data = yield call(Api.postTweet, { tweet_text, imageFile, reply_id });
     if (yield data.code === 'errors') throw Error;
     yield put(postTweetApi.success(data));
     yield put({type: 'CLOSE_MODAL'});
@@ -17,8 +17,8 @@ function* postTweetApiSaga({ tweet_text, tweet_image, reply_id }: PostTweetUseDa
 
 function* watchPostTweetApiSaga() {
   while (true) {
-    const { tweet_text, tweet_image, reply_id } = yield take(types.POST_TWEET['REQUEST']);
-    yield fork(postTweetApiSaga, { tweet_text, tweet_image, reply_id });
+    const { tweet_text, imageFile, reply_id } = yield take(types.POST_TWEET['REQUEST']);
+    yield fork(postTweetApiSaga, { tweet_text, imageFile, reply_id });
   }
 }
 

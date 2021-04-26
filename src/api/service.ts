@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseUrl } from '../config/config';
+import { baseURL } from '../config/config';
 
 axios.defaults.withCredentials = true;
 
@@ -21,28 +21,28 @@ const onError = (error: any) => {
 
 export const get = (url: string, params?: any) => {
   return axios
-    .get(baseUrl + url, { params })
+    .get(baseURL + url, { params })
     .then(onSuccess)
     .catch(onError);
 };
 
 export const post = (url: string, params?: any, headers?: any) => {
   return axios
-    .post(baseUrl + url, params, headers)
+    .post(baseURL + url, params, headers)
     .then(onSuccess)
     .catch(onError);
 };
 
 export const put = (url: string, params?: any, headers?: any) => {
   return axios
-    .put(baseUrl + url, params, headers)
+    .put(baseURL + url, params, headers)
     .then(onSuccess)
     .catch(onError);
 };
 
 export const del = (url: string, params?: any) => {
   return axios
-    .delete(baseUrl + url, {params})
+    .delete(baseURL + url, {params})
     .then(onSuccess)
     .catch(onError);
 };

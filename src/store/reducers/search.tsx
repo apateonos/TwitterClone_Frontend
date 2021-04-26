@@ -2,20 +2,19 @@ import { GET_SEARCH_BY_KEYWORD } from '../actions/types';
 
 const initialState: SearchReducerUseData = {
   results: [],
-  err: ""
+  err: ''
 }
 
 interface SearchReducerUseData {
-  results: [] | SearchResultsData;
+  results: []|Array<ResultData>;
   err: any;
 }
 
-export interface SearchResultsData {
+export interface ResultData {
   user_id: number;
   user_image: string;
   unique_name: string;
   display_name: string;
-  user_profile: string;
 
   tweet_id: number;
   tweet_text: string;
@@ -23,15 +22,7 @@ export interface SearchResultsData {
   created_at: string;
   reply_count: number;
   retweet_count: number;
-  tweet_view: number;
-  
-  retweet_id: number;
-  retweet_user_id: string;
-  retweet_user_image: string;
-  retweet_unique_name: string;
-  retweet_display_name: string;
-  retweet_text: string;
-  retweet_image: string;
+  heart_count: number;
 }
 
 export default function (state = initialState, { type, payload }: any) {

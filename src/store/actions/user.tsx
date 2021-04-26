@@ -1,5 +1,5 @@
-import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, EDIT_USER_ACCOUNT, LOGOUT_USER_ACCOUNT, DELETE_USER_ACCOUNT, GET_TOKEN_FROM_REFRESH, POST_FOLLOW_USER, DELETE_FOLLOW_USER } from './types';
-import { CreateUserAccountUseData, LoginUserAccountUseData, EditUserAccountUseData, DeleteUserAccountUseData, FollowUseData } from '../../api/user';
+import { CREATE_USER_ACCOUNT, LOGIN_USER_ACCOUNT, EDIT_USER_ACCOUNT, LOGOUT_USER_ACCOUNT, DELETE_USER_ACCOUNT, GET_TOKEN_FROM_REFRESH } from './types';
+import { CreateUserAccountUseData, LoginUserAccountUseData, EditUserAccountUseData, DeleteUserAccountUseData } from '../../api/user';
 
 export const getTokenFromRefreshApi = {
   request: () => ({
@@ -91,35 +91,5 @@ export const deleteUserAccountApi = {
   failure: (err: Error) => ({
     type: DELETE_USER_ACCOUNT['FAILURE'],
     payload: err,
-  }),
-};
-
-export const postFollowUserApi = {
-  request: ({ follower_id }: FollowUseData) => ({
-    type: POST_FOLLOW_USER['REQUEST'],
-    follower_id
-  }),
-  success: (res: any) => ({
-    type: POST_FOLLOW_USER['SUCCESS'],
-    payload: res,
-  }),
-  failure: (err: Error) => ({
-    type: POST_FOLLOW_USER['FAILURE'],
-    err: err.message,
-  }),
-};
-
-export const deleteFollowUserApi = {
-  request: ({ follower_id }: FollowUseData) => ({
-    type: DELETE_FOLLOW_USER['REQUEST'],
-    follower_id
-  }),
-  success: (res: any) => ({
-    type: DELETE_FOLLOW_USER['SUCCESS'],
-    payload: res,
-  }),
-  failure: (err: Error) => ({
-    type: DELETE_FOLLOW_USER['FAILURE'],
-    err: err.message,
   }),
 };

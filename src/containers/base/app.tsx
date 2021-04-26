@@ -7,27 +7,28 @@ import '../../assets/style/main.scss';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../assets/style/lib/theme';
 import { getTokenFromRefreshApi } from '../../store/actions/user';
+import { SelfData } from 'store/reducers/user';
 
-interface AppContainerProps {
+interface AppContainerUseProps {
   getTokenFromRefreshApi: () => object;
-  self: any;
   isModal: boolean;
+  self: SelfData
 }
 
-const AppContainer: React.FC<AppContainerProps> = ({
+const AppContainer: React.FC<AppContainerUseProps> = ({
   getTokenFromRefreshApi,
-  self,
   isModal,
+  self
 }) => {
-  const [ isLogin, setIsLogin ] = useState(false);
+  const [ isLogin, setLogin ] = useState(false);
 
   useEffect(() => {
-    const loginCheck = Object.keys(self).length > 0 && self.constructor === Object;
-    setIsLogin(loginCheck);
-    if (!loginCheck) { 
-      getTokenFromRefreshApi();
-    }
+    setLogin(self.user_id !== undefined);
   }, [self]);
+
+  useEffect(() => {
+    getTokenFromRefreshApi();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}> 
@@ -35,7 +36,7 @@ const AppContainer: React.FC<AppContainerProps> = ({
         isLogin={isLogin} 
         isModal={isModal} 
       /> 
-    </ThemeProvider> 
+    </ThemeProvider>
   )
 }
 
@@ -44,8 +45,8 @@ const mapStateToProps = (rootState: State) => ({
   isModal: rootState.modalReducer.isModal,
 })
 
-const mapDispatchToProps = () => ({
-  getTokenFromRefreshApi: (dispatch: Dispatch) => {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  getTokenFromRefreshApi: () => {
     return dispatch(getTokenFromRefreshApi.request());
   }
 });

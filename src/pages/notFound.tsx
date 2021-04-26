@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { mainLogo } from '../assets/images/svg';
 
 export default () => {
   return (
     <Container>
       <Wrap>
-      <Logo>{mainLogo}</Logo>
+      <Logo></Logo>
       <Text>NOT FOUND 404</Text>
     
       </Wrap>

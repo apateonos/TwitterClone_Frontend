@@ -9,43 +9,43 @@ const initialState: ProfileReducerUseData = {
 };
 
 interface ProfileReducerUseData {
-  user: {} | ProfileUserData;
-  tweets: [] | Array<ProfileTweetsData>;
-  follower: [] | Array<ProfileFollowerData>
-  following: [] | Array<ProfileFollowingData>
+  user: {}|UserData;
+  tweets: []|Array<TweetData>;
+  follower: []|Array<FollowerData>
+  following: []|Array<FollowingData>
   error: any;
 }
 
-export interface ProfileUserData {  
+export interface UserData {  
   user_id: number;
   user_image: string;
-  display_name: string;
+  user_name: string;
   unique_name: string;
-  user_profile: string;
+  profile: string;
   created_at: string;
 }
 
-export interface ProfileFollowingData {
+export interface FollowingData {
   user_id: number;
   user_image: string;
-  display_name: string;
+  user_name: string;
   unique_name: string;
-  user_profile: string;
+  profile: string;
 }
 
-export interface ProfileFollowerData {
+export interface FollowerData {
   user_id: number;
   user_image: string;
-  display_name: string;
+  user_name: string;
   unique_name: string;
-  user_profile: string;
+  profile: string;
 }
 
-export interface ProfileTweetsData {
+export interface TweetData {
   user_id: number;
   user_image: string;
   unique_name: string;
-  display_name: string;
+  user_name: string;
 
   tweet_id: number;
   tweet_text: string;

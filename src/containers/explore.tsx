@@ -1,117 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from '../store/reducers/index';
-import { Explore, TweetList, UserList, NotFoundTweet } from '../components/index';
-import { SearchResultsData } from '../store/reducers/search';
-import { Header, Tweet, Search } from './index';
-import { ModalComponentData } from '../store/reducers/modal';
-import { modal } from '../store/actions/modal';
-import { FollowUseData } from '../api/follow';
-import { Login } from './index';
-import { UserSelfData } from '../store/reducers/user';
-import { deleteFollowUserApi, postFollowUserApi } from '../store/actions/follow';
+import { useChange, useClick, useSubmit } from '../handler/index';
+import { SelfData } from '../store/reducers/user';
+import { ResultData } from '../store/reducers/search';
 
-
-interface SearchProps extends RouteComponentProps<any> {
-  postFollowUserApi: ({ userNumber }: FollowUseData) => object;
-  deleteFollowUserApi: ({ userNumber }: FollowUseData) => object;
-  openModal: ({ component }: ModalComponentData) => object;
-  results: Array<SearchResultsData>;
-  self: UserSelfData;
+interface SearchContainerUseProps extends RouteComponentProps<any> {
+  results: Array<ResultData>;
+  self: SelfData;
 }
 
-const SearchContainer: React.FC<SearchProps> = ({
-  postFollowUserApi,
-  deleteFollowUserApi,
-  openModal,
+const initialState = { keyword: '' };
+const SearchContainer: React.FC<SearchContainerUseProps> = ({
   results,
   self
 }) => {
-  const isLogin = Object.keys(self).length > 0 && self.constructor === Object;
-  const [ sortType, setSortType ] = useState('latest');
-  const [ buttonIdx, setButtonIdx ] = useState(1);
+  const [ state, inputState ] = useChange(initialState);
+  const onSubmitHandler = useSubmit(state);
+  const onClickHandler = useClick();
 
-  const onClickHandler = (event: React.MouseEvent<HTMLButtonElement>, idx: number) => {
-    const { name } = event.currentTarget;
+  useEffect(() => {
 
-    switch ( name ) {
-      case 'follow':
-        if (isLogin) {
-          postFollowUserApi({ userNumber: idx });
-        }
-        else {
-          openModal({ component: <Login />});
-        }
-        break;
-      
-      case 'unfollow':
-        deleteFollowUserApi({ 
-          userNumber: idx 
-        });
-        break;
-
-      case 'reply':
-        openModal({component: <Tweet replyNumber={idx}/>});
-        break;
-
-      case 'retweet':
-        openModal({component: <Tweet retweetNumber={idx}/>});
-        break;
-      
-      case 'latest':
-        setButtonIdx(idx);
-        setSortType('latest');
-        break;
-
-      case 'top':
-        setButtonIdx(idx);
-        setSortType('top');
-        break;
-
-      case 'people':
-        setButtonIdx(idx);
-        setSortType('people');
-        break;
-
-      case 'photo':
-        setButtonIdx(idx);
-        setSortType('photo');
-        break;
-      
-      default:
-        break;
-    }
-  }
+  }, []);
 
   return (
     <>
-      <Header 
-        title={<Search />}
-      />
-      <Explore 
-        onClick={onClickHandler}
-        buttonIdx={buttonIdx}
-      />
-      {sortType !== 'people' ?
-        <TweetList
-          onClick={onClickHandler}
-          tweets={sort[sortType as 'latest'|'top'|'photo'](results).reverse()}
-          notFound={<></>}
-        />
-        :
-        <UserList 
-          onClick={onClickHandler}
-          users={results.filter((item, i) => {
-            return (
-              results.findIndex((item2, j) => {
-                return item.user_id === item2.user_id;
-              }) === i
-            );
-          })}
-        />
-      }
     </>
   )
 }
@@ -121,22 +36,10 @@ const mapStateToProps = (rootState: State) => ({
   self: rootState.userReducer.self
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  openModal: ({ component }: ModalComponentData) => {
-    return dispatch(modal.open({ component }));
-  },
-  postFollowUserApi: ({ userNumber }: FollowUseData) => {
-    return dispatch(postFollowUserApi.request({ userNumber }));
-  },
-  deleteFollowUserApi: ({ userNumber }: FollowUseData) => {
-    return dispatch(deleteFollowUserApi.request({ userNumber }));
-  }
-});
-
 export default withRouter(
-  compose(connect(mapStateToProps, mapDispatchToProps))(SearchContainer)
+  compose(connect(mapStateToProps))(SearchContainer)
 );
-
+/* 
 const sort = {
   latest: (tweets: Array<SearchResultsData>) => tweets.sort((a, b) => {
     if (a.created_at > b.created_at) {
@@ -162,4 +65,4 @@ const sort = {
     if (isImage) return true;
     return false;
   }),
-}
+} */

@@ -2,9 +2,9 @@ import { GetDetailTweetUseData } from '../../api/detail';
 import { GET_DETAIL_TWEET } from './types';
 
 export const getDetailTweetApi = {
-  request: ({ tweetNumber }: GetDetailTweetUseData) => ({
+  request: ({ tweet_id }: GetDetailTweetUseData) => ({
     type: GET_DETAIL_TWEET['REQUEST'],
-    tweetNumber
+    tweet_id
   }),
   success: (res: any) => ({
     type: GET_DETAIL_TWEET['SUCCESS'],
