@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import styled from 'styled-components';
 import { CommonButton, EmphasisButton } from '../atoms/buttons';
@@ -12,14 +13,21 @@ interface LoginUseProps {
 
 export default ({ onChange, onSubmit, onClick, state }: LoginUseProps) => {
   const { unique_name, password } = state;
+  const temp = () => {
+    console.log('temp');
+    axios.get('http://52.15.44.208:3000/ping')
+  }
   return (
-    <form name='login' onSubmit={(e) => onSubmit(e)} >
-      <InfoInput name='unique_name' onChange={onChange} type='text' value={unique_name} placeholder='ID...' />
-      <InfoInput name='password' onChange={onChange} type='password' value={password} placeholder='Password...' />
-      <div>
-        <CommonButton name='login' type='submit' text='Login' />
-        <EmphasisButton name='create' onClick={onClick} text='Create' />
-      </div>
-    </form>
+    <>
+      <button onClick={() => temp()}>버튼!</button>
+      <form name='login' onSubmit={(e) => onSubmit(e)} >
+        <InfoInput name='unique_name' onChange={onChange} type='text' value={unique_name} placeholder='ID...' />
+        <InfoInput name='password' onChange={onChange} type='password' value={password} placeholder='Password...' />
+        <div>
+          <CommonButton name='login' type='submit' text='Login' />
+          <EmphasisButton name='create' onClick={onClick} text='Create' />
+        </div>
+      </form>
+    </>
   )
 }
