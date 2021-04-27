@@ -15,7 +15,7 @@ export default ({ onChange, onSubmit, onClick, state }: LoginUseProps) => {
   const { unique_name, password } = state;
   const temp = () => {
     console.log('temp');
-    axios.get('http://52.15.44.208:3000/ping')
+    axios.get('https://agtwitter.tk/ping')
   }
   return (
     <>
