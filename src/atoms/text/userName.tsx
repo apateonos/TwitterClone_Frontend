@@ -19,4 +19,8 @@ export default ({ text, to }: TweetTextUseProps) => {
 }
 
 const Text = styled.p`
+  font-weight: 800;
+  font-size: 17px;
+  margin: 0 4px 6px 0;
+
 `;

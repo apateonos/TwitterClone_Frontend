@@ -17,8 +17,51 @@ export default ({ name, icon, text }: TweetButtonUseProps) => {
   )
 }
 
-const Button = styled.button``;
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
 
-const Icon = styled.div``;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 7px 15px;
+  background: black;
+  border-radius: 1.5em;
+  transition-duration: 0.4s;
+  :hover {
+    background: #efefef;
+  }
 
-const Text = styled.span``;
+  @media only screen and ( min-width: 768px ) {
+    width: auto;
+    padding: 0 25px;
+  }
+`;
+
+const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  
+  svg {
+    width: 30px;
+    height: 30px;
+    fill: white;
+  }
+
+  @media only screen and ( min-width: 768px ) {
+    display: none;
+  }
+`;
+
+const Text = styled.span`
+  display: none;
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+
+  @media only screen and ( min-width: 768px ) {
+    display: block;
+  }
+`;

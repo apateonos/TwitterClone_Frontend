@@ -32,9 +32,6 @@ export default () => {
     }
 
     if (self.user_id === undefined) return dispatch(modal.open(<Login />));
-    if ( i === undefined ) return false;
-    console.log('hello?');
-    console.log(i);
     switch (name) {
       case 'tweet':
         return dispatch(modal.open(<Tweet />));
@@ -64,7 +61,8 @@ export default () => {
         return dispatch(deleteHeartApi.request({ tweet_id: i }));
     
       case 'userlist':
-        return dispatch(modal.open(<UserList users={i}/>));
+        if (i.length > 0) return dispatch(modal.open(<UserList users={i}/>));
+        break;
 
       default:
         return false;

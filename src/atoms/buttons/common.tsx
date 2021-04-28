@@ -20,4 +20,11 @@ export default ({ text, name, type, idx, size }: props) => {
 }
 
 const Button = styled.button`
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 20px;
+  background: black;
+  color: white;
+  font-weight: 700;
+  padding: 7px 25px;
 `;

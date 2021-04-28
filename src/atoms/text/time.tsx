@@ -11,4 +11,5 @@ export default ({ text }: TweetTextUseProps) => {
 }
 
 const Text = styled.p`
+  margin: 0 4px 6px 0;
 `;

@@ -71,28 +71,66 @@ export default ({
     const isFollow = follows.some(fu => fu.user_id === user_id);
     inputState({ ...state, isFollow });
   }, [follows])
+  
   const containerClicked = (e: React.MouseEvent) => {
     e.stopPropagation();
     history.push(`/tweet/${tweet_id}`);
   }
   return (
     <Container onClick={(e) => containerClicked(e)} >
-      <UserImage image={user_image} to={unique_name} />
-      <UserNameText text={user_name} to={unique_name} />
-      <UniqueNameText text={unique_name} to={unique_name} />
-      <TimeText text={created_at} />
+      <UserImageWrap>
+        <UserImage image={user_image} to={unique_name} />
+      </UserImageWrap>
+      <TweetWrap>
+        <TweetInfoWrap>
+          <UserNameText text={user_name} to={unique_name} />
+          <UniqueNameText text={unique_name} to={unique_name} />
+          <TimeText text={created_at} />
+        </TweetInfoWrap>
+      
       <DescText text={tweet_text} />
       <TweetImage image={tweet_image} />
-      <IconButton name='reply' icon={tweetCardSVG.reply} color='' idx={tweet_id}/>
-      {state.isRetweet 
-        ? <IconButton name='unretweet' icon={tweetCardSVG.retweet} color='' idx={tweet_id} />
-        : <IconButton name='retweet' icon={tweetCardSVG.retweet} color='' idx={tweet_id} /> }
-      {state.isHeart
-        ? <IconButton name='unheart' icon={tweetCardSVG.heart} color='' idx={tweet_id} /> 
-        : <IconButton name='heart' icon={tweetCardSVG.heart} color='' idx={tweet_id} /> }  
+      <ButtonWrap>
+        <IconButton name='reply' icon={tweetCardSVG.reply} color='' idx={tweet_id}/>
+        {state.isRetweet 
+          ? <IconButton name='unretweet' icon={tweetCardSVG.retweet} color='' idx={tweet_id} />
+          : <IconButton name='retweet' icon={tweetCardSVG.retweet} color='' idx={tweet_id} /> }
+        {state.isHeart
+          ? <IconButton name='unheart' icon={tweetCardSVG.heart} color='' idx={tweet_id} /> 
+          : <IconButton name='heart' icon={tweetCardSVG.heart} color='' idx={tweet_id} /> }
+      </ButtonWrap>
+      </TweetWrap>  
     </Container>
   )
 }
 
 const Container = styled.article`
+  display: flex;
+  border-bottom: 1px solid black;
+  padding: 0 0.4em;
+  margin: 1em 0;
+`;
+
+const UserImageWrap = styled.div`
+  padding-right: 7px;
+`;
+
+const TweetWrap = styled.div`
+  width: 100%;
+`;
+
+const TweetInfoWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+`;
+
+const ButtonWrap = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+
+  @media only screen and ( min-width: 500px ) {
+    padding-right: 20%;
+  } 
 `;

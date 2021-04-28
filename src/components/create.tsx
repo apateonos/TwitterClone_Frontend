@@ -19,10 +19,19 @@ export default ({ onChange, onSubmit, onClick, state }: CreateUseProps) => {
       <InfoInput name='user_name' onChange={onChange} type='text' value={user_name} placeholder='Name...' />
       <InfoInput name='password' onChange={onChange} type='password' value={password} placeholder='Password...' />
       <InfoInput name='password_' onChange={onChange} type='password' value={password_} placeholder='Comfirm password...' />
-      <AreaInput name='profile' onChange={onChange} value={profile} placeholder='Profile...' />
+      <AreaInputWrap>
+        <AreaInput name='profile' onChange={onChange} value={profile} placeholder='Profile...' />
+      </AreaInputWrap>
       <div>
         <EmphasisButton name='create' type='submit' text='Create' />
       </div>
     </form>
   )
 }
+
+const AreaInputWrap = styled.div`
+  padding: 6px 17px;
+  margin: 4px 0;
+  border: 1px solid black;
+  border-radius: 20px;
+`;

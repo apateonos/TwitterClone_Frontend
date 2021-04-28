@@ -26,4 +26,5 @@ export default ({ onChange, image, accept, name }: props) => {
   )
 }
 
-const Image = styled.img``;
+const Image = styled.img`
+`;

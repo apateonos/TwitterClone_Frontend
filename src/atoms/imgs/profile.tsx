@@ -2,22 +2,26 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-interface TweetTextUseProps {
-  text: string;
+interface UserImageUseProps {
+  image: string;
   to?: string;
 }
-export default ({ text, to }: TweetTextUseProps) => {
+
+export default ({ image, to }: UserImageUseProps) => {
   const history = useHistory();
   const textClicked = (e: React.MouseEvent) => {
     e.stopPropagation();
     history.push(`/profile/${to}`);
   }
   return (
-    <Text onClick={(e) => textClicked(e)}>{text}</Text>
+    <UserImage onClick={(e) => textClicked(e)}/>
   )
 }
 
-const Text = styled.p`
-  font-size: 16px;
-  margin: 0 4px 6px 0;
+const UserImage = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: gray;
+  border: 2px solid white;
 `;

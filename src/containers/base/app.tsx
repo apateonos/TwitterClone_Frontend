@@ -3,7 +3,7 @@ import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from "../../store/reducers/index";
 import Route from '../../routes/route';
-//import '../../assets/style/main.scss';
+import '../../assets/style/main.scss';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../assets/style/lib/theme';
 import { getTokenFromRefreshApi } from '../../store/actions/user';

@@ -6,6 +6,7 @@ import { FollowsData } from '../store/reducers/follow';
 import { useSelector } from 'react-redux';
 import { State } from '../store/reducers';
 import { SelfData } from '../store/reducers/user';
+import { UserImage } from '../atoms/imgs';
 
 interface UserCardUseProps {
   user: UserCardUseData;
@@ -38,17 +39,49 @@ export default ({ user }: UserCardUseProps) => {
 
   return (
     <Container>
-      <UniqueNameText text={unique_name} to={unique_name} />
-      <UserNameText text={user_name} to={unique_name} />
-      <ProfileText text={profile} />
-      {state.isSelf 
-        ? ''
-        : state.isFollow
-          ? <EmphasisButton name='unfollow' idx={user_id} text='Unfollow' />
-          : <EmphasisButton name='follow' idx={user_id} text='Follow' />
-      }
+      <UserWrap>     
+        <UserImageWrap>
+          <UserImage image={user_image} to={unique_name} />
+        </UserImageWrap>
+        <UserTextWrap>
+          <UserInfoWrap>
+            <UserNameText text={user_name} to={unique_name} />
+            <UniqueNameText text={unique_name} to={unique_name} />
+          </UserInfoWrap>
+          <ProfileText text={profile} />
+        </UserTextWrap>
+      </UserWrap>
+      <ButtonWrap>
+        {state.isSelf 
+          ? ''
+          : state.isFollow
+            ? <EmphasisButton name='unfollow' idx={user_id} text='Unfollow' />
+            : <EmphasisButton name='follow' idx={user_id} text='Follow' />
+        }
+      </ButtonWrap>
     </Container>
   )
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const UserImageWrap = styled.div`
+  margin-right: 6px;
+`;
+
+const UserWrap = styled.div`
+  display: flex;
+`;
+
+const UserTextWrap = styled.div``;
+
+const UserInfoWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const ButtonWrap = styled.div``;

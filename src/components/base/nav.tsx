@@ -28,7 +28,9 @@ export default ({ self }: NavComponentUseProps) => {
           <NavButton to='/explore' text='Explore' icon={navSVG.explore} count={0}/>
           <NavButton to='/message' text='Message' icon={navSVG.message} count={0}/>
           <NavButton to={`/profile/${self.unique_name}`} text='Profile' icon={navSVG.profile} count={0}/>
-          <VersatileNavButton name='tweet' icon={navSVG.tweet} text='TWEET'/>
+          <VersatileNavButtonWrap>
+            <VersatileNavButton name='tweet' icon={navSVG.tweet} text='TWEET'/>
+          </VersatileNavButtonWrap>
         </>
         : <>
           <NavButton to='/explore' text='Explore' icon={navSVG.explore} count={0}/>
@@ -38,5 +40,30 @@ export default ({ self }: NavComponentUseProps) => {
   )
 }
 
-const Nav = styled.nav``;
+const Nav = styled.nav`
+  position: fixed;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  border-top: 1px solid black;
+  bottom: 0;
+  padding: 5px 3px;
+  background: white;
 
+  @media only screen and ( min-width: 550px ) {
+    position: static;
+    display: block;
+    width: auto;
+    border-top: none;
+  }
+`;
+
+const VersatileNavButtonWrap = styled.div`
+  position: fixed;
+  bottom: 80px;
+  right: 15px;
+
+  @media only screen and ( min-width: 550px ) {
+    position: static;
+  }
+`;

@@ -12,7 +12,6 @@ export default (componentState = {}) => {
     event.preventDefault();
     const { name } = event.currentTarget;
     const { unique_name, user_name, password, profile, imageFile, tweet_text, reply_id, keyword, room_id, message } = componentState as any; // 이부분을 좀더 멋지게 만들고싶다...
-    console.log(name);
     switch (name) {
       case 'login':
         return dispatch(loginUserAccountApi.request({ unique_name, password }));
@@ -24,7 +23,6 @@ export default (componentState = {}) => {
         return dispatch(editUserAccountApi.request({ user_name, imageFile, profile }));
 
       case 'tweet':
-        console.log('tweet');
         return dispatch(postTweetApi.request({ tweet_text, imageFile, reply_id }));
 
       case 'search':

@@ -25,6 +25,10 @@ const ToolButton = styled.button`
 `;
 
 const Icon = styled.div`
+  svg {
+    width: 1.4em;
+    height: 1.4em;
+  }
 `;
 
 const TextBox = styled.span`

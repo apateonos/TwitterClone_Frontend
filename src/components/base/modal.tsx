@@ -7,12 +7,16 @@ interface ModalComponentUseProps {
 }
 export default ({ component }: ModalComponentUseProps) => {
   return (
-    <div>
-      <div>
-        <EmphasisButton name='close' text='Back' />
-      </div>
-      {component}
-    </div>
+    <Container>
+      <Board>
+        <Headline>
+          <EmphasisButton name='close' text='Back' />
+        </Headline>
+        <ComponentWrap>
+          {component}
+        </ComponentWrap>
+      </Board>
+    </Container>
   )
 }
 
@@ -33,15 +37,14 @@ const Container = styled.div`
 `;
 
 const Board = styled.div`
-  width: 500px;
   background: white;
-  border-radius: 25px;
-  overflow: hidden;
+  width: 100%;
+  height: 100vh;
 
-  @media only screen and (max-width: 500px) {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
+  @media only screen and ( min-width: 500px ) {
+    width: 500px;
+    height: auto;
+    border-radius: 25px;
   }
 `;
 
@@ -49,11 +52,11 @@ const Headline = styled.div`
   width: 100%;
   height: 50px;
   padding: 5px 10px;
-  border-bottom: 1px solid ${props => props.theme.color.borderGray};
 `;
 
-const ButtonWrap = styled.div`
-  width: 100px;
+const ComponentWrap = styled.div`
+  width: 100%;
+  padding: 10px 15px;
 `;
 
 const Section = styled.section`

@@ -19,7 +19,17 @@ export default ({ name, count, text, idx }: IconButtonUseData) => {
   )
 }
 
-const CountButton = styled.button``;
-const Count = styled.span``;
-const Text = styled.span``;
+const CountButton = styled.button`
+  padding: 1.2px 4px;
+`;
+
+const Count = styled.span`
+  font-size: 17.5px;
+  font-weight: 800;
+  margin-right: 1.4px;
+`;
+
+const Text = styled.span`
+  font-size: 17.5px;
+`;
 

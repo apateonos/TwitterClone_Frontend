@@ -27,4 +27,8 @@ export default ({ onChange, icon, accept, name }: props) => {
 }
 
 const Label = styled.label`
+  svg {
+    width: 25px;
+    height: 25px;
+  }
 `;
