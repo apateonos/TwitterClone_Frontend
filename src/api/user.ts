@@ -14,7 +14,13 @@ export interface CreateUserAccountUseData {
 }
 export const createUserAccount = (data: CreateUserAccountUseData): AxiosPromise => {
   const header = { headers: {'Content-Type': 'multipart/form-data' }};
-  return post('user/sign', data, header);
+  const form = new FormData;
+  form.append('imageFile', data.imageFile);
+  form.append('unique_name', data.unique_name);
+  form.append('user_name', data.user_name);
+  form.append('password', data.password);
+  form.append('profile', data.profile);
+  return post('user/sign', form, header);
 };
 
 export interface LoginUserAccountUseData {

@@ -66,8 +66,8 @@ export default function (state=initialState, { type, payload }: any) {
         ...state,
         user: payload.user,
         tweets: payload.tweets,
-        following: payload.following,
-        follower: payload.follower
+        following: payload.followings,
+        follower: payload.followers
       }
     
     case GET_USER_PROFILE['FAILURE']:

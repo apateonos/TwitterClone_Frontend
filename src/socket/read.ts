@@ -7,6 +7,7 @@ export function readSocketChannel(socket: any) {
       emit(receiveMessageSocket(item));
     });
     socket.on('receive invite', (item: any) => {
+      console.log(item);
       emit(receiveInviteRoomSocket(item));
     })
     socket.on('receive leave', (item: any) => {

@@ -20,7 +20,7 @@ export default ({ data }: MessageCardUseProps) => {
   const { user_id, unique_name, user_image, message, created_at } = data;
   return (
     <div>
-      <UserImage image={user_image}/>
+      <UserImage image={user_image} to={unique_name} />
       <MessageText text={message} />
       <TimeText text={created_at} />
     </div>

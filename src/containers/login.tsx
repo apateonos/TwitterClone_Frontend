@@ -16,12 +16,10 @@ const LoginContainer: React.FC<LoginContainerUseProps> = ({
 }) => {
   const [ state, onChangeHandler ] = useChange(initialState);
   const onSubmitHandler = useSubmit(state);
-  const onClickHandler = useClick();
 
   return (
     <Login
       onChange={onChangeHandler}
-      onClick={onClickHandler}
       onSubmit={onSubmitHandler}
       state={state}
     />

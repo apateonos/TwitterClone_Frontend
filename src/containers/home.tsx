@@ -9,9 +9,13 @@ import { useClick } from '../handler/index';
 import { HeartData, RetweetData } from '../store/reducers/tweet';
 import { Tweet } from './index';
 import { TweetList } from '../components/index';
+import { SelfData } from '../store/reducers/user';
+import { FollowsData } from '../store/reducers/follow';
 
 interface HomeContainerProps extends RouteComponentProps<any> {
   getUserTimelineApi: () => object;
+  self: SelfData;
+  follows: Array<FollowsData>
   tweets: Array<TweetData>;
   retweets: Array<RetweetData>;
   hearts: Array<HeartData>;
@@ -20,9 +24,11 @@ interface HomeContainerProps extends RouteComponentProps<any> {
 
 const HomeContainer: React.FC<HomeContainerProps> = ({
   getUserTimelineApi,
+  follows,
   hearts,
   retweets,
   tweets,
+  self,
   res,
 }) => {
   const onClickHandler = useClick();
@@ -35,7 +41,8 @@ const HomeContainer: React.FC<HomeContainerProps> = ({
     <>
       <Tweet />
       <TweetList 
-        onClick={onClickHandler}
+        self={self}
+        follows={follows}
         tweets={tweets}
         retweets={retweets}
         hearts={hearts}
@@ -47,6 +54,8 @@ const HomeContainer: React.FC<HomeContainerProps> = ({
 const mapStateToProps = (rootState: State) => ({
   tweets: rootState.timelineReducer.tweets,
   res: rootState.tweetReducer.res,
+  self: rootState.userReducer.self,
+  follows: rootState.followReducer.follows,
   retweets: rootState.tweetReducer.retweets,
   hearts: rootState.tweetReducer.hearts
 })

@@ -49,16 +49,17 @@ export default function (state = initialState, { type, payload }: any) {
     case DELETE_RETWEET['SUCCESS']:
       return {
         ...state,
-        retweets: payload.retweets
+        res: payload.result,
+        retweets: payload.retweets,
       }
     
     case POST_HEART['SUCCESS']:
     case DELETE_HEART['SUCCESS']:
       return {
         ...state,
-        hearts: payload.hearts
+        res: payload.result,
+        hearts: payload.hearts,
       }
-
     case POST_TWEET['SUCCESS']:
     case DELETE_TWEET['SUCCESS']:
     case POST_RETWEET['SUCCESS']:

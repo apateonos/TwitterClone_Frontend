@@ -1,7 +1,10 @@
 import { GET_DETAIL_TWEET } from '../actions/types';
 
+
 const initialState: DetailReducerUseData = {
   tweet: {},
+  heartList: [],
+  retweetList: [],
   replys: [],
   error: '',
 };
@@ -9,7 +12,23 @@ const initialState: DetailReducerUseData = {
 interface DetailReducerUseData {
   tweet: {}|TweetData;
   replys: []|Array<ReplyData>;
+  retweetList: []|Array<RetweetListData>;
+  heartList: []|Array<HeartListData>
   error: string;
+}
+
+export interface RetweetListData {
+  user_id: number;
+  user_image: string;
+  unique_name: string;
+  user_name: string;
+}
+
+export interface HeartListData {
+  user_id: number;
+  user_image: string;
+  unique_name: string;
+  user_name: string;
 }
 
 export interface TweetData {  
@@ -50,8 +69,11 @@ export default function (state = initialState, { type, payload }: any) {
     case GET_DETAIL_TWEET['SUCCESS']:
       return {
         ...state,
-        tweet: payload.tweet,
-        replys: payload.replys
+        error: payload,
+        tweet: payload.tweets,
+        replys: payload.replys,
+        retweetList: payload.retweets,
+        heartList: payload.hearts
       }
 
     case GET_DETAIL_TWEET['FAILURE']:

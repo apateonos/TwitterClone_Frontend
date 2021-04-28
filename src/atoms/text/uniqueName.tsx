@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface TweetTextUseProps {
@@ -7,13 +7,13 @@ interface TweetTextUseProps {
   to?: string;
 }
 export default ({ text, to }: TweetTextUseProps) => {
+  const history = useHistory();
+  const textClicked = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    history.push(`/profile/${to}`);
+  }
   return (
-    <>{ to 
-      ? <Link to={`/propfile/${to}`} >
-          <Text>{text}</Text>
-        </Link> 
-      : <Text>{text}</Text>
-    }</>
+    <Text onClick={(e) => textClicked(e)}>{text}</Text>
   )
 }
 

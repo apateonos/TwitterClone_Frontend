@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useClick } from '../../handler/index';
 
 interface IconButtonUseData {
-  onClick: Function;
   name: string;
   color: string;
   icon: JSX.Element;
@@ -10,9 +10,11 @@ interface IconButtonUseData {
   idx?: number;
 }
 
-export default ({ onClick, name, color, icon, count, idx }: IconButtonUseData) => {
+export default ({ name, color, icon, count, idx }: IconButtonUseData) => {
+  const onClickHandler = useClick();
+
   return (
-    <ToolButton onClick={(e) => onClick(e, idx)} name={name} color={color}>
+    <ToolButton onClick={(e) => onClickHandler(e, idx)} name={name} color={color}>
       <Icon>{icon}</Icon>
       {count && <TextBox>{count}</TextBox>}
     </ToolButton>

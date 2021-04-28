@@ -77,7 +77,9 @@ function* socketHandlerSaga (socket: any) {
 function* watchSocketFlowSaga () {
   while (true) {
     const { token } = yield take('CONNECTION_SOCKET');
+    yield console.log(token);
     const socket = yield call(connection, token);
+    console.log(socket);
     yield call(joinRoom, socket);
     yield fork(socketHandlerSaga, socket);
   }

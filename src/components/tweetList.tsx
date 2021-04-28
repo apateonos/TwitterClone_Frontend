@@ -4,18 +4,26 @@ import { TweetCard } from './index';
 import { TweetCardUseData } from './tweetCard';
 
 interface TweetListUseProps {
-  onClick: Function;
+  self: any;
+  follows: any;
   tweets: Array<TweetCardUseData>;
   retweets: Array<any>;
   hearts: Array<any>;
 }
 
-export default ({ onClick, tweets, retweets, hearts }: TweetListUseProps) => {
+export default ({ self, follows, tweets, retweets, hearts }: TweetListUseProps) => {
   return (
     <div>
       {
         tweets.length > 0 
-          ? tweets.map((el, key)=> <TweetCard onClick={onClick} tweet={el} key={key} />)
+          ? tweets.map((el, key)=> <TweetCard 
+            tweet={el} 
+            key={key}
+            self = {self}
+            follows = {follows}
+            retweets = {retweets}
+            hearts = {hearts}
+          />)
           : '로딩중'
       }
     </div>

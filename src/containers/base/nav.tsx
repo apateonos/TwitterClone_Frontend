@@ -4,6 +4,7 @@ import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from '../../store/reducers/index';
 import { SelfData } from '../../store/reducers/user';
+import { Nav } from '../../components/index';
 
 interface NavContainerUseProps extends RouteComponentProps<any> {
   self: SelfData;
@@ -19,7 +20,9 @@ const NavContainer: React.FC<NavContainerUseProps> = ({
   }, [])
 
   return (
-    <></>
+    <Nav 
+      self={self}
+    />
   )
 }
 

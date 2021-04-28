@@ -2,9 +2,9 @@ import { POST_FOLLOW_USER, DELETE_FOLLOW_USER } from '../actions/types';
 import { FollowUseData } from '../../api/follow';
 
 export const postFollowUserApi = {
-  request: ({ follower_id }: FollowUseData) => ({
+  request: ({ following_id }: FollowUseData) => ({
     type: POST_FOLLOW_USER['REQUEST'],
-    follower_id
+    following_id
   }),
   success: (res: any) => ({
     type: POST_FOLLOW_USER['SUCCESS'],
@@ -17,9 +17,9 @@ export const postFollowUserApi = {
 };
 
 export const deleteFollowUserApi = {
-  request: ({ follower_id }: FollowUseData) => ({
+  request: ({ following_id }: FollowUseData) => ({
     type: DELETE_FOLLOW_USER['REQUEST'],
-    follower_id
+    following_id
   }),
   success: (res: any) => ({
     type: DELETE_FOLLOW_USER['SUCCESS'],

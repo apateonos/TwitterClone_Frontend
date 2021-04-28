@@ -18,13 +18,13 @@ export default ({ onSubmit, onChange, onClick, state, self }: TweetComponentUseP
   const { user_image } = self;
 
   return (
-    <Container onSubmit={(e) => onSubmit(e)}>
+    <Container name='tweet' onSubmit={(e) => onSubmit(e)}>
       <UserImage image={user_image}/>
       <AreaInput onChange={onChange} name='tweet_text' value={tweet_text} placeholder="What's on mind...?"/>
       <div>
         <IconInput onChange={onChange} name='image' icon={tweetSVG.image} accept='jpg' />
         <IconInput onChange={onChange} name='image' icon={tweetSVG.gif} accept='gif' />
-        <EmphasisButton onClick={()=> false} type='submit' name='post' text='Tweet'/>
+        <EmphasisButton type='submit' name='tweet' text='Tweet'/>
       </div>
     </Container> 
   )

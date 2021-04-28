@@ -18,8 +18,8 @@ export default ({ isLogin, isModal }: props) => {
         <Route exact path = "/explore" component={Explore} />
         <Route exact path = "/message" component={isLogin ? Message : Login} />
         <Route exact path = "/message/:room_id" component={isLogin ? Room : Login} />
-        <Route exact path = "/tweet/:tweetNumber" component={Tweet} />
-        <Route exact path = "/profile/:userUniqueName" component={Profile} />
+        <Route exact path = "/tweet/:tweet_id" component={Tweet} />
+        <Route exact path = "/profile/:unique_name" component={Profile} />
         <Route path='*' component={NotFound} />
       </Switch>
     </Router>

@@ -1,15 +1,16 @@
+import { useClick } from '../../handler/index';
 import React from 'react';
 import styled from 'styled-components';
 
 interface TweetButtonUseProps {
-  onClick: Function;
   name: string;
   icon: any;
   text: string;
 }
-export default ({ onClick, name, icon, text }: TweetButtonUseProps) => {
+export default ({ name, icon, text }: TweetButtonUseProps) => {
+  const onClickHandler = useClick();
   return (
-    <Button onClick={(e)=>onClick(e)} name={name}>
+    <Button onClick={(e)=>onClickHandler(e)} name={name}>
       <Icon>{icon}</Icon>
       <Text>{text}</Text>
     </Button>

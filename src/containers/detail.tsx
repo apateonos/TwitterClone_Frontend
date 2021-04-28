@@ -6,13 +6,19 @@ import { State } from "../store/reducers/index";
 import { useClick } from '../handler/index';
 import { GetDetailTweetUseData } from '../api/detail';
 import { getDetailTweetApi } from '../store/actions/detail';
-import { ReplyData, TweetData } from '../store/reducers/detail';
+import { HeartListData, ReplyData, RetweetListData, TweetData } from '../store/reducers/detail';
 import { Detail, TweetList } from '../components/index';
-import { HeartData, RetweetData } from 'store/reducers/tweet';
+import { HeartData, RetweetData } from '../store/reducers/tweet';
+import { SelfData } from '../store/reducers/user';
+import { FollowsData } from '../store/reducers/follow';
 
 interface DetailContainerUseProps extends RouteComponentProps<any> {
   getDetailTweetApi: ({ tweet_id }: GetDetailTweetUseData) => object;
   tweet: TweetData;
+  self: SelfData;
+  heartList: Array<HeartListData>;
+  retweetList: Array<RetweetListData>;
+  follows: Array<FollowsData>
   replys: Array<ReplyData>;
   retweets: Array<RetweetData>;
   hearts: Array<HeartData>;
@@ -24,10 +30,9 @@ interface ParamsTypes {
 }
 
 const DetailContainer: React.FC<DetailContainerUseProps> = ({
-  getDetailTweetApi, tweet, replys, retweets, hearts, res
+  getDetailTweetApi, self, follows, tweet, retweetList, heartList, replys, retweets, hearts, res
 }) => {
   const { tweet_id } = useParams<ParamsTypes>();
-  const onClickHandler = useClick();
 
   useEffect(() => {
     getDetailTweetApi({ tweet_id: Number( tweet_id )});
@@ -36,16 +41,18 @@ const DetailContainer: React.FC<DetailContainerUseProps> = ({
   return (
     <>
       <Detail 
-        onClick={onClickHandler}
         tweet={tweet}
+        retweetList={retweetList}
+        heartList={heartList}
         retweets={retweets}
         hearts={hearts}
       />
-      <TweetList
-        onClick={onClickHandler}
+      <TweetList 
+        self={self}
+        follows={follows}
         tweets={replys}
         retweets={retweets}
-        hearts={hearts} 
+        hearts={hearts}
       />
     </>
   )
@@ -53,6 +60,10 @@ const DetailContainer: React.FC<DetailContainerUseProps> = ({
 
 const mapStateToProps = (rootState: State) => ({
   tweet: rootState.detailReducer.tweet,
+  self: rootState.userReducer.self,
+  retweetList: rootState.detailReducer.retweetList,
+  heartList: rootState.detailReducer.heartList,
+  follows: rootState.followReducer.follows,
   replys: rootState.detailReducer.replys,
   retweets: rootState.tweetReducer.retweets,
   hearts: rootState.tweetReducer.hearts,

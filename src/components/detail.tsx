@@ -2,12 +2,14 @@ import { tweetCardSVG } from '../assets/images/svg';
 import { CountTextButton, IconButton } from '../atoms/buttons/index';
 import { TweetImage, UserImage } from '../atoms/imgs/index';
 import { DescText, UserNameText, TimeText, UniqueNameText } from '../atoms/text/index';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { HeartListData, RetweetListData } from 'store/reducers/detail';
 
 interface DetailUseProps {
-  onClick: Function;
   tweet: DetailUseData;
+  retweetList: Array<HeartListData>;
+  heartList: Array<RetweetListData>;
   retweets: Array<RetweetsData>;
   hearts: Array<HeartsData>;
 }
@@ -35,7 +37,8 @@ interface HeartsData {
   tweet_id: number;
 }
 
-export default ({ onClick, tweet, retweets, hearts }: DetailUseProps) => {
+const initialState = { isHeart: false, isRetweet: false };
+export default ({ tweet, retweetList, heartList, retweets, hearts }: DetailUseProps) => {
   const {  
     user_id,
     user_image,
@@ -46,11 +49,18 @@ export default ({ onClick, tweet, retweets, hearts }: DetailUseProps) => {
     tweet_text,
     tweet_image,
     created_at,
-    reply_count,
     retweet_count,
     heart_count
   } = tweet;
+  const [ state, inputState ] = useState(initialState);
 
+  useEffect(()=> {
+    const isRetweet = retweets !== undefined && retweets.some(rt => rt.tweet_id === tweet_id);
+    const isHeart = hearts !== undefined && hearts.some(h => h.tweet_id === tweet_id);
+    console.log(retweets, hearts);
+    inputState({ isRetweet, isHeart });
+  }, [retweets, hearts]);
+  console.log(state);
   return (
     <div>
       <UserImage image={user_image} />
@@ -60,13 +70,18 @@ export default ({ onClick, tweet, retweets, hearts }: DetailUseProps) => {
       <DescText text={tweet_text} />
       <TweetImage image={tweet_image} />      
       <div>
-        <CountTextButton onClick={onClick} name='retweetCount' count={retweet_count} text='Retweets' />
-        <CountTextButton onClick={onClick} name='heartCount' count={heart_count} text='Hearts' />
+        <CountTextButton name='userlist' idx={retweetList} count={retweetList.length} text='Retweets' />
+        <CountTextButton name='userlist' idx={heartList} count={heartList.length} text='Hearts' />
       </div>
       <div>
-        <IconButton onClick={onClick} name='reply' icon={tweetCardSVG.reply} color='' />
-        <IconButton onClick={onClick} name='retweet' icon={tweetCardSVG.retweet} color='' />
-        <IconButton onClick={onClick} name='heart' icon={tweetCardSVG.heart} color='' />    
+        <IconButton name='reply' icon={tweetCardSVG.reply} color='' idx={tweet_id} />
+        {state.isRetweet 
+          ? <IconButton name='unretweet' icon={tweetCardSVG.retweet} color='' idx={tweet_id} />
+          : <IconButton name='retweet' icon={tweetCardSVG.retweet} color='' idx={tweet_id} /> }
+        {state.isHeart
+          ? <IconButton name='unheart' icon={tweetCardSVG.heart} color='' idx={tweet_id} /> 
+          : <IconButton name='heart' icon={tweetCardSVG.heart} color='' idx={tweet_id} /> }  
+            
       </div>
     </div>
   )

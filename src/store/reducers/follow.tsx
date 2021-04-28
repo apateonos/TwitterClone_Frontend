@@ -11,7 +11,7 @@ const initialState: FollowReducerUseData = {
 
 export interface FollowsData {
   user_id: number;
-  follower_id: number;
+  following_id: number;
 }
 
 export default function (state = initialState, { type, payload }: any) {
@@ -20,7 +20,7 @@ export default function (state = initialState, { type, payload }: any) {
     case LOGIN_USER_ACCOUNT['SUCCESS']:
       return {
         ...state,
-        follows: payload.follows
+        follows: payload.followings
       }
 
     case POST_FOLLOW_USER['REQUEST']:
@@ -31,7 +31,7 @@ export default function (state = initialState, { type, payload }: any) {
     case DELETE_FOLLOW_USER['SUCCESS']:
       return {
         ...state,
-        follows: payload.follows
+        follows: payload.followings
       }
 
     case POST_FOLLOW_USER['FAILURE']:

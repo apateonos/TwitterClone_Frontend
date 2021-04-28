@@ -1,10 +1,8 @@
 import axios from "axios";
 import { baseURL } from '../config/config';
 
-axios.defaults.withCredentials = true;
-
 const onSuccess = (response: any) => {
-  return response.data;
+  return response.data; 
 };
 
 const onError = (error: any) => {
@@ -21,28 +19,28 @@ const onError = (error: any) => {
 
 export const get = (url: string, params?: any) => {
   return axios
-    .get(baseURL + url, { params })
+    .get(baseURL + url, {params})
     .then(onSuccess)
     .catch(onError);
 };
 
-export const post = (url: string, params?: any, headers?: any) => {
+export const post = (url: string, data?: any, headers?: any) => {
   return axios
-    .post(baseURL + url, params, headers)
+    .post(baseURL + url, data, headers)
     .then(onSuccess)
     .catch(onError);
 };
 
-export const put = (url: string, params?: any, headers?: any) => {
+export const put = (url: string, data?: any, headers?: any) => {
   return axios
-    .put(baseURL + url, params, headers)
+    .put(baseURL + url, data, headers)
     .then(onSuccess)
     .catch(onError);
 };
 
-export const del = (url: string, params?: any) => {
+export const del = (url: string, data?: any) => {
   return axios
-    .delete(baseURL + url, {params})
+    .delete(baseURL + url, {data})
     .then(onSuccess)
     .catch(onError);
 };

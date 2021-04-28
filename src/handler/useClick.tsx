@@ -1,15 +1,19 @@
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { modal } from "../store/actions/modal";
 import { Create, Login, Tweet } from "../containers/index";
 import { deleteFollowUserApi, postFollowUserApi } from "../store/actions/follow";
 import { deleteHeartApi, deleteRetweetApi, deleteTweetApi, postHeartApi, postRetweetApi } from "../store/actions/tweet";
+import { State } from '../store/reducers/index';
+import { UserList } from "../components/index";
+import { useClick } from "./index";
 
 export default () => {
   const dispatch = useDispatch();
+  const { self } = useSelector((state: State) => ({ self: state.userReducer.self }))
 
-  const onClickHandler = useCallback((event: React.MouseEvent<HTMLButtonElement>, i?: number) => {
-    event.stopPropagation();    
+  const onClickHandler = useCallback((event: React.MouseEvent<HTMLButtonElement>, i?: any) => {
+    event.stopPropagation();
     const { name } = event.currentTarget;
     console.log(name);
     
@@ -27,14 +31,19 @@ export default () => {
         break;
     }
 
+    if (self.user_id === undefined) return dispatch(modal.open(<Login />));
     if ( i === undefined ) return false;
-
+    console.log('hello?');
+    console.log(i);
     switch (name) {
+      case 'tweet':
+        return dispatch(modal.open(<Tweet />));
+
       case 'follow':
-        return dispatch(postFollowUserApi.request({ follower_id: i }));
+        return dispatch(postFollowUserApi.request({ following_id: i }));
 
       case 'unfollow':
-        return dispatch(deleteFollowUserApi.request({ follower_id: i }));
+        return dispatch(deleteFollowUserApi.request({ following_id: i }));
       
       case 'reply':
         return dispatch(modal.open(<Tweet reply_id={i} />));
@@ -54,10 +63,13 @@ export default () => {
       case 'unheart':
         return dispatch(deleteHeartApi.request({ tweet_id: i }));
     
+      case 'userlist':
+        return dispatch(modal.open(<UserList users={i}/>));
+
       default:
         return false;
     }
-  }, []);
+  }, [self]);
 
   return onClickHandler;
 }

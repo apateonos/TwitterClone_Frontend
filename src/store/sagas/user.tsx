@@ -4,6 +4,7 @@ import * as Api from '../../api/user';
 import * as types from '../actions/types';
 import { getTokenFromRefreshApi, createUserAccountApi, loginUserAccountApi, editUserAccountApi, logoutUserAccountApi, deleteUserAccountApi } from '../actions/user';
 import { LoginUserAccountUseData, CreateUserAccountUseData, EditUserAccountUseData, DeleteUserAccountUseData } from '../../api/user';
+import { modal } from '../actions/modal';
 
 function* getTokenFromRefreshApiSaga () {
   try { 
@@ -29,6 +30,8 @@ function* loginUserAccountApiSaga ({ unique_name, password }: LoginUserAccountUs
     if (yield data.code === 'errors') throw Error;
     yield put(loginUserAccountApi.success(data));
     yield axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+    yield put({type: 'CONNECTION_SOCKET', token: `Bearer ${data.token}`});
+    yield put(modal.close());
   } catch (err) {
     yield put(loginUserAccountApi.failure(err));
   }                                                                 
@@ -45,7 +48,9 @@ function* createUserAccountApiSaga ({ unique_name, user_name, password, imageFil
   try {
     const data = yield call(Api.createUserAccount, { unique_name, user_name, password, imageFile, profile });
     if (yield data.code === 'errors') throw Error;
+    yield axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
     yield put(createUserAccountApi.success(data));
+    yield put(modal.close());
   } catch (err) {
     yield put(createUserAccountApi.failure(err));
   }

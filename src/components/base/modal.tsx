@@ -3,14 +3,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface ModalComponentUseProps {
-  onClick: Function;
   component: JSX.Element;
 }
-export default ({ onClick, component }: ModalComponentUseProps) => {
+export default ({ component }: ModalComponentUseProps) => {
   return (
     <div>
       <div>
-        <EmphasisButton name='close' onClick={onClick} text='Back' />
+        <EmphasisButton name='close' text='Back' />
       </div>
       {component}
     </div>

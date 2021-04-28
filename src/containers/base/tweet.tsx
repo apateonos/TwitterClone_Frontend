@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
@@ -13,7 +13,7 @@ interface TweetContainerUseProps extends RouteComponentProps<any> {
   res: any;
 }
 
-const initialState = {tweet_text: '', imageFile: {}, preview_image: ''};
+const initialState = {tweet_text: '', imageFile: {}, preview_image: '', reply_id: ''};
 const TweetContainer: React.FC<TweetContainerUseProps> = ({
   reply_id,
   self,
@@ -23,6 +23,13 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
   const onSubmitHandler = useSubmit(state);
   const onClickHandler = useClick();
 
+  useEffect(() => {
+    state.reply_id = reply_id;
+    state.tweet_text = '';
+    state.imageFile = {};
+    state.preview_image = '';
+  }, [res]);
+  
   return (
     <Tweet 
       onSubmit={onSubmitHandler}

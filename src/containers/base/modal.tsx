@@ -1,11 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { State } from '../../store/reducers/index';
 import { Modal } from '../../components/index';
-import { useClick } from '../../handler/index';
 
 interface ModalContainerUseProps extends RouteComponentProps {
   component: JSX.Element;
@@ -14,11 +12,9 @@ interface ModalContainerUseProps extends RouteComponentProps {
 const ModalComponent: React.FC<ModalContainerUseProps> = ({
   component
 }) => {
-  const onClickHandler = useClick();
 
   return (
     <Modal
-      onClick={onClickHandler}
       component={component}
     />
   );

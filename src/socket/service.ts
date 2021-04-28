@@ -1,7 +1,6 @@
 import { io } from 'socket.io-client';
 
-const url = 'https://18.220.165.19:4000/';
-
+const url = 'https://agtwitter.tk';
 const onSuccess = (response: any) => {
   return response;
 };

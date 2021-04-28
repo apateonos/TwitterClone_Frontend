@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter, RouteComponentProps, useParams } from 'react-router-dom';
 import { Dispatch, compose } from 'redux';
 import { connect } from 'react-redux';
@@ -10,6 +10,7 @@ import { SelfData } from '../store/reducers/user';
 import { FollowerData, FollowingData, TweetData, UserData } from '../store/reducers/profile';
 import { FollowsData } from '../store/reducers/follow';
 import { HeartData, RetweetData } from '../store/reducers/tweet';
+import { Profile, TweetList } from '../components/index';
 
 
 interface ProfileContainerUseProps extends RouteComponentProps<any> {
@@ -41,15 +42,29 @@ const ProfileContainer: React.FC<ProfileContainerUseProps> = ({
   follower,
   res,
 }) => {
+
   const { unique_name } = useParams<ParamTypes>();
-  const onClickHandler = useClick();
 
   useEffect(() => {
     getUserProfileApi({ unique_name });
-  }, [res]);
-
+  }, [res, follows, retweets, hearts]);
+  
   return (
     <>
+      <Profile
+        self={self}
+        follows={follows}
+        user={user}
+        following={following}
+        follower={follower}
+      />
+      <TweetList 
+        self={self}
+        follows={follows}
+        tweets={tweets}
+        retweets={retweets}
+        hearts={hearts}
+      />
     </>
   )
 }
@@ -57,8 +72,8 @@ const ProfileContainer: React.FC<ProfileContainerUseProps> = ({
 const mapStateToProps = (rootState: State) => ({
   self: rootState.userReducer.self,
   user: rootState.profileReducer.user,
-  follows: rootState.followReducer.follows,
   tweets: rootState.profileReducer.tweets,
+  follows: rootState.followReducer.follows,
   retweets: rootState.tweetReducer.retweets,
   hearts: rootState.tweetReducer.hearts,
   res: rootState.tweetReducer.res,

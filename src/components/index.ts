@@ -7,6 +7,7 @@ export { default as Tweet } from './base/tweet';
 // components
 export { default as Create } from './create';
 export { default as Login } from './login';
+export { default as Profile } from './profile';
 export { default as Detail } from './detail';
 export { default as TweetCard } from './tweetCard';
 export { default as TweetList } from './tweetList';

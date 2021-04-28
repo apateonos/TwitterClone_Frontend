@@ -1,17 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useClick } from '../../handler/index';
 
 interface IconButtonUseData {
-  onClick: Function;
   name: string;
   count: number;
   text: string;
-  idx?: number;
+  idx?: any;
 }
 
-export default ({ onClick, name, count, text, idx }: IconButtonUseData) => {
+export default ({ name, count, text, idx }: IconButtonUseData) => {
+  const onClickHandler = useClick();
   return (
-    <CountButton onClick={(e) => onClick(e, idx)} name={name} >
+    <CountButton onClick={(e) => onClickHandler(e, idx)} name={name} >
       <Count>{count}</Count>
       <Text>{text}</Text>
     </CountButton>

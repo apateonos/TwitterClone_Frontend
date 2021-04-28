@@ -5,9 +5,9 @@ import * as types from '../actions/types';
 import { postFollowUserApi, deleteFollowUserApi } from '../actions/follow';
 import { FollowUseData } from '../../api/follow';
 
-function* postFollowUserApiSaga ({ follower_id }: FollowUseData) {
+function* postFollowUserApiSaga ({ following_id }: FollowUseData) {
   try {
-    const data = yield call(Api.postFollowUser, { follower_id });
+    const data = yield call(Api.postFollowUser, { following_id });
     if (yield data.code === 'errors') throw Error;
     yield put(postFollowUserApi.success(data));
   } catch (err) {
@@ -17,14 +17,14 @@ function* postFollowUserApiSaga ({ follower_id }: FollowUseData) {
 
 function* watchPostFollowUserApiSaga () {
   while (true) {
-    const { follower_id } = yield take(types.POST_FOLLOW_USER['REQUEST']);
-    yield fork(postFollowUserApiSaga, { follower_id });
+    const { following_id } = yield take(types.POST_FOLLOW_USER['REQUEST']);
+    yield fork(postFollowUserApiSaga, { following_id });
   }
 }
 
-function* deleteFollowUserApiSaga ({ follower_id }: FollowUseData) {
+function* deleteFollowUserApiSaga ({ following_id }: FollowUseData) {
   try {
-    const data = yield call(Api.deleteFollowUser, { follower_id });
+    const data = yield call(Api.deleteFollowUser, { following_id });
     if (yield data.code === 'errors') throw Error;
     yield put(deleteFollowUserApi.success(data));
   } catch (err) {
@@ -34,8 +34,8 @@ function* deleteFollowUserApiSaga ({ follower_id }: FollowUseData) {
 
 function* watchDeleteFollowUserApiSaga () {
   while (true) {
-    const { follower_id } = yield take(types.DELETE_FOLLOW_USER['REQUEST']);
-    yield fork(deleteFollowUserApiSaga, { follower_id });
+    const { following_id } = yield take(types.DELETE_FOLLOW_USER['REQUEST']);
+    yield fork(deleteFollowUserApiSaga, { following_id });
   }
 }
 

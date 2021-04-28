@@ -3,15 +3,16 @@ import * as Api from '../../api/tweet';
 import * as types from '../actions/types';
 import { postTweetApi, deleteTweetApi, postRetweetApi, deleteRetweetApi, postHeartApi, deleteHeartApi } from '../actions/tweet';
 import { PostTweetUseData, DeleteTweetUseData, PostRetweetUseData, DeleteRetweetUseData, PostHeartUseData, DeleteHeartUseData } from '../../api/tweet';
+import { modal } from '../actions/modal';
 
 function* postTweetApiSaga({ tweet_text, imageFile, reply_id }: PostTweetUseData) {
   try {
     const data = yield call(Api.postTweet, { tweet_text, imageFile, reply_id });
     if (yield data.code === 'errors') throw Error;
     yield put(postTweetApi.success(data));
-    yield put({type: 'CLOSE_MODAL'});
+    yield put(modal.close());
   } catch (err) {
-    yield put(postTweetApi.failure(err));
+    yield put(postTweetApi.failure(err)); 
   }
 }
 
