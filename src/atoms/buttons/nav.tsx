@@ -32,14 +32,16 @@ const Container = styled.button`
   font-size: 20px;
   font-weight: 700;
   padding: 7px 15px;
-  
   border-radius: 1.5em;
+
   transition-duration: 0.4s;
   :hover {
     background: #efefef;
   }
+
   @media only screen and ( min-width: 768px ) {
     width: auto;
+    margin-bottom: 8px;
   }
 `;
 

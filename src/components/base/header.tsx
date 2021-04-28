@@ -14,4 +14,15 @@ export default ({ title }: HeaderComponentUseProps) => {
   )
 }
 
-const Header = styled.header``;
+const Header = styled.header`
+  position: sticky;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  padding: 0 12px;
+  background: white;
+  border-bottom: 1px solid black;
+`;

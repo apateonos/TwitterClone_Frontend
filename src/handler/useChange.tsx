@@ -9,6 +9,7 @@ export default (initialState = {}) => {
     switch (name) {
       case 'image':
         const imageFile = files[0];
+        console.log(imageFile);
         inputState({ ...state, imageFile });
         const reader = new FileReader();
         reader.onloadend = (finishedEvent) => {
@@ -22,6 +23,6 @@ export default (initialState = {}) => {
     }
   }, [state]);
 
-  const result: [ any, (event: React.ChangeEvent<HTMLInputElement>) => void, any ] = [ state, onChangeHandler, inputState ]; // 이방식이 마음에 안든다... 좀더 좋은 수정안은 고민해보자
+  const result: [ any, (event: React.ChangeEvent<HTMLInputElement>) => void, Function ] = [ state, onChangeHandler, inputState ]; // 이방식이 마음에 안든다... 좀더 좋은 수정안은 고민해보자
   return result;
 };

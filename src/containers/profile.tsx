@@ -11,6 +11,7 @@ import { FollowerData, FollowingData, TweetData, UserData } from '../store/reduc
 import { FollowsData } from '../store/reducers/follow';
 import { HeartData, RetweetData } from '../store/reducers/tweet';
 import { Profile, TweetList } from '../components/index';
+import { Header } from './index';
 
 
 interface ProfileContainerUseProps extends RouteComponentProps<any> {
@@ -51,6 +52,7 @@ const ProfileContainer: React.FC<ProfileContainerUseProps> = ({
   
   return (
     <>
+      <Header title='Profile' />
       <Profile
         self={self}
         follows={follows}

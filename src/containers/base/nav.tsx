@@ -13,11 +13,6 @@ interface NavContainerUseProps extends RouteComponentProps<any> {
 const NavContainer: React.FC<NavContainerUseProps> = ({
   self
 }) => {
-  const [ width, setWidth ] = useState(document.body.clientWidth);
-
-  useEffect(()=> {
-    document.addEventListener('resize', ()=> setWidth(document.body.clientWidth));
-  }, [])
 
   return (
     <Nav 

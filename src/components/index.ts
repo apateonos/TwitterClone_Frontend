@@ -3,7 +3,7 @@ export { default as Header } from './base/header';
 export { default as Nav } from './base/nav';
 export { default as Modal } from './base/modal';
 export { default as Tweet } from './base/tweet';
-
+export { default as PreviewImage } from './base/preview';
 // components
 export { default as Create } from './create';
 export { default as Login } from './login';

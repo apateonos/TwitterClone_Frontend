@@ -60,7 +60,7 @@ export default ({ tweet, retweetList, heartList, retweets, hearts }: DetailUsePr
     console.log(retweets, hearts);
     inputState({ isRetweet, isHeart });
   }, [retweets, hearts]);
-  console.log(state);
+  
   return (
     <div>
       <UserImage image={user_image} />
@@ -81,7 +81,6 @@ export default ({ tweet, retweetList, heartList, retweets, hearts }: DetailUsePr
         {state.isHeart
           ? <IconButton name='unheart' icon={tweetCardSVG.heart} color='' idx={tweet_id} /> 
           : <IconButton name='heart' icon={tweetCardSVG.heart} color='' idx={tweet_id} /> }  
-            
       </div>
     </div>
   )

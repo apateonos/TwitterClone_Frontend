@@ -11,6 +11,7 @@ import { Detail, TweetList } from '../components/index';
 import { HeartData, RetweetData } from '../store/reducers/tweet';
 import { SelfData } from '../store/reducers/user';
 import { FollowsData } from '../store/reducers/follow';
+import { Header } from './index';
 
 interface DetailContainerUseProps extends RouteComponentProps<any> {
   getDetailTweetApi: ({ tweet_id }: GetDetailTweetUseData) => object;
@@ -40,6 +41,7 @@ const DetailContainer: React.FC<DetailContainerUseProps> = ({
 
   return (
     <>
+      <Header title='Tweet'/>
       <Detail 
         tweet={tweet}
         retweetList={retweetList}

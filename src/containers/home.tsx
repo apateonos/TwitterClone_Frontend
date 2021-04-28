@@ -7,7 +7,7 @@ import { getUserTimelineApi } from '../store/actions/timeline';
 import { TweetData } from '../store/reducers/timeline';
 import { useClick } from '../handler/index';
 import { HeartData, RetweetData } from '../store/reducers/tweet';
-import { Tweet } from './index';
+import { Header, Tweet } from './index';
 import { TweetList } from '../components/index';
 import { SelfData } from '../store/reducers/user';
 import { FollowsData } from '../store/reducers/follow';
@@ -39,6 +39,7 @@ const HomeContainer: React.FC<HomeContainerProps> = ({
 
   return (
     <>
+      <Header title='Home'/>
       <Tweet />
       <TweetList 
         self={self}

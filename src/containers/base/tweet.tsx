@@ -19,10 +19,11 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
   self,
   res,
 }) => {
-  const [ state, onChangeHandler ] = useChange(initialState);
+  const [ state, onChangeHandler, setState ] = useChange(initialState);
   const onSubmitHandler = useSubmit(state);
   const onClickHandler = useClick();
 
+  console.log(state);
   useEffect(() => {
     state.reply_id = reply_id;
     state.tweet_text = '';
@@ -35,6 +36,7 @@ const TweetContainer: React.FC<TweetContainerUseProps> = ({
       onSubmit={onSubmitHandler}
       onClick={onClickHandler}
       onChange={onChangeHandler}
+      setState={setState}
       self={self}
       state={state}
     />

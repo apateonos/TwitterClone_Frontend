@@ -67,6 +67,7 @@ export default ({ self, follows, user, following, follower }: ProfileUseProps) =
 
 const Container = styled.div`
   border-bottom: 1px solid black;
+  background: white;
 `;
 
 const ProfileBackground = styled.div`

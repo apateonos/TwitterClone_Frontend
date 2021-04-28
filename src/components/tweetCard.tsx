@@ -107,8 +107,13 @@ export default ({
 const Container = styled.article`
   display: flex;
   border-bottom: 1px solid black;
-  padding: 0 0.4em;
-  margin: 1em 0;
+  padding: 7px 0.4em;
+  background: white;
+
+  transition-duration: 0.6s;
+  :hover {
+    background: #f8f8f8;
+  }
 `;
 
 const UserImageWrap = styled.div`
